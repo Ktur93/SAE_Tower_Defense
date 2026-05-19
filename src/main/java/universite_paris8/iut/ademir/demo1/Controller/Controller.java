@@ -3,7 +3,7 @@ package universite_paris8.iut.ademir.demo1.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.TilePane;
-import universite_paris8.iut.ademir.demo1.Modele.Carte;
+import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
 
 import java.net.URL;
