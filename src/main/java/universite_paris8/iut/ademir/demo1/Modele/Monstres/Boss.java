@@ -1,4 +1,4 @@
 package universite_paris8.iut.ademir.demo1.Modele.Monstres;
 
-public abstract class Monstre {
+public class Boss extends Monstre{
 }
