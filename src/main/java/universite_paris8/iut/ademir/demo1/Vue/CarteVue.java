@@ -18,17 +18,18 @@ public class CarteVue {
 
     public void dessinerCarte() {
 
-        Image herbe = new Image(Main.class.getResourceAsStream("tuile/herbe.png"));
-        Image cheminD = new Image(Main.class.getResourceAsStream("tuile/chemin-D.png"));
-        Image cheminL = new Image(Main.class.getResourceAsStream("tuile/chemin-L.png"));
-        Image cheminT = new Image(Main.class.getResourceAsStream("tuile/chemin-T.png"));
+        Image herbe = new Image(Main.class.getResourceAsStream("Tuiles/herbe.png"));
+        Image cheminD = new Image(Main.class.getResourceAsStream("Tuiles/chemin-D.png"));
+        Image cheminL = new Image(Main.class.getResourceAsStream("Tuiles/chemin-L.png"));
+        Image cheminT = new Image(Main.class.getResourceAsStream("Tuiles/chemin-T.png"));
+        Image cheminArriver = new Image(Main.class.getResourceAsStream("Tuiles/chemin-Départ.png"));
+        Image cheminDépart = new Image(Main.class.getResourceAsStream("Tuiles/chemin-Arriver.png"));
 
-
-        int tailleTuile = 32;
+        int tailleTuile = 64;
 
         for (int ligne = 0; ligne < carte.hauteur(); ligne++){
 
-            for (int col = 0; col < carte.largeur();col++){
+            for (int col = 0; col < carte.largeur(); col++){
 
                 Image image = null;
 
@@ -49,15 +50,20 @@ public class CarteVue {
                     case 3:
                         image = cheminT;
                         break;
+
+                    case 4:
+                        image = cheminArriver;
+                        break;
+
+                    case 5:
+                        image = cheminDépart;
+                        break;
                 }
 
                 ImageView tuile = new ImageView(image);
 
-//                tuile.setFitWidth(tailleTuile);
-//                tuile.setFitHeight(tailleTuile);
-//
-//                tuile.setLayoutX(x * tailleTuile);
-//                tuile.setLayoutY(y * tailleTuile);
+                tuile.setFitWidth(tailleTuile);
+                tuile.setFitHeight(tailleTuile);
 
                 paneCarte.getChildren().add(tuile);
             }
