@@ -18,12 +18,12 @@ public class CarteVue {
 
     public void dessinerCarte() {
 
-        Image herbe = new Image(Main.class.getResourceAsStream("Tuiles/herbe.png"));
-        Image cheminD = new Image(Main.class.getResourceAsStream("Tuiles/chemin-D.png"));
-        Image cheminL = new Image(Main.class.getResourceAsStream("Tuiles/chemin-L.png"));
-        Image cheminT = new Image(Main.class.getResourceAsStream("Tuiles/chemin-T.png"));
-        Image cheminArriver = new Image(Main.class.getResourceAsStream("Tuiles/chemin-Départ.png"));
-        Image cheminDépart = new Image(Main.class.getResourceAsStream("Tuiles/chemin-Arriver.png"));
+        Image herbe = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/herbe.png"));
+        Image cheminD = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/chemin-D.png"));
+        Image cheminL = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/chemin-L.png"));
+        Image cheminT = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/chemin-T.png"));
+        Image cheminArriver = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/chemin-Depart.png"));
+        Image cheminDépart = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/chemin-Arriver.png"));
 
         int tailleTuile = 64;
 
