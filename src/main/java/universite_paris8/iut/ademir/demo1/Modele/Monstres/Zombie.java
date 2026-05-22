@@ -1,4 +1,7 @@
 package universite_paris8.iut.ademir.demo1.Modele.Monstres;
 
 public class Zombie extends Monstre{
+    public Zombie(int pv){
+        super(pv);
+    }
 }

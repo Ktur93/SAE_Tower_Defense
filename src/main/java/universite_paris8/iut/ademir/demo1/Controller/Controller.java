@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.TilePane;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
+import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
 
 import java.net.URL;
@@ -25,5 +26,11 @@ public class Controller implements Initializable {
         carte.Remplir();
         CarteVue carteVue = new CarteVue(carte, paneCarte);
         carteVue.dessinerCarte();
+    }
+
+    public void ajouter()
+
+    public void creeSprite(Monstre m){
+
     }
 }
