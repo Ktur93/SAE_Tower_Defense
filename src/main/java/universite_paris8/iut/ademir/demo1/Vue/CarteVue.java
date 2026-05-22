@@ -6,7 +6,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
 import universite_paris8.iut.ademir.demo1.Main;
-import universite_paris8.iut.ademir.demo1.Modele.Carte;
+import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 
 public class CarteVue {
 
