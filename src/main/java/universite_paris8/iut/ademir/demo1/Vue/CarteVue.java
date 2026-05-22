@@ -22,35 +22,28 @@ public class CarteVue {
 
         Image herbe = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/herbe.png"));
 
-
         Image cheminD = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-D/chemin-D.png"));
-        Image cheminD90 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-D90/chemin-D.png"));
-
+        Image cheminD90 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-D/chemin-D90.png"));
 
         Image cheminL = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-L/chemin-L.png"));
         Image cheminL45 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-L/chemin-L45.png"));
         Image cheminL90 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-L/chemin-L90.png"));
         Image cheminL180 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-L/chemin-L180.png"));
 
-
         Image cheminT = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-T/chemin-T.png"));
         Image cheminT45 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-T/chemin-T45.png"));
         Image cheminT90 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-T/chemin-T90.png"));
         Image cheminT180 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-T/chemin-T180.png"));
-
 
         Image cheminArriver = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Arriver/chemin-Arriver.png"));
         Image cheminArriver45 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Arriver/chemin-Arriver45.png"));
         Image cheminArriver90 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Arriver/chemin-Arriver90.png"));
         Image cheminArriver180 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Arriver/chemin-Arriver180.png"));
 
-
         Image cheminDepart = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Depart/chemin-Depart.png"));
         Image cheminDepart45 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Depart/chemin-Depart45.png"));
         Image cheminDepart90 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Depart/chemin-Depart90.png"));
         Image cheminDepart180 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Depart/chemin-Depart180.png"));
-
-
 
         int tailleTuile = 64;
 
@@ -94,8 +87,6 @@ public class CarteVue {
                         image = cheminL180;
                         break;
 
-
-
                     case 7:
                         image = cheminT;
                         break;
@@ -111,7 +102,6 @@ public class CarteVue {
                     case 10:
                         image = cheminT180;
                         break;
-
 
                     case 11:
                         image = cheminArriver;
@@ -129,21 +119,20 @@ public class CarteVue {
                         image = cheminArriver180;
                         break;
 
-
                     case 15:
-                        image = cheminL;
+                        image = cheminDepart;
                         break;
 
                     case 16:
-                        image = cheminL45;
+                        image = cheminDepart45;
                         break;
 
                     case 17:
-                        image = cheminL90;
+                        image = cheminDepart90;
                         break;
 
                     case 18:
-                        image = cheminL180;
+                        image = cheminDepart180;
                         break;
 
                 }
@@ -166,4 +155,5 @@ public class CarteVue {
             }
         }
     }
+
 }
