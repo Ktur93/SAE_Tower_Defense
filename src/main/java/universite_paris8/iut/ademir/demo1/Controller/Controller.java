@@ -58,6 +58,7 @@ public class Controller implements Initializable {
 
         partie = new Partie(chemin);
         partie.ajouterZombie();
+        afficherMonstres();
 
         AnimationTimer gameLoop = new AnimationTimer() {
             private long dernierDeplacement = 0;
@@ -84,7 +85,6 @@ public class Controller implements Initializable {
         }
 
         ImageView sprite = new ImageView(image);
-        sprite.setId("monstre");
 
         sprite.setFitWidth(TAILLE_TUILE);
         sprite.setFitHeight(TAILLE_TUILE);
