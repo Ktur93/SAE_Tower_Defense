@@ -42,7 +42,7 @@ public class Carte {
     }
 
     private boolean dansCarte(int x, int y) {
-        return x >= 0 && x < LARGEUR && y >= 0 && y < HAUTEUR;
+        return x >= 0 && x < largeur() && y >= 0 && y < hauteur();
     }
 
     public int largeur() {
@@ -108,6 +108,20 @@ public class Carte {
                 int code = codeTuile(colonne, ligne);
 
                 if (code >= 15 && code <= 18) {
+                    return new Position(colonne, ligne);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public Position trouverArrivee() {
+        for (int ligne = 0; ligne < hauteur(); ligne++) {
+            for (int colonne = 0; colonne < largeur(); colonne++) {
+                int code = codeTuile(colonne, ligne);
+
+                if (code >= 11 && code <= 14) {
                     return new Position(colonne, ligne);
                 }
             }
