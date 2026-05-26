@@ -1,7 +1,7 @@
 package universite_paris8.iut.ademir.demo1.Modele.Monstres;
 
 public class Squelette extends Monstre{
-    public Squelette(int pv){
-        super(pv);
+    public Squelette(){
+        super(100, 0, 7 * 64, 1);
     }
 }
