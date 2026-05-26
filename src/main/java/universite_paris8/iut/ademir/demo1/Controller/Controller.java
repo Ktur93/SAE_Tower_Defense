@@ -27,7 +27,7 @@ public class Controller implements Initializable {
         carteVue.dessinerCarte();
     }
 
-    public void ajouter()
+    // public void ajouter()
 
     public void creeSprite(Monstre m){
 
