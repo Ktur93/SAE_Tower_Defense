@@ -32,12 +32,7 @@ public class Controller implements Initializable {
         CarteVue carteVue = new CarteVue(carte, paneCarte);
         carteVue.dessinerCarte();
 
-        Circle c = new Circle();
-        c.setCenterX(100);
-        c.setCenterY(100);
-        c.setFill(Color.RED);
-        c.setRadius(5);
-        pane.getChildren().add(c);
+
     }
 
     public void creeSprite(Monstre m){
