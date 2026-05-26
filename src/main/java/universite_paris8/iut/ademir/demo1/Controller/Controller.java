@@ -44,11 +44,6 @@ public class Controller implements Initializable {
         };
     }
 
-
-    public void creeSprite(Monstre m){
-
-    }
-
     private void afficherMonstres() {
         paneCarte.getChildren().removeIf(node -> "monstre".equals(node.getId()));
 
