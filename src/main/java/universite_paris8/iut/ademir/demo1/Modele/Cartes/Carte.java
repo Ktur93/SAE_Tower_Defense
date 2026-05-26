@@ -1,5 +1,7 @@
 package universite_paris8.iut.ademir.demo1.Modele.Cartes;
 
+import java.util.ArrayList;
+
 public class Carte {
 
     private int[][] carte;
@@ -54,4 +56,64 @@ public class Carte {
     public int codeTuile(int col, int ligne) {
         return carte[ligne][col];
     }
+
+    public boolean estDansCarte(int colonne, int ligne) {
+        return colonne >= 0 && colonne < largeur()
+                && ligne >= 0 && ligne < hauteur();
+    }
+
+    public boolean estMarchable(int colonne, int ligne) {
+        if (!estDansCarte(colonne, ligne)) {
+            return false;
+        }
+
+        int code = codeTuile(colonne, ligne);
+
+        return code >= 1 && code <= 18;
+    }
+
+    public ArrayList<Position> getVoisinsMarchables(Position position) {
+        ArrayList<Position> voisins = new ArrayList<>();
+
+        int colonne = position.getColonne();
+        int ligne = position.getLigne();
+
+        Position haut = new Position(colonne, ligne - 1);
+        Position bas = new Position(colonne, ligne + 1);
+        Position gauche = new Position(colonne - 1, ligne);
+        Position droite = new Position(colonne + 1, ligne);
+
+        if (estMarchable(haut.getColonne(), haut.getLigne())) {
+            voisins.add(haut);
+        }
+
+        if (estMarchable(bas.getColonne(), bas.getLigne())) {
+            voisins.add(bas);
+        }
+
+        if (estMarchable(gauche.getColonne(), gauche.getLigne())) {
+            voisins.add(gauche);
+        }
+
+        if (estMarchable(droite.getColonne(), droite.getLigne())) {
+            voisins.add(droite);
+        }
+
+        return voisins;
+    }
+
+    public Position trouverDepart() {
+        for (int ligne = 0; ligne < hauteur(); ligne++) {
+            for (int colonne = 0; colonne < largeur(); colonne++) {
+                int code = codeTuile(colonne, ligne);
+
+                if (code >= 15 && code <= 18) {
+                    return new Position(colonne, ligne);
+                }
+            }
+        }
+
+        return null;
+    }
+
 }

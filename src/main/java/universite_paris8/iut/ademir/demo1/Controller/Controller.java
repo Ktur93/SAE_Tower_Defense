@@ -6,7 +6,8 @@ import javafx.scene.layout.TilePane;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
-
+import universite_paris8.iut.ademir.demo1.Modele.Algorithmes.BFS;
+import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,10 +28,7 @@ public class Controller implements Initializable {
         carteVue.dessinerCarte();
     }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> mathis
     public void creeSprite(Monstre m){
 
     }
