@@ -10,16 +10,30 @@
 
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.TilePane?>
-<BorderPane
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.layout.StackPane?>
+<BorderPane prefHeight="640.0" prefWidth="980.0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="universite_paris8.iut.ademir.demo1.Controller.Controller">
 
 
     <center>
-        <Pane fx:id="pane" prefHeight="1024" prefWidth="1600" BorderPane.alignment="CENTER">
-            <TilePane fx:id="paneCarte" prefHeight="1024" prefWidth="1600"></TilePane>
-        </Pane>
+        <StackPane BorderPane.alignment="CENTER">
+
+            <!-- Couche 1 : carte fixe -->
+            <TilePane fx:id="paneCarte"
+                      prefHeight="1024"
+                      prefWidth="1600" />
+
+            <!-- Couche 2 : monstres et sprites mobiles -->
+            <Pane fx:id="paneSprites"
+                  prefHeight="1024"
+                  prefWidth="1600"
+                  pickOnBounds="false" />
+
+        </StackPane>
     </center>
 
     <right>
