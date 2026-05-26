@@ -2,6 +2,8 @@ package universite_paris8.iut.ademir.demo1.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.animation.AnimationTimer;
@@ -11,6 +13,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
+import universite_paris8.iut.ademir.demo1.Modele.Monstres.Zombie;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
 
 import java.net.URL;
@@ -42,6 +45,21 @@ public class Controller implements Initializable {
                 afficherMonstres();
             }
         };
+    }
+
+    private void creerSprite(Monstre monstre){
+        Image image = null;
+        if(monstre instanceof Zombie){
+            image = new Image(Main.class.getResourceAsStream("Sprites/zombie.png"));
+        }
+
+        else if(monstre instanceof Araignee){
+            image = new Image(Main.class.getResourceAsStream("Sprites/araignee.png"));
+        }
+
+        else if(monstre instanceof Boss){
+            image = new Image(Main.class.getResourceAsStream("Sprites/boss.png"));
+        }
     }
 
     private void afficherMonstres() {
