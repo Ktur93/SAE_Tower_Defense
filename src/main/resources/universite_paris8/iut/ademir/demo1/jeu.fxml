@@ -10,6 +10,7 @@
 
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.StackPane?>
 <BorderPane prefHeight="640.0" prefWidth="980.0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -17,9 +18,16 @@
 
 
     <center>
-        <TilePane fx:id="paneCarte" prefHeight="576" prefWidth="768">
+        <StackPane>
+            <TilePane fx:id="paneCarte"
+                      prefHeight="576"
+                      prefWidth="768" />
 
-        </TilePane>
+            <Pane fx:id="paneSprites"
+                  prefHeight="576"
+                  prefWidth="768"
+                  pickOnBounds="false" />
+        </StackPane>
     </center>
 
     <right>
