@@ -9,11 +9,11 @@ import javafx.scene.layout.TilePane;
 import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import universite_paris8.iut.ademir.demo1.Main;
 import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
-import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
-import universite_paris8.iut.ademir.demo1.Modele.Monstres.Zombie;
+import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
 
 import java.net.URL;
@@ -30,7 +30,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
+
         carte = new Carte();
         carte.Remplir();
         CarteVue carteVue = new CarteVue(carte, paneCarte);
@@ -45,34 +45,51 @@ public class Controller implements Initializable {
                 afficherMonstres();
             }
         };
+        gameLoop.start();
     }
 
     private void creerSprite(Monstre monstre){
         Image image = null;
         if(monstre instanceof Zombie){
-            image = new Image(Main.class.getResourceAsStream("Sprites/zombie.png"));
+            image = new Image(Main.class.getResourceAsStream("Monstres/zombie.png"));
         }
 
         else if(monstre instanceof Araignee){
-            image = new Image(Main.class.getResourceAsStream("Sprites/araignee.png"));
+            image = new Image(Main.class.getResourceAsStream("Monstres/araignee.png"));
+        }
+
+        else if(monstre instanceof Squelette){
+            image = new Image(Main.class.getResourceAsStream("Monstres/squelette.png"));
+        }
+
+        else if(monstre instanceof Pillager){
+            image = new Image(Main.class.getResourceAsStream("Monstres/pillager.png"));
         }
 
         else if(monstre instanceof Boss){
-            image = new Image(Main.class.getResourceAsStream("Sprites/boss.png"));
+            image = new Image(Main.class.getResourceAsStream("Monstres/boss.png"));
         }
+        ImageView sprite = new ImageView(image);
+
+        sprite.setId("monstre");
+
+        sprite.setFitWidth(64);
+        sprite.setFitHeight(64);
+
+        sprite.setTranslateX(monstre.getX());
+        sprite.setTranslateY(monstre.getY());
+
+        paneCarte.getChildren().add(sprite);
     }
 
     private void afficherMonstres() {
         paneCarte.getChildren().removeIf(node -> "monstre".equals(node.getId()));
 
-        for (Monstre m : partie.getMonstres()) {
-            Circle c = new Circle(15);
-            c.setId("monstre");
-            c.setFill(Color.GREEN);
-            c.setTranslateX(m.getX());
-            c.setTranslateY(m.getY());
-
-            paneCarte.getChildren().add(c);
+        paneCarte.getChildren().removeIf(node ->
+                "monstre".equals(node.getId())
+        );
+        for(Monstre m : partie.getMonstres()){
+            creerSprite(m);
         }
     }
 }
