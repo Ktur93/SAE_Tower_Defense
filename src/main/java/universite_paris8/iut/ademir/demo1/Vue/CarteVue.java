@@ -45,6 +45,10 @@ public class CarteVue {
         Image cheminDepart90 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Depart/chemin-Depart90.png"));
         Image cheminDepart180 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Depart/chemin-Depart180.png"));
 
+        Image EmplacementToursDébloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TDébloquer.png"));
+        Image EmplacementToursBloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TBloquer.png"));
+
+
         int tailleTuile = 64;
 
         paneCarte.getChildren().clear();
@@ -133,6 +137,14 @@ public class CarteVue {
 
                     case 18:
                         image = cheminDepart180;
+                        break;
+
+                    case 19:
+                        image = EmplacementToursDébloquer;
+                        break;
+
+                    case 20:
+                        image = EmplacementToursBloquer;
                         break;
 
                 }
