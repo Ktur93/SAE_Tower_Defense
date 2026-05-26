@@ -1,11 +1,45 @@
 package universite_paris8.iut.ademir.demo1.Modele.Tour;
 
+import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
+import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
+
+import java.util.ArrayList;
+
 public abstract class Tour {
+
     private int atk;
-    public Tour(int atk){
-        this.atk = atk;
+    private int prix;
+    private int portee;
+    private Position pos;
+
+    public Tour(int attaque, int prix, int portee, Position position) {
+        this.atk = attaque;
+        this.prix = prix;
+        this.portee = portee;
+        this.pos = position;
     }
-    public int getAtk(){
-        return this.atk;
+
+    public int getPrix() {
+        return prix;
+    }
+
+    public Position getPosition() {
+        return pos;
+    }
+
+    public void attaquer(ArrayList<Monstre> monstres) {
+        for (Monstre m : monstres) {
+            if (estAPortee(m)) {
+                m.recevoirDegats(atk);
+                break;
+            }
+        }
+    }
+
+    private boolean estAPortee(Monstre monstre) {
+        int dx = pos.getColonne() - monstre.getPosition().getColonne();
+        int dy = pos.getLigne() - monstre.getPosition().getLigne();
+
+        return Math.sqrt(dx * dx + dy * dy) <= portee;
     }
 }
