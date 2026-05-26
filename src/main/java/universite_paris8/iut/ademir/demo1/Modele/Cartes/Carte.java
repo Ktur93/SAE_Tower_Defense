@@ -13,7 +13,7 @@ public class Carte {
         this.carte = new int[HAUTEUR][LARGEUR];
     }
 
-    public void Remplir() {
+    public void remplir() {
 
         carte = new int[][]{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

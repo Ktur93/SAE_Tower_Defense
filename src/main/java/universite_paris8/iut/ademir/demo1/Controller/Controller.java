@@ -36,7 +36,7 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         carte = new Carte();
-        carte.Remplir();
+        carte.remplir();
 
         CarteVue carteVue = new CarteVue(carte, paneCarte);
         carteVue.dessinerCarte();
