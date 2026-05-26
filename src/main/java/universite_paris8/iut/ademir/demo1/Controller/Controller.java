@@ -27,7 +27,10 @@ public class Controller implements Initializable {
         carteVue.dessinerCarte();
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> mathis
     public void creeSprite(Monstre m){
 
     }
