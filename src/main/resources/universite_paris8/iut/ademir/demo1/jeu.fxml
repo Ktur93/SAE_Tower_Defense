@@ -10,16 +10,16 @@
 
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.TilePane?>
-<BorderPane prefHeight="640.0" prefWidth="980.0"
+<BorderPane
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="universite_paris8.iut.ademir.demo1.Controller.Controller">
 
 
     <center>
-        <TilePane fx:id="paneCarte" prefHeight="576" prefWidth="768">
-
-        </TilePane>
+        <Pane fx:id="pane" prefHeight="1024" prefWidth="1600" BorderPane.alignment="CENTER">
+            <TilePane fx:id="paneCarte" prefHeight="1024" prefWidth="1600"></TilePane>
+        </Pane>
     </center>
 
     <right>
