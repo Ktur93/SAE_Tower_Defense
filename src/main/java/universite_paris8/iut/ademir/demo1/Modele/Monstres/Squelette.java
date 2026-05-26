@@ -7,5 +7,6 @@ public class Squelette extends Monstre {
 
     public Squelette(ArrayList<Position> chemin) {
         super(90, 1, 15, chemin);
+
     }
 }

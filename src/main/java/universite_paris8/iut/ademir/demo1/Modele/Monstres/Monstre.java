@@ -1,5 +1,6 @@
 package universite_paris8.iut.ademir.demo1.Modele.Monstres;
 
+
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import java.util.ArrayList;
 
@@ -32,6 +33,7 @@ public abstract class Monstre {
 
     public Position getPosition() {
         return chemin.get(indiceChemin);
+
     }
 
     public int getPv() {
@@ -52,9 +54,11 @@ public abstract class Monstre {
 
     public void recevoirDegats(int degats) {
         pv -= degats;
+
     }
 
     public boolean estMort() {
         return pv <= 0;
     }
 }
+
