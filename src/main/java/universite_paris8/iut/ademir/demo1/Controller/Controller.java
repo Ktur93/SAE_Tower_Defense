@@ -3,6 +3,7 @@ package universite_paris8.iut.ademir.demo1.Controller;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -10,6 +11,11 @@ import javafx.scene.layout.TilePane;
 
 import universite_paris8.iut.ademir.demo1.Main;
 import universite_paris8.iut.ademir.demo1.Modele.Algorithmes.BFS;
+
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
@@ -28,7 +34,11 @@ public class Controller implements Initializable {
     private TilePane paneCarte;
 
     @FXML
+
     private Pane paneSprites;
+
+    private Pane pane;
+
 
     private Carte carte;
     private Partie partie;
@@ -40,6 +50,7 @@ public class Controller implements Initializable {
 
         CarteVue carteVue = new CarteVue(carte, paneCarte);
         carteVue.dessinerCarte();
+
 
         Position depart = new Position(0, 7);
         Position arrivee = carte.trouverArrivee();
@@ -73,6 +84,14 @@ public class Controller implements Initializable {
         };
 
         gameLoop.start();
+
+        Circle c = new Circle();
+        c.setCenterX(100);
+        c.setCenterY(100);
+        c.setFill(Color.RED);
+        c.setRadius(5);
+        pane.getChildren().add(c);
+
     }
 
     private void creerSprite(Monstre monstre) {

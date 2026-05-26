@@ -48,6 +48,7 @@ public class CarteVue {
         Image EmplacementToursDébloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TDébloquer.png"));
         Image EmplacementToursBloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TBloquer.png"));
 
+        Image eau = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
 
         int tailleTuile = 64;
 
@@ -147,6 +148,10 @@ public class CarteVue {
                         image = EmplacementToursBloquer;
                         break;
 
+                    case 21:
+                        image = eau;
+                        break;
+
                 }
 
                 ImageView tuile = new ImageView(image);
@@ -167,5 +172,4 @@ public class CarteVue {
             }
         }
     }
-
 }
