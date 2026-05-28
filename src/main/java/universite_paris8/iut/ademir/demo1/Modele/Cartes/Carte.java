@@ -129,11 +129,8 @@ public class Carte {
     }
 
     public boolean estCaseTour(int colonne, int ligne) {
-        if (!estDansCarte(colonne, ligne)) {
-            return false;
-        }
-
-        return codeTuile(colonne, ligne) == 19;
+        return estDansCarte(colonne, ligne) &&
+                (codeTuile(colonne, ligne) == 19 || codeTuile(colonne, ligne) == 20);
     }
 
 }
