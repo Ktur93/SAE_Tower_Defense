@@ -1,5 +1,7 @@
 package universite_paris8.iut.ademir.demo1.Modele.Jeu;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
@@ -11,7 +13,7 @@ import java.util.Iterator;
 
 public class Partie {
 
-    private ArrayList<Monstre> monstres;
+    private ObservableList<Monstre> monstres;
     private ArrayList<Tour> tours;
     private ArrayList<Position> chemin;
 
@@ -19,7 +21,7 @@ public class Partie {
 
     public Partie(ArrayList<Position> chemin) {
         this.chemin = chemin;
-        this.monstres = new ArrayList<>();
+        this.monstres = FXCollections.observableArrayList();
         this.tours = new ArrayList<>();
         this.rubis = 200;
     }
@@ -47,16 +49,13 @@ public class Partie {
     }
 
     private void supprimerMonstresMorts() {
-        Iterator<Monstre> it = monstres.iterator();
-
-        while (it.hasNext()) {
-            Monstre monstre = it.next();
-
+        monstres.removeIf(monstre -> {
             if (monstre.estMort()) {
                 rubis += monstre.getRecompense();
-                it.remove();
+                return true;
             }
-        }
+            return false;
+        });
     }
 
     public boolean placerTour(Tour tour, Carte carte) {
@@ -76,7 +75,7 @@ public class Partie {
         return true;
     }
 
-    public ArrayList<Monstre> getMonstres() {
+    public ObservableList<Monstre> getMonstres() {
         return monstres;
     }
 

@@ -163,12 +163,8 @@ public class CarteVue {
 
                 tuile.setRotate(rotation);
 
-                StackPane wrapper = new StackPane();
-                wrapper.setPrefSize(tailleTuile, tailleTuile);
 
-                wrapper.getChildren().add(tuile);
-
-                paneCarte.getChildren().add(wrapper);
+                paneCarte.getChildren().add(tuile);
             }
         }
     }
