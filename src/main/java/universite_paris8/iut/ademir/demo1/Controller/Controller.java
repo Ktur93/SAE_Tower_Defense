@@ -51,7 +51,6 @@ public class Controller implements Initializable {
 
         CarteVue carteVue = new CarteVue(carte, paneCarte);
         carteVue.dessinerCarte();
-
         Position depart = new Position(0, 7);
         Position arrivee = carte.trouverArrivee();
 

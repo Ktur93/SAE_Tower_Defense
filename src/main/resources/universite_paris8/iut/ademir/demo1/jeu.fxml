@@ -13,14 +13,14 @@
 <?import javafx.scene.layout.StackPane?>
 
 <?import javafx.scene.layout.StackPane?>
-<BorderPane prefHeight="640.0" prefWidth="980.0"
+<BorderPane prefHeight="1024" prefWidth="1810"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="universite_paris8.iut.ademir.demo1.Controller.Controller">
 
 
     <center>
-        <StackPane BorderPane.alignment="CENTER">
+        <StackPane prefHeight="1024" prefWidth="1600">
 
             <!-- Couche 1 : carte fixe -->
             <TilePane fx:id="paneCarte"
@@ -29,6 +29,12 @@
 
             <!-- Couche 2 : monstres et sprites mobiles -->
             <Pane fx:id="paneSprites"
+                  prefHeight="1024"
+                  prefWidth="1600"
+                  pickOnBounds="false" />
+
+            <!-- Couche 3 : Décoration -->
+            <Pane fx:id="paneDécoration"
                   prefHeight="1024"
                   prefWidth="1600"
                   pickOnBounds="false" />
