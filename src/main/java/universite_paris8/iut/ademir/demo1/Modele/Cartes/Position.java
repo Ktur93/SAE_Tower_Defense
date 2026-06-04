@@ -20,19 +20,19 @@ public class Position {
         return ligne;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof Position)) {
-            return false;
-        }
-
-        Position autre = (Position) obj;
-        return colonne == autre.colonne && ligne == autre.ligne;
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//
+//        if (!(obj instanceof Position)) {
+//            return false;
+//        }
+//
+//        Position autre = (Position) obj;
+//        return colonne == autre.colonne && ligne == autre.ligne;
+//    }
 
     @Override
     public int hashCode() {

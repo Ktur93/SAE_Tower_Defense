@@ -283,4 +283,5 @@ public class Controller implements Initializable {
             System.out.println("Impossible de poser la tour ici.");
         }
     }
+
 }
