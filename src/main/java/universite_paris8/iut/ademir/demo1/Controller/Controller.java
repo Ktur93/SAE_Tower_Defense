@@ -62,7 +62,9 @@ public class Controller implements Initializable {
         ArrayList<Position> chemin = bfs.cheminDeSourceVersCible(arrivee);
 
         partie = new Partie(chemin);
+        partie.ajouterAraignee();
         partie.ajouterZombie();
+
 
         afficherRubis();
 
@@ -75,7 +77,7 @@ public class Controller implements Initializable {
 
             @Override
             public void handle(long now) {
-                if (now - dernierDeplacement > 500_000_000) {
+                if (now - dernierDeplacement > 20_000_000) {
 
                     partie.mettreAJour(now);
                     afficherMonstres(now);
@@ -108,13 +110,9 @@ public class Controller implements Initializable {
 
         Position position = monstre.getPosition();
 
-        sprite.setLayoutX(
-                position.getColonne() * TAILLE_TUILE
-        );
+        sprite.setLayoutX(monstre.getX());
 
-        sprite.setLayoutY(
-                position.getLigne() * TAILLE_TUILE
-        );
+        sprite.setLayoutY(monstre.getY());
 
         paneSprites.getChildren().add(sprite);
     }
