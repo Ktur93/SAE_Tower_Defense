@@ -9,7 +9,6 @@ public abstract class Monstre {
     private int pv;
     private int vitesse;
     private int recompense;
-
     private ArrayList<Position> chemin;
     private int indiceChemin;
 
@@ -28,16 +27,16 @@ public abstract class Monstre {
     }
 
     public boolean estArrive() {
-        return indiceChemin >= chemin.size() - 1;
+        return this.indiceChemin >= this.chemin.size() - 1;
     }
 
     public Position getPosition() {
-        return chemin.get(indiceChemin);
+        return this.chemin.get(this.indiceChemin);
 
     }
 
     public int getPv() {
-        return pv;
+        return this.pv;
     }
 
     public void setPv(int pv) {
@@ -45,20 +44,20 @@ public abstract class Monstre {
     }
 
     public int getVitesse() {
-        return vitesse;
+        return this.vitesse;
     }
 
     public int getRecompense() {
-        return recompense;
+        return this.recompense;
     }
 
     public void recevoirDegats(int degats) {
-        pv -= degats;
+        this.pv -= degats;
 
     }
 
     public boolean estMort() {
-        return pv <= 0;
+        return this.pv <= 0;
     }
 }
 
