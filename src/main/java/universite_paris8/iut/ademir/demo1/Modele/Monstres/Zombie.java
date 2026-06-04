@@ -8,6 +8,5 @@ public class Zombie extends Monstre {
 
     public Zombie(ArrayList<Position> chemin) {
         super(100, 1, 10, chemin);
-
     }
 }

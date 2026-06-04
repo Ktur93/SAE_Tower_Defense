@@ -9,7 +9,6 @@ import universite_paris8.iut.ademir.demo1.Modele.Monstres.Zombie;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Partie {
 
@@ -30,15 +29,15 @@ public class Partie {
         monstres.add(new Zombie(chemin));
     }
 
-    public void mettreAJour() {
-        faireAvancerMonstres();
+    public void mettreAJour(long now) {
+        faireAvancerMonstres(now);
         faireAttaquerTours();
         supprimerMonstresMorts();
     }
 
-    private void faireAvancerMonstres() {
+    private void faireAvancerMonstres(long now) {
         for (Monstre monstre : monstres) {
-            monstre.avancer();
+            monstre.avancer(now);
         }
     }
 

@@ -13,17 +13,25 @@ public abstract class Monstre {
     private ArrayList<Position> chemin;
     private int indiceChemin;
 
+    private Position anciennePos;
+    private long debutAnimation;
+
+
     public Monstre(int pv, int vitesse, int recompense, ArrayList<Position> chemin) {
         this.pv = pv;
         this.vitesse = vitesse;
         this.recompense = recompense;
         this.chemin = chemin;
         this.indiceChemin = 0;
+
+
     }
 
-    public void avancer() {
+    public void avancer(long now) {
         if (!estArrive()) {
+            anciennePos = getPosition();
             indiceChemin++;
+            debutAnimation = now;
         }
     }
 
@@ -33,7 +41,6 @@ public abstract class Monstre {
 
     public Position getPosition() {
         return chemin.get(indiceChemin);
-
     }
 
     public int getPv() {
@@ -56,6 +63,11 @@ public abstract class Monstre {
         pv -= degats;
 
     }
+
+    public Position getAnciennePosition () {
+        return this.anciennePos;
+    }
+
 
     public boolean estMort() {
         return pv <= 0;

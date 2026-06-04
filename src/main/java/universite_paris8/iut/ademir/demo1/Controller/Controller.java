@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
@@ -77,10 +76,12 @@ public class Controller implements Initializable {
             @Override
             public void handle(long now) {
                 if (now - dernierDeplacement > 500_000_000) {
-                    partie.mettreAJour();
-                    afficherMonstres();
+
+                    partie.mettreAJour(now);
+                    afficherMonstres(now);
                     afficherTours();
                     afficherRubis();
+
                     dernierDeplacement = now;
                 }
             }
@@ -124,16 +125,11 @@ public class Controller implements Initializable {
 
         if (tour instanceof TourCanon) {
 
-            image = new Image(
-                    Main.class.getResourceAsStream(
-                            "Tours/canon.png"
-                    )
+            image = new Image(Main.class.getResourceAsStream("Tours/canon.png")
             );
         }
 
-        if (image == null) {
-            return;
-        }
+
 
         ImageView sprite = new ImageView(image);
 
@@ -205,7 +201,7 @@ public class Controller implements Initializable {
         return null;
     }
 
-    private void afficherMonstres() {
+    private void afficherMonstres(long now) {
 
         paneSprites.getChildren().removeIf(
                 node -> "monstre".equals(node.getId())
