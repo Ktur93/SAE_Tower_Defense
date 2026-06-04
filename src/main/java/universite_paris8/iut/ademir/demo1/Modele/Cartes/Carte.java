@@ -51,7 +51,7 @@ public class Carte {
         return carte.length;
     }
 
-    public int codeTuile(int col, int ligne) {
+    public int Tuile(int col, int ligne) {
         return carte[ligne][col];
     }
 
@@ -65,7 +65,7 @@ public class Carte {
             return false;
         }
 
-        int code = codeTuile(colonne, ligne);
+        int code = Tuile(colonne, ligne);
 
         return code >= 1 && code <= 18;
     }
@@ -73,27 +73,27 @@ public class Carte {
     public ArrayList<Position> getVoisinsMarchables(Position position) {
         ArrayList<Position> voisins = new ArrayList<>();
 
-        int colonne = position.getColonne();
-        int ligne = position.getLigne();
+        int colonne = position.getX();
+        int ligne = position.getY();
 
         Position haut = new Position(colonne, ligne - 1);
         Position bas = new Position(colonne, ligne + 1);
         Position gauche = new Position(colonne - 1, ligne);
         Position droite = new Position(colonne + 1, ligne);
 
-        if (estMarchable(haut.getColonne(), haut.getLigne())) {
+        if (estMarchable(haut.getX(), haut.getY())) {
             voisins.add(haut);
         }
 
-        if (estMarchable(bas.getColonne(), bas.getLigne())) {
+        if (estMarchable(bas.getX(), bas.getY())) {
             voisins.add(bas);
         }
 
-        if (estMarchable(gauche.getColonne(), gauche.getLigne())) {
+        if (estMarchable(gauche.getX(), gauche.getY())) {
             voisins.add(gauche);
         }
 
-        if (estMarchable(droite.getColonne(), droite.getLigne())) {
+        if (estMarchable(droite.getX(), droite.getY())) {
             voisins.add(droite);
         }
 
@@ -103,7 +103,7 @@ public class Carte {
     public Position trouverDepart() {
         for (int ligne = 0; ligne < hauteur(); ligne++) {
             for (int colonne = 0; colonne < largeur(); colonne++) {
-                int code = codeTuile(colonne, ligne);
+                int code = Tuile(colonne, ligne);
 
                 if (code >= 15 && code <= 18) {
                     return new Position(colonne, ligne);
@@ -117,20 +117,19 @@ public class Carte {
     public Position trouverArrivee() {
         for (int ligne = 0; ligne < hauteur(); ligne++) {
             for (int colonne = 0; colonne < largeur(); colonne++) {
-                int code = codeTuile(colonne, ligne);
+                int code = Tuile(colonne, ligne);
 
                 if (code >= 11 && code <= 14) {
                     return new Position(colonne, ligne);
                 }
             }
         }
-//oui
         return null;
     }
 
     public boolean estCaseTour(int colonne, int ligne) {
         return estDansCarte(colonne, ligne) &&
-                (codeTuile(colonne, ligne) == 19 || codeTuile(colonne, ligne) == 20);
+                (Tuile(colonne, ligne) == 19 || Tuile(colonne, ligne) == 20);
     }
 
 }

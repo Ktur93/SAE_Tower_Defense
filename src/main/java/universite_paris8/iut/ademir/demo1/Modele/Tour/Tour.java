@@ -3,7 +3,6 @@ package universite_paris8.iut.ademir.demo1.Modele.Tour;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
-
 import java.util.ArrayList;
 
 public abstract class Tour {
@@ -38,8 +37,8 @@ public abstract class Tour {
     }
 
     private boolean estAPortee(Monstre monstre) {
-        int dx = pos.getColonne() - monstre.getPosition().getColonne();
-        int dy = pos.getLigne() - monstre.getPosition().getLigne();
+        int dx = pos.getX() - monstre.getPosition().getX();
+        int dy = pos.getY() - monstre.getPosition().getY();
 
         return Math.sqrt(dx * dx + dy * dy) <= portee;
     }

@@ -14,7 +14,7 @@ import java.util.Iterator;
 public class Partie {
 
     private ObservableList<Monstre> monstres;
-    private ArrayList<Tour> tours;
+    private ObservableList<Tour> tours;
     private ArrayList<Position> chemin;
 
     private int rubis;
@@ -22,12 +22,16 @@ public class Partie {
     public Partie(ArrayList<Position> chemin) {
         this.chemin = chemin;
         this.monstres = FXCollections.observableArrayList();
-        this.tours = new ArrayList<>();
+        this.tours = FXCollections.observableArrayList();
         this.rubis = 200;
     }
 
     public void ajouterZombie() {
         monstres.add(new Zombie(chemin));
+    }
+
+    public void ajoutTours(Tour tour){
+        tours.add(tour);
     }
 
     public void mettreAJour() {
@@ -61,7 +65,7 @@ public class Partie {
     public boolean placerTour(Tour tour, Carte carte) {
         Position position = tour.getPosition();
 
-        if (!carte.estCaseTour(position.getColonne(), position.getLigne())) {
+        if (!carte.estCaseTour(position.getX(), position.getY())) {
             return false;
         }
 

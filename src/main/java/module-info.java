@@ -4,6 +4,7 @@ module universite_paris8.iut.ademir.demo1 {
 
     requires org.controlsfx.controls;
     requires jdk.compiler;
+    requires javafx.base;
 
     opens universite_paris8.iut.ademir.demo1 to javafx.fxml;
     exports universite_paris8.iut.ademir.demo1;

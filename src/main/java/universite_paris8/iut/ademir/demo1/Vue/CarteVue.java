@@ -52,16 +52,13 @@ public class CarteVue {
 
         int tailleTuile = 64;
 
-        paneCarte.getChildren().clear();
-
         for (int ligne = 0; ligne < carte.hauteur(); ligne++) {
 
             for (int col = 0; col < carte.largeur(); col++) {
 
                 Image image = null;
-                int rotation = 0;
 
-                switch (carte.codeTuile(col, ligne)) {
+                switch (carte.Tuile(col, ligne)) {
 
                     case 0:
                         image = herbe;
@@ -160,8 +157,6 @@ public class CarteVue {
                 tuile.setFitHeight(tailleTuile);
 
                 tuile.setPreserveRatio(true);
-
-                tuile.setRotate(rotation);
 
 
                 paneCarte.getChildren().add(tuile);

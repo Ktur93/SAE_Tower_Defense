@@ -22,18 +22,18 @@
     <center>
         <StackPane prefHeight="1024" prefWidth="1600">
 
-            <!-- Couche 1 : carte fixe -->
+
             <TilePane fx:id="paneCarte"
                       prefHeight="1024"
                       prefWidth="1600" />
 
-            <!-- Couche 2 : monstres et sprites mobiles -->
+
             <Pane fx:id="paneSprites"
                   prefHeight="1024"
                   prefWidth="1600"
                   pickOnBounds="false" />
 
-            <!-- Couche 3 : Décoration -->
+
             <Pane fx:id="paneDécoration"
                   prefHeight="1024"
                   prefWidth="1600"

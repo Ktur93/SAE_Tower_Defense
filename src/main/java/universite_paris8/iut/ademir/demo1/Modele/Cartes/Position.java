@@ -4,20 +4,20 @@ import java.util.Objects;
 
 public class Position {
 
-    private int colonne;
-    private int ligne;
+    private int x;
+    private int y;
 
     public Position(int colonne, int ligne) {
-        this.colonne = colonne;
-        this.ligne = ligne;
+        this.x = x;
+        this.y = y;
     }
 
-    public int getColonne() {
-        return colonne;
+    public int getX() {
+        return x;
     }
 
-    public int getLigne() {
-        return ligne;
+    public int getY() {
+        return y;
     }
 
     @Override
@@ -31,16 +31,16 @@ public class Position {
         }
 
         Position autre = (Position) obj;
-        return colonne == autre.colonne && ligne == autre.ligne;
+        return getX() == autre.getX() && getY() == autre.getY();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(colonne, ligne);
+        return Objects.hash(getX(), getY());
     }
 
     @Override
     public String toString() {
-        return "(" + colonne + ", " + ligne + ")";
+        return "(" + getX() + ", " + getY() + ")";
     }
 }
