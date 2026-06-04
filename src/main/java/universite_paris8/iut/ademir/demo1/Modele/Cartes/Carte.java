@@ -51,21 +51,22 @@ public class Carte {
         return carte.length;
     }
 
-    public int codeTuile(int col, int ligne) {
-        return carte[ligne][col];
+    public int codeTuile(int x, int y) {
+        return carte[y][x];
     }
 
-    public boolean estDansCarte(int colonne, int ligne) {
-        return colonne >= 0 && colonne < largeur()
-                && ligne >= 0 && ligne < hauteur();
+    public void setCodeTuile(int x, int y, int code){
+       carte[y][x] = code;
+
     }
 
-    public boolean estMarchable(int colonne, int ligne) {
-        if (!estDansCarte(colonne, ligne)) {
+
+    public boolean estMarchable(int x, int y) {
+        if (!dansCarte(x, y)) {
             return false;
         }
 
-        int code = codeTuile(colonne, ligne);
+        int code = codeTuile(x, y);
 
         return code >= 1 && code <= 18;
     }
@@ -128,9 +129,20 @@ public class Carte {
         return null;
     }
 
-    public boolean estCaseTour(int colonne, int ligne) {
-        return estDansCarte(colonne, ligne) &&
-                (codeTuile(colonne, ligne) == 19 || codeTuile(colonne, ligne) == 20);
+    public boolean estCaseTour(int x, int y) {
+        return dansCarte(x, y) && codeTuile(x, y) == 19;
+    }
+
+    public boolean estCaseBloque(int x, int y){
+        return dansCarte(x,y) && codeTuile(x,y) == 20;
+    }
+
+    public boolean debloquerCase(int x, int y){
+       if(!estCaseBloque(x,y)) {
+           return false;
+       }
+       setCodeTuile(x,y,19);
+       return true;
     }
 
 }

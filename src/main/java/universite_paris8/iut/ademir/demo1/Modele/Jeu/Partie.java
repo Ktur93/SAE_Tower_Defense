@@ -14,7 +14,6 @@ public class Partie {
     private ObservableList<Monstre> monstres;
     private ArrayList<Tour> tours;
     private ArrayList<Position> chemin;
-
     private int rubis;
 
     public Partie(ArrayList<Position> chemin) {
@@ -25,7 +24,7 @@ public class Partie {
     }
 
     public void ajouterZombie() {
-        monstres.add(new Zombie(chemin));
+        this.monstres.add(new Zombie(this.chemin));
     }
 
     public void ajouterAraignee() {
@@ -59,15 +58,15 @@ public class Partie {
     }
 
     private void faireAttaquerTours() {
-        for (Tour tour : tours) {
-            tour.attaquer(monstres);
+        for (Tour tour : this.tours) {
+            tour.attaquer(this.monstres);
         }
     }
 
     private void supprimerMonstresMorts() {
-        monstres.removeIf(monstre -> {
+        this.monstres.removeIf(monstre -> {
             if (monstre.estMort()) {
-                rubis += monstre.getRecompense();
+                this.rubis += monstre.getRecompense();
                 return true;
             }
             return false;
@@ -81,25 +80,25 @@ public class Partie {
             return false;
         }
 
-        if (rubis < tour.getPrix()) {
+        if (this.rubis < tour.getPrix()) {
             return false;
         }
 
-        rubis -= tour.getPrix();
-        tours.add(tour);
+        this.rubis -= tour.getPrix();
+        this.tours.add(tour);
 
         return true;
     }
 
     public ObservableList<Monstre> getMonstres() {
-        return monstres;
+        return this.monstres;
     }
 
     public ArrayList<Tour> getTours() {
-        return tours;
+        return this.tours;
     }
 
     public int getRubis() {
-        return rubis;
+        return this.rubis;
     }
 }
