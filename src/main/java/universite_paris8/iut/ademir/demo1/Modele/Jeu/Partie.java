@@ -7,9 +7,8 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Zombie;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
-
 import java.util.ArrayList;
-import java.util.Iterator;
+
 
 public class Partie {
 
@@ -30,10 +29,6 @@ public class Partie {
         monstres.add(new Zombie(chemin));
     }
 
-    public void ajoutTours(Tour tour){
-        tours.add(tour);
-    }
-
     public void mettreAJour() {
         faireAvancerMonstres();
         faireAttaquerTours();
@@ -46,12 +41,6 @@ public class Partie {
         }
     }
 
-    private void faireAttaquerTours() {
-        for (Tour tour : tours) {
-            tour.attaquer(monstres);
-        }
-    }
-
     private void supprimerMonstresMorts() {
         monstres.removeIf(monstre -> {
             if (monstre.estMort()) {
@@ -60,6 +49,24 @@ public class Partie {
             }
             return false;
         });
+    }
+
+    public ObservableList<Monstre> getMonstres() {
+        return monstres;
+    }
+
+
+    private void faireAttaquerTours() {
+        for (Tour tour : tours) {
+            tour.attaquer(monstres);
+        }
+    }
+
+
+
+    //tours /placement des tours dans la liste observable/ajout
+    public ObservableList<Tour> getTours() {
+        return tours;
     }
 
     public boolean placerTour(Tour tour, Carte carte) {
@@ -79,13 +86,8 @@ public class Partie {
         return true;
     }
 
-    public ObservableList<Monstre> getMonstres() {
-        return monstres;
-    }
 
-    public ArrayList<Tour> getTours() {
-        return tours;
-    }
+
 
     public int getRubis() {
         return rubis;

@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+    private static final int TAILLE_TUILE = 64;
 
     @FXML
     private TilePane paneCarte;
@@ -39,77 +40,73 @@ public class Controller implements Initializable {
     @FXML
     private Button btnPoison;
 
-
-
     private Carte carte;
-
     private Partie partie;
-
-    private String tourSelectionnés;
-
-
+    private String tourSelectionne;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //carte affichage
+
         carte = new Carte();
         carte.remplir();
 
         CarteVue carteVue = new CarteVue(carte, paneCarte);
         carteVue.dessinerCarte();
 
-        //rubis affichage
-        RubisVue rubis = new RubisVue(partie , labelRubis);
-        rubis.afficherRubis();
-
-        //tours affichage
-
-        ToursVue toursVue = new ToursVue(partie , carte , paneSprites , tourSelectionnés);
-
-
-        btnCanon.setOnAction(actionEvent -> {
-            tourSelectionnés = "CANON";
-        });
-
-        btnArcher.setOnAction(actionEvent -> {
-            tourSelectionnés = "ARCHER";
-        });
-
-        btnGlace.setOnAction(actionEvent -> {
-            tourSelectionnés = "GLACE";
-        });
-
-        btnPoison.setOnAction(actionEvent -> {
-            tourSelectionnés = "POISON";
-        });
-
-
-
-
-        paneCarte.setOnMouseClicked(event -> {
-                    Tour tour = creerTourSelectionnés(tourSelectionnés, new Position(event.getX(), event.getY()));
-                    partie.ajoutTours(tour);
-                }
-                //toursVue.placerTourSurCarte(event.getX(), event.getY())
-        );
-
-
-
-
-
-        //position des monstres/deplacement
         Position depart = new Position(0, 7);
         Position arrivee = carte.trouverArrivee();
-
 
         BFS bfs = new BFS(carte, depart);
         ArrayList<Position> chemin = bfs.cheminDeSourceVersCible(arrivee);
 
-
         partie = new Partie(chemin);
         partie.ajouterZombie();
 
+        RubisVue rubisVue = new RubisVue(partie, labelRubis);
+        rubisVue.afficherRubis();
 
+
+
+        // pour selectionnée les tours via des boutons:
+        btnCanon.setOnAction(actionEvent -> {
+            tourSelectionne = "CANON";
+
+        });
+
+        btnArcher.setOnAction(actionEvent -> {
+            tourSelectionne = "ARCHER";
+        });
+
+        btnGlace.setOnAction(actionEvent -> {
+            tourSelectionne = "GLACE";
+        });
+
+        btnPoison.setOnAction(actionEvent -> {
+            tourSelectionne = "POISON";
+        });
+
+        new ToursVue(partie, paneSprites);
+
+        paneSprites.setOnMouseClicked(event -> {
+
+
+            int colonne = (int) (event.getX() / TAILLE_TUILE);
+            int ligne = (int) (event.getY() / TAILLE_TUILE);
+
+
+            Position position = new Position(colonne, ligne);
+
+            Tour tour = creerTourSelectionnee(tourSelectionne, position);
+
+            boolean placeDisponible = partie.placerTour(tour, carte);
+
+            if (placeDisponible) {
+                rubisVue.afficherRubis();
+                System.out.println("placement");
+            } else {
+                System.out.println("null");
+            }
+        });
 
 
         AnimationTimer gameLoop = new AnimationTimer() {
@@ -119,9 +116,10 @@ public class Controller implements Initializable {
             public void handle(long now) {
                 if (now - dernierDeplacement > 500_000_000) {
                     partie.mettreAJour();
-                    afficherMonstres();
-                    afficherTours();
-                    afficherRubis();
+
+                    //afficherMonstres();
+                    rubisVue.afficherRubis();
+
                     dernierDeplacement = now;
                 }
             }
@@ -130,9 +128,9 @@ public class Controller implements Initializable {
         gameLoop.start();
     }
 
+    public Tour creerTourSelectionnee(String tourSelectionnee, Position position) {
 
-    public Tour creerTourSelectionnés(String tourSelectionnés, Position position) {
-        switch (tourSelectionnés) {
+        switch (tourSelectionnee) {
             case "CANON":
                 return new TourCanon(position);
             case "ARCHER":

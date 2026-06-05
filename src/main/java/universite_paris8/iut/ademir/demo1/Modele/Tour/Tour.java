@@ -3,7 +3,7 @@ package universite_paris8.iut.ademir.demo1.Modele.Tour;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
-import java.util.ArrayList;
+
 
 public abstract class Tour {
 
@@ -31,7 +31,6 @@ public abstract class Tour {
         for (Monstre m : monstres) {
             if (estAPortee(m)) {
                 m.recevoirDegats(atk);
-                break;
             }
         }
     }

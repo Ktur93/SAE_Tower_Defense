@@ -55,11 +55,6 @@ public class Carte {
         return carte[ligne][col];
     }
 
-    public boolean estDansCarte(int colonne, int ligne) {
-        return colonne >= 0 && colonne < largeur()
-                && ligne >= 0 && ligne < hauteur();
-    }
-
     public boolean estMarchable(int colonne, int ligne) {
         if (!estDansCarte(colonne, ligne)) {
             return false;
@@ -127,9 +122,33 @@ public class Carte {
         return null;
     }
 
+
+    //verification pour l'emplacement des tours :
+
+    public boolean estDansCarte(int colonne, int ligne) {
+        if (colonne < 0 || colonne >= largeur()) {
+            return false;
+        }
+
+        if (ligne < 0 || ligne >= hauteur()) {
+            return false;
+        }
+
+        return true;
+    }
+
     public boolean estCaseTour(int colonne, int ligne) {
-        return estDansCarte(colonne, ligne) &&
-                (Tuile(colonne, ligne) == 19 || Tuile(colonne, ligne) == 20);
+        if (!estDansCarte(colonne, ligne)) {
+            return false;
+        }
+
+        int tuile = Tuile(colonne, ligne);
+
+        if(tuile > 0) {
+            return true;
+        }
+
+        return false;
     }
 
 }
