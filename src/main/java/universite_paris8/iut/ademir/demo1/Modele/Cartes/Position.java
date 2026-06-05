@@ -20,20 +20,26 @@ public class Position {
         return ligne;
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) {
-//            return true;
-//        }
-//
-//        if (!(obj instanceof Position)) {
-//            return false;
-//        }
-//
-//        Position autre = (Position) obj;
-//        return colonne == autre.colonne && ligne == autre.ligne;
-//    }
 
+    // UTILITE DANS LE BFS, SINON MARCHE PAS !!! PAS SUPPRIME
+    @Override
+    public boolean equals(Object obj) {
+        // si la position a la meme adresse memoire que obj
+        if (this == obj) {
+            return true;
+        }
+
+        // si c'est pas passé on test si c'est une position
+        if (!(obj instanceof Position)) {
+            return false;
+        }
+
+        // une fois qu'on est sur que c'est une position on compare les coordonnées entre eux pour voir si ils sont egaux
+        Position autre = (Position) obj;
+        return colonne == autre.colonne && ligne == autre.ligne;
+    }
+
+    // Si deux positions ont les memes coordonnées ils auront les memes hashcode donc seront "trié" dans le meme tiroir
     @Override
     public int hashCode() {
         return Objects.hash(colonne, ligne);

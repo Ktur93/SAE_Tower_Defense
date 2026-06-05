@@ -1,8 +1,11 @@
 package universite_paris8.iut.ademir.demo1.Controller;
 
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +28,9 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     private static final int TAILLE_TUILE = 64;
+    
+    @FXML
+    private Button btnLancerVague;
 
     @FXML
     private TilePane paneCarte;
@@ -62,8 +68,8 @@ public class Controller implements Initializable {
         ArrayList<Position> chemin = bfs.cheminDeSourceVersCible(arrivee);
 
         partie = new Partie(chemin);
-        partie.ajouterAraignee();
-        partie.ajouterZombie();
+
+        mettreAJourBoutonVague();
 
 
         afficherRubis();
@@ -80,6 +86,7 @@ public class Controller implements Initializable {
                 if (now - dernierDeplacement > 20_000_000) {
 
                     partie.mettreAJour(now);
+                    mettreAJourBoutonVague();
                     afficherMonstres(now);
                     afficherTours();
                     afficherRubis();
@@ -284,4 +291,24 @@ public class Controller implements Initializable {
         }
     }
 
+    @FXML
+    public void lancerVague() {
+        partie.lancerProchaineVague();
+        mettreAJourBoutonVague();
+
+
+    }
+
+    public void mettreAJourBoutonVague() {
+        if (partie.toutesLesVaguesTerminees()) {
+            btnLancerVague.setDisable(true);
+            btnLancerVague.setText("Toutes les vagues sont terminees");
+        } else if (partie.isVagueEnCours()) {
+            btnLancerVague.setDisable(true);
+            btnLancerVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " En cours");
+        } else {
+            btnLancerVague.setDisable(false);
+            btnLancerVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
+        }
+    }
 }

@@ -62,8 +62,7 @@
             <Separator/>
 
             <Label text="Actions" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;" />
-            <Button text="Lancer vague"
-                    maxWidth="Infinity"/>
+            <Button text="Lancer vague 1" fx:id="btnLancerVague" onAction="#lancerVague" maxWidth="Infinity"/>
 
             <Button text="Recommencer"
                     maxWidth="Infinity"/>
