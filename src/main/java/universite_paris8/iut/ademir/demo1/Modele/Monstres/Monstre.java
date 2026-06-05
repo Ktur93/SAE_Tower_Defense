@@ -77,37 +77,37 @@ public abstract class Monstre {
     }
 
 
-    public boolean diffEntreLesPositionsHaut (Position point, Position pointSuivant) {
-        boolean reponse = false;
-        if (pointSuivant.getLigne() < point.getLigne()) {
-            reponse = true;
-        }
-        return reponse;
-    }
-
-    public boolean diffEntreLesPositionsBas (Position point, Position pointSuivant) {
-        boolean reponse = false;
-        if (pointSuivant.getLigne() > point.getLigne()) {
-            reponse = true;
-        }
-        return reponse;
-    }
-
-    public boolean diffEntreLesPositionsGauche (Position point, Position pointSuivant) {
-        boolean reponse = false;
-        if (pointSuivant.getColonne() < point.getColonne()) {
-            reponse = true;
-        }
-        return reponse;
-    }
-
-    public boolean diffEntreLesPositionsDroite (Position point, Position pointSuivant) {
-        boolean reponse = false;
-        if (pointSuivant.getColonne() > point.getColonne()) {
-            reponse = true;
-        }
-        return reponse;
-    }
+//    public boolean diffEntreLesPositionsHaut (Position point, Position pointSuivant) {
+//        boolean reponse = false;
+//        if (pointSuivant.getLigne() < point.getLigne()) {
+//            reponse = true;
+//        }
+//        return reponse;
+//    }
+//
+//    public boolean diffEntreLesPositionsBas (Position point, Position pointSuivant) {
+//        boolean reponse = false;
+//        if (pointSuivant.getLigne() > point.getLigne()) {
+//            reponse = true;
+//        }
+//        return reponse;
+//    }
+//
+//    public boolean diffEntreLesPositionsGauche (Position point, Position pointSuivant) {
+//        boolean reponse = false;
+//        if (pointSuivant.getColonne() < point.getColonne()) {
+//            reponse = true;
+//        }
+//        return reponse;
+//    }
+//
+//    public boolean diffEntreLesPositionsDroite (Position point, Position pointSuivant) {
+//        boolean reponse = false;
+//        if (pointSuivant.getColonne() > point.getColonne()) {
+//            reponse = true;
+//        }
+//        return reponse;
+//    }
 
 
     public boolean estArrive() {

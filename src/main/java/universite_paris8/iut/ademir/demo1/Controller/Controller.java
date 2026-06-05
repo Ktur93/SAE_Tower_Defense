@@ -1,8 +1,6 @@
 package universite_paris8.iut.ademir.demo1.Controller;
 
 import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -180,7 +178,7 @@ public class Controller implements Initializable {
 
             return new Image(
                     Main.class.getResourceAsStream(
-                            "Monstres/squelettes.png"
+                            "Monstres/squelette.png"
                     )
             );
         }
@@ -295,8 +293,6 @@ public class Controller implements Initializable {
     public void lancerVague() {
         partie.lancerProchaineVague();
         mettreAJourBoutonVague();
-
-
     }
 
     public void mettreAJourBoutonVague() {

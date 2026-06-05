@@ -67,11 +67,19 @@ public class Partie {
         faireAvancerMonstres(now);
         faireAttaquerTours();
         supprimerMonstresMorts();
-        if (this.vagueEnCours && this.monstres.isEmpty()) {
-            this.vagueEnCours = false;
-            indiceVague++;
+
+        if (this.vagueEnCours) {
+            Vague vagueActuelle = this.vagues.get(this.indiceVague);
+            vagueActuelle.mettreAJourVague(now, this.monstres);
+
+            if (vagueActuelle.tousLesMonstresEnvoyes() && this.monstres.isEmpty()) {
+                this.vagueEnCours = false;
+                this.indiceVague++;
+            }
         }
     }
+
+
 
     private void faireAvancerMonstres(long now) {
         for (Monstre monstre : monstres) {
@@ -177,9 +185,6 @@ public class Partie {
         } else if (indiceVague >= vagues.size()) {
 
         } else {
-            for (int i = 0; i < this.vagues.get(this.indiceVague).getMonstresVague().size(); i++) {
-                this.monstres.add(vagues.get(this.indiceVague).getMonstresVague().get(i));
-            }
             this.vagueEnCours = true;
         }
     }
