@@ -7,6 +7,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import java.util.ArrayList;
 
 public class Vague {
+
     private ArrayList<Monstre> monstresVague;
 
     private int indiceMonstre;
@@ -87,6 +88,7 @@ public class Vague {
     public boolean tousLesMonstresEnvoyes() {
         return indiceMonstre >= monstresVague.size();
     }
+
 
 
 

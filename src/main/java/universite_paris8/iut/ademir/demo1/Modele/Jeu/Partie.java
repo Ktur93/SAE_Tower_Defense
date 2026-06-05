@@ -6,13 +6,12 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
-
 import java.util.ArrayList;
 
 public class Partie {
 
     private ObservableList<Monstre> monstres;
-    private ArrayList<Tour> tours;
+    private ObservableList<Tour> tours;
     private ArrayList<Position> chemin;
     private int rubis;
 
@@ -30,8 +29,8 @@ public class Partie {
         // Partie Monstres
         this.monstres = FXCollections.observableArrayList();
 
-        // Partie Tour
-        this.tours = new ArrayList<>();
+        this.tours = FXCollections.observableArrayList();
+
         this.rubis = 200;
 
         // Partie Vagues
@@ -87,11 +86,6 @@ public class Partie {
         }
     }
 
-    private void faireAttaquerTours() {
-        for (Tour tour : this.tours) {
-            tour.attaquer(this.monstres);
-        }
-    }
 
     private void supprimerMonstresMorts() {
         this.monstres.removeIf(monstre -> {
@@ -103,10 +97,28 @@ public class Partie {
         });
     }
 
+    public ObservableList<Monstre> getMonstres() {
+        return monstres;
+    }
+
+
+    private void faireAttaquerTours() {
+        for (Tour tour : tours) {
+            tour.attaquer(monstres);
+        }
+    }
+
+
+
+    //tours /placement des tours dans la liste observable/ajout
+    public ObservableList<Tour> getTours() {
+        return tours;
+    }
+
     public boolean placerTour(Tour tour, Carte carte) {
         Position position = tour.getPosition();
 
-        if (!carte.estCaseTour(position.getColonne(), position.getLigne())) {
+        if (!carte.estCaseTour(position.getX(), position.getY())) {
             return false;
         }
 
@@ -118,14 +130,6 @@ public class Partie {
         this.tours.add(tour);
 
         return true;
-    }
-
-    public ObservableList<Monstre> getMonstres() {
-        return this.monstres;
-    }
-
-    public ArrayList<Tour> getTours() {
-        return this.tours;
     }
 
     public int getRubis() {

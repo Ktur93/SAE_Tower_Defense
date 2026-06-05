@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
+
 public abstract class Tour {
 
     private int atk;
@@ -51,25 +52,21 @@ public abstract class Tour {
     }
 
     public void attaquer(ObservableList<Monstre> monstres) {
-        Monstre aPortee = null; //aucun monstres trouvé
-        int i = 0; //indice qui parcoure la liste de monstres
-        while(i < monstres.size() && aPortee == null){ //on parcourt la liste tant qu'on a pas trouvé de mosntre a porté
-            Monstre m = monstres.get(i);
-            if(estAPortee(m)){
-                aPortee = m;
+
+        for (Monstre m : monstres) {
+            if (estAPortee(m)) {
+                m.recevoirDegats(atk);
             }
-            i++;
-        }
-        if(aPortee != null){
-            aPortee.recevoirDegats(this.atk);
         }
     }
 
     private boolean estAPortee(Monstre monstre) {
-        int dx = pos.getColonne() - monstre.getPosition().getColonne();
-        int dy = pos.getLigne() - monstre.getPosition().getLigne();
+
+        int dx = pos.getX() - monstre.getPosition().getX();
+        int dy = pos.getY() - monstre.getPosition().getY();
         return Math.sqrt(dx * dx + dy * dy) <= this.portee;
     }
+
 
     private void ameliorer(int nouvAtk, int nouvPrix, int nouvPortee){
         //la methode sert a change les stats de la tour ex : passe du niv 1 a 2

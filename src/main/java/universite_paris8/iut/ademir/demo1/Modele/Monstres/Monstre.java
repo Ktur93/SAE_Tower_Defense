@@ -26,16 +26,16 @@ public abstract class Monstre {
         this.recompense = recompense;
         this.chemin = chemin;
         this.indiceChemin = 0;
-        this.x = depart.getColonne() * 64;
-        this.y = depart.getLigne() * 64;
+        this.x = depart.getX() * 64;
+        this.y = depart.getY() * 64;
     }
 
     public void avancer(long now) {
         if (!estArrive()) {
             Position position = chemin.get(indiceChemin);
             Position posSuivante = chemin.get(indiceChemin + 1);
-            double cibleX = posSuivante.getColonne() * 64;
-            double cibleY = posSuivante.getLigne() * 64;
+            double cibleX = posSuivante.getX() * 64;
+            double cibleY = posSuivante.getY() * 64;
 
             // si il est a gauche de la cible, on le fait avancer via sa vitesse
             if (this.x < cibleX) {
@@ -67,10 +67,10 @@ public abstract class Monstre {
             }
 
 
-            if (this.x == posSuivante.getColonne() * 64 && this.y == posSuivante.getLigne() * 64) {
+            if (this.x == posSuivante.getX() * 64 && this.y == posSuivante.getY() * 64) {
                 this.indiceChemin++;
 
-                System.out.println(posSuivante.getLigne());
+                System.out.println(posSuivante.getY());
             }
 
         }

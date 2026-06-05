@@ -22,18 +22,17 @@
     <center>
         <StackPane prefHeight="1024" prefWidth="1600">
 
-            <!-- Couche 1 : carte fixe -->
+
             <TilePane fx:id="paneCarte"
                       prefHeight="1024"
                       prefWidth="1600" />
 
-            <!-- Couche 2 : monstres et sprites mobiles -->
+
             <Pane fx:id="paneSprites"
                   prefHeight="1024"
-                  prefWidth="1600"
-                  pickOnBounds="false" />
+                  prefWidth="1600" />
 
-            <!-- Couche 3 : Décoration -->
+
             <Pane fx:id="paneDécoration"
                   prefHeight="1024"
                   prefWidth="1600"
@@ -55,10 +54,10 @@
             <Separator/>
             <!-- TOURS -->
             <Label text="Tours" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;" />
-            <Button fx:id="btnCanon" text="Tour Canon - 120" maxWidth="Infinity" onAction="#selectionnerCanon"/>
-            <Button fx:id="btnArcher" text="Tour Archer - 75" maxWidth="Infinity" onAction="#selectionnerArcher"/>
-            <Button fx:id="btnGlace" text="Tour Glace - 100" maxWidth="Infinity" onAction="#selectionnerGlace"/>
-            <Button fx:id="btnPoison" text="Tour Poison - 100" maxWidth="Infinity" onAction="#selectionnerPoison"/>
+            <Button fx:id="btnCanon" text="Tour Canon - 120" maxWidth="Infinity" />
+            <Button fx:id="btnArcher" text="Tour Archer - 75" maxWidth="Infinity" />
+            <Button fx:id="btnGlace" text="Tour Glace - 100" maxWidth="Infinity" />
+            <Button fx:id="btnPoison" text="Tour Poison - 100" maxWidth="Infinity" />
             <Separator/>
 
             <Label text="Actions" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;" />
