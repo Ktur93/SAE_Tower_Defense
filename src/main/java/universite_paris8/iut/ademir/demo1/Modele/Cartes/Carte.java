@@ -15,7 +15,7 @@ public class Carte {
                 {21,21,21,21,21,21,21,21,21,21, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {21,21,21, 0, 0, 0, 0, 0, 0, 0, 0, 0,10, 1, 1, 1, 7, 1, 1, 1, 3, 0, 0, 0, 0},
                 {21,21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0},
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0,20, 0, 2, 0,19, 0, 2, 0, 0, 0, 0},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0,20, 0, 2, 0,20, 0, 2, 0, 0, 0, 0},
                 {15, 1, 1, 1, 3, 0,20, 0, 0, 0,20, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0},
                 { 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4, 1, 1, 1, 9, 0, 0, 0, 0},
                 { 0, 0,20, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0},
@@ -66,14 +66,12 @@ public class Carte {
     public int getLargeur() {
         return carte[0].length;
     }
-
     public int getHauteur() {
         return carte.length;
     }
     public int Tuile(int col, int ligne) {
         return carte[ligne][col];
     }
-
 
 
 
@@ -88,7 +86,7 @@ public class Carte {
     }
 
 
-
+    //marchable
     public boolean estMarchable(int colonne, int ligne) {
         if (!estDansCarte(colonne, ligne)) {
             return false;
@@ -126,15 +124,15 @@ public class Carte {
 
         return voisins;
     }
+    //
 
 
     public Position trouverArrivee() {
-        for (int ligne = 0; ligne < getHauteur(); ligne++) {
-            for (int colonne = 0; colonne < getLargeur(); colonne++) {
-                int code = Tuile(colonne, ligne);
-
-                if (code >= 11 && code <= 14) {
-                    return new Position(colonne, ligne);
+        for (int i = 0; i < carte.length; i++) {
+            for (int j = 0; j < carte[i].length; j++) {
+                int arriver = Tuile(j, i);
+                if (arriver >= 11 && arriver <= 14) {
+                    return new Position(j, i);
                 }
             }
         }
@@ -148,6 +146,17 @@ public class Carte {
                 if (position.getX() == j && position.getY() == i && carte[i][j] == 20) {
                     carte[i][j] = 19;
                     System.out.println("achat de la case");
+                }
+            }
+        }
+    }
+
+    public void caseBloquer(){
+        for (int i = 0; i < carte.length; i++) {
+            for (int j = 0; j < carte[i].length; j++) {
+                if (carte[i][j] == 19) {
+                    carte[i][j] = 20;
+                    System.out.println("case bloquer");
                 }
             }
         }

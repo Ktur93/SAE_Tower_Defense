@@ -32,6 +32,8 @@ public class Controller implements Initializable {
     @FXML
     private Button btnLancerVague;
     @FXML
+    private Button btnRecommencer;
+    @FXML
     private TilePane paneCarte;
     @FXML
     private Pane paneSprites;
@@ -66,7 +68,6 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         carte = new Carte();
-
         CarteVue carteVue = new CarteVue(carte, paneCarte , paneDécoration);
         carteVue.dessinerCarte();
 
@@ -109,6 +110,15 @@ public class Controller implements Initializable {
             }
         };
         gameLoop.start();
+
+        //pour recommencer
+        btnRecommencer.setOnAction(actionEvent -> {
+            partie.recommnencer();
+            carte.caseBloquer();
+            carteVue.viderCarte();
+            carteVue.dessinerCarte();
+        });
+
 
 
         // pour selectionnée les tours via des boutons:
@@ -197,5 +207,4 @@ public class Controller implements Initializable {
             btnVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
         }
     }
-
 }

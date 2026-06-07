@@ -56,14 +56,13 @@ public class Vague {
         this.monstresVague.add(new Boss(chemin));
     }
 
-    public void mettreAJourVague(long now, ObservableList<Monstre> monstresPartie) {
-
+    public void mettreAJourVague(long tempsActuelle, ObservableList<Monstre> monstresPartie) {
         if (indiceMonstre >= monstresVague.size()) {
 
-        } else if (indiceMonstre == 0 || now - dernierSpawn >= delaiSpawn) {
+        } else if (indiceMonstre == 0 || tempsActuelle - dernierSpawn >= delaiSpawn) {
             monstresPartie.add(monstresVague.get(indiceMonstre));
             indiceMonstre++;
-            dernierSpawn = now;
+            dernierSpawn = tempsActuelle;
         }
     }
 

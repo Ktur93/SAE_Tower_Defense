@@ -2,12 +2,14 @@ package universite_paris8.iut.ademir.demo1.Vue;
 
 
 import javafx.collections.ListChangeListener;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import universite_paris8.iut.ademir.demo1.Main;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
+import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
 
 public class ToursVue {
@@ -29,17 +31,17 @@ public class ToursVue {
             while (c.next()) {
                 if (c.wasAdded()) {
                     for (int i = 0; i < c.getAddedSubList().size(); i++) {
-
                         Tour tour = c.getAddedSubList().get(i);
-
                         creerSpriteTour(tour);
                     }
+                }
+
+                if (c.wasRemoved()) {
+                    enleverSpriteTour();
                 }
             }
         }
     };
-
-
 
 
 
@@ -65,17 +67,25 @@ public class ToursVue {
 
 
         ImageView sprite = new ImageView(imageTour);
+        sprite.setId("tour");
 
         sprite.setFitWidth(TAILLE_TUILE);
         sprite.setFitHeight(TAILLE_TUILE);
 
         Position position = tour.getPosition();
-
         sprite.setLayoutX(position.getX() * TAILLE_TUILE);
-
         sprite.setLayoutY(position.getY() * TAILLE_TUILE);
-
         paneSprites.getChildren().add(sprite);
+    }
 
+    public void enleverSpriteTour(){
+        for (int i = paneSprites.getChildren().size() - 1; i >= 0; i--) {
+
+            Node node = paneSprites.getChildren().get(i);
+
+            if ("tour".equals(node.getId())) {
+                paneSprites.getChildren().remove(i);
+            }
+        }
     }
 }

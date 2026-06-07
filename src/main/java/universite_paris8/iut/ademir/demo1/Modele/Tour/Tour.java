@@ -58,17 +58,9 @@ public class Tour {
         int x = position.getX() - monstre.getPosition().getX();
         int y = position.getY() - monstre.getPosition().getY();
         int CalculePorter = (x * x + y * y);
-        if (CalculePorter <= getPorter()){
+        if (CalculePorter <= getPorter() * getPorter()){
             return true;
         }
         return false;
-    }
-
-
-    private void ameliorer(int nouvAtk, int nouvPrix, int nouvPortee){
-        //la methode sert a change les stats de la tour ex : passe du niv 1 a 2
-        setAtk(nouvAtk);
-        setPrix(nouvPrix);
-        setPorter(nouvPortee);
     }
 }

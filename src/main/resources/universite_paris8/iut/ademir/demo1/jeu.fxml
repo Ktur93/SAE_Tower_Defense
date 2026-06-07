@@ -33,7 +33,6 @@
                   prefWidth="1600"
                   pickOnBounds="false"/>
 
-
             <Pane fx:id="paneDécoration"
                   prefHeight="1024"
                   prefWidth="1600"
@@ -65,7 +64,7 @@
 
             <Label text="Actions" style="-fx-text-fill: white;-fx-font-size: 18;-fx-font-weight: bold;"/>
             <Button fx:id="btnVague" text="Lancer vague 1" maxWidth="Infinity"/>
-            <Button text="Recommencer" maxWidth="Infinity"/>
+            <Button fx:id="btnRecommencer" text="Recommencer" maxWidth="Infinity"/>
         </VBox>
     </right>
 </BorderPane>

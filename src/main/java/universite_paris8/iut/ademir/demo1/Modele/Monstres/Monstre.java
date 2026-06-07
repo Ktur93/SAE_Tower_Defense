@@ -12,7 +12,6 @@ public class Monstre {
     private int recompense;
     private int indiceChemin;
     private ArrayList<Position> chemin;
-    //position du monstre EN PIXEL
     private double x;
     private double y;
 
@@ -29,7 +28,7 @@ public class Monstre {
         this.y = depart.getY() * 64;
     }
 
-    public void avancer(long tempActuel) {
+    public void avancer() {
         if (!estArrive()) {
             Position position = chemin.get(indiceChemin);
             Position posSuivante = chemin.get(indiceChemin + 1);

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Partie {
 
     private int rubis;
-    private Carte carte;
     private ObservableList<Tour> tours;
     private ObservableList<Monstre> monstres;
     private ArrayList<Position> chemin;
@@ -40,11 +39,11 @@ public class Partie {
         return monstres;
     }
 
-    private void faireAvancerMonstres(long tempActuel) {
+    private void faireAvancerMonstres() {
 
         for (int i = 0 ; i < getMonstres().size() ; i++){
             Monstre monstre = getMonstres().get(i);
-            monstre.avancer(tempActuel);
+            monstre.avancer();
         }
     }
 
@@ -158,8 +157,17 @@ public class Partie {
     }
 
 
+    public void recommnencer() {
+        this.indiceVague = 0;
+        this.rubis = 200;
+        for(int i = 0 ; i < tours.size() ; i++){
+            tours.remove(i);
+        }
+    }
+
+
     public void mettreAJour(long tempActuel) {
-        faireAvancerMonstres(tempActuel);
+        faireAvancerMonstres();
         faireAttaquerTours();
         supprimerMonstresMorts();
 
