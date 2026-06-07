@@ -17,6 +17,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
+import universite_paris8.iut.ademir.demo1.Vue.MonstreVue;
 import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
 import universite_paris8.iut.ademir.demo1.Vue.ToursVue;
 
@@ -30,11 +31,12 @@ public class Controller implements Initializable {
     
     @FXML
     private Button btnLancerVague;
-
     @FXML
     private TilePane paneCarte;
     @FXML
     private Pane paneSprites;
+    @FXML
+    private Pane paneDécoration;
     @FXML
     private Label labelRubis;
     @FXML
@@ -45,29 +47,37 @@ public class Controller implements Initializable {
     private Button btnGlace;
     @FXML
     private Button btnPoison;
+    @FXML
+    private Button btnVague;
+    @FXML
+    private Button btnAcheterCase;
 
     private Carte carte;
     private Partie partie;
     private String tourSelectionne;
+    private boolean AchatCase = false;
+
+
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         carte = new Carte();
-        carte.remplir();
 
-        CarteVue carteVue = new CarteVue(carte, paneCarte);
+        CarteVue carteVue = new CarteVue(carte, paneCarte , paneDécoration);
         carteVue.dessinerCarte();
+
+
+
 
         Position depart = new Position(0, 7);
         Position arrivee = carte.trouverArrivee();
-
         BFS bfs = new BFS(carte, depart);
         ArrayList<Position> chemin = bfs.cheminDeSourceVersCible(arrivee);
-
         partie = new Partie(chemin);
-
-        mettreAJourBoutonVague();
 
 
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
@@ -75,10 +85,35 @@ public class Controller implements Initializable {
 
 
 
+        //bouton pour lancer la vague/lancement du gameLoop/deplacement des monstre:
+        mettreAJourBoutonVague();
+        btnVague.setOnAction(actionEvent -> {
+            partie.lancerProchaineVague();
+            mettreAJourBoutonVague();
+        });
+
+        MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
+
+        AnimationTimer gameLoop = new AnimationTimer() {
+            long dernierDeplacement = 0;
+            public void handle(long tempActuel) {
+
+                if (tempActuel - dernierDeplacement > 20_000_000) {
+
+                    partie.mettreAJour(tempActuel);
+                    monstreVue.mettreAJourSprites();
+                    mettreAJourBoutonVague();
+                    rubisVue.afficherRubis();
+                    dernierDeplacement = tempActuel;
+                }
+            }
+        };
+        gameLoop.start();
+
+
         // pour selectionnée les tours via des boutons:
         btnCanon.setOnAction(actionEvent -> {
             tourSelectionne = "CANON";
-
         });
 
         btnArcher.setOnAction(actionEvent -> {
@@ -93,9 +128,14 @@ public class Controller implements Initializable {
             tourSelectionne = "POISON";
         });
 
-        new ToursVue(partie, paneSprites);
+        ToursVue T = new ToursVue(partie, paneSprites);
 
-        paneSprites.setOnMouseClicked(event -> {
+
+        btnAcheterCase.setOnAction(actionEvent -> {
+            AchatCase = true;
+        });
+
+        paneCarte.setOnMouseClicked(event -> {
 
 
             int colonne = (int) (event.getX() / TAILLE_TUILE);
@@ -103,6 +143,15 @@ public class Controller implements Initializable {
 
 
             Position position = new Position(colonne, ligne);
+
+            if (AchatCase == true) {
+                partie.acheterCase(position , carte);
+                carteVue.viderCarte();
+                carteVue.dessinerCarte();
+                rubisVue.afficherRubis();
+                AchatCase = false;
+                return;
+            }
 
             Tour tour = creerTourSelectionnee(tourSelectionne, position);
 
@@ -114,29 +163,11 @@ public class Controller implements Initializable {
             } else {
                 System.out.println("null");
             }
+
         });
-
-
-        AnimationTimer gameLoop = new AnimationTimer() {
-            private long dernierDeplacement = 0;
-
-            @Override
-            public void handle(long now) {
-
-                if (now - dernierDeplacement > 20_000_000) {
-
-                    partie.mettreAJour(now);
-                    mettreAJourBoutonVague();
-
-
-
-                    dernierDeplacement = now;
-                }
-            }
-        };
-
-        gameLoop.start();
     }
+
+
 
     public Tour creerTourSelectionnee(String tourSelectionnee, Position position) {
         switch (tourSelectionnee) {
@@ -154,26 +185,16 @@ public class Controller implements Initializable {
     }
 
 
-
-
-
-
-    @FXML
-    public void lancerVague() {
-        partie.lancerProchaineVague();
-        mettreAJourBoutonVague();
-    }
-
     public void mettreAJourBoutonVague() {
         if (partie.toutesLesVaguesTerminees()) {
-            btnLancerVague.setDisable(true);
-            btnLancerVague.setText("Toutes les vagues sont terminees");
-        } else if (partie.isVagueEnCours()) {
-            btnLancerVague.setDisable(true);
-            btnLancerVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " En cours");
+            btnVague.setDisable(true);
+            btnVague.setText("Toutes les vagues sont terminees");
+        } else if (partie.getVagueEnCours()) {
+            btnVague.setDisable(true);
+            btnVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " En cours");
         } else {
-            btnLancerVague.setDisable(false);
-            btnLancerVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
+            btnVague.setDisable(false);
+            btnVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
         }
     }
 

@@ -4,6 +4,6 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 
 public class TourArcher extends Tour{
     public TourArcher(Position position){
-        super(25, 75, 3, position);
+        super(25, 75, 4, position);
     }
 }

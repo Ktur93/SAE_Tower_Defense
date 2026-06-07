@@ -5,66 +5,63 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
 
-public abstract class Tour {
+public class Tour {
 
     private int atk;
     private int prix;
-    private int portee;
-    private Position pos;
+    private int porter;
+    private Position position;
 
-    public Tour(int attaque, int prix, int portee, Position position) {
+    public Tour(int attaque, int prix, int porter, Position position) {
         this.atk = attaque;
         this.prix = prix;
-        this.portee = portee;
-        this.pos = position;
+        this.porter = porter;
+        this.position = position;
     }
-
     public int getPrix() {
         return prix;
     }
-
     public void setPrix(int prix){
         this.prix = prix;
     }
-
     public int getAtk(){
         return this.atk;
     }
-
     public void setAtk(int atk){
         this.atk = atk;
     }
-
-    public int getPortee() {
-        return portee;
+    public int getPorter() {
+        return porter;
     }
 
-    public void setPortee(int portee) {
-        this.portee = portee;
-    }
-
-    public void setPos(Position pos){
-        this.pos = pos;
+    public void setPorter(int portee) {
+        this.porter = portee;
     }
 
     public Position getPosition() {
-        return pos;
+        return position;
+    }
+
+    public void setPosition(Position pos){
+        this.position = pos;
     }
 
     public void attaquer(ObservableList<Monstre> monstres) {
 
         for (Monstre m : monstres) {
-            if (estAPortee(m)) {
-                m.recevoirDegats(atk);
+            if (estAPorter(m)) {
+                m.recevoirDegats(getAtk());
             }
         }
     }
-
-    private boolean estAPortee(Monstre monstre) {
-
-        int dx = pos.getX() - monstre.getPosition().getX();
-        int dy = pos.getY() - monstre.getPosition().getY();
-        return Math.sqrt(dx * dx + dy * dy) <= this.portee;
+    private boolean estAPorter(Monstre monstre) {
+        int x = position.getX() - monstre.getPosition().getX();
+        int y = position.getY() - monstre.getPosition().getY();
+        int CalculePorter = (x * x + y * y);
+        if (CalculePorter <= getPorter()){
+            return true;
+        }
+        return false;
     }
 
 
@@ -72,6 +69,6 @@ public abstract class Tour {
         //la methode sert a change les stats de la tour ex : passe du niv 1 a 2
         setAtk(nouvAtk);
         setPrix(nouvPrix);
-        setPortee(nouvPortee);
+        setPorter(nouvPortee);
     }
 }

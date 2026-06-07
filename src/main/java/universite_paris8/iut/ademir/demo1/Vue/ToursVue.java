@@ -19,17 +19,26 @@ public class ToursVue {
     public ToursVue(Partie partie , Pane paneSprites) {
         this.partie = partie;
         this.paneSprites = paneSprites;
+        this.partie.getTours().addListener(listener);
+    }
 
-        this.partie.getTours().addListener((ListChangeListener<Tour>) change -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    for (Tour tour : change.getAddedSubList()) {
+    ListChangeListener<Tour> listener = new ListChangeListener<Tour>() {
+
+        public void onChanged(Change<? extends Tour> c) {
+
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    for (int i = 0; i < c.getAddedSubList().size(); i++) {
+
+                        Tour tour = c.getAddedSubList().get(i);
+
                         creerSpriteTour(tour);
                     }
                 }
             }
-        });
-    }
+        }
+    };
+
 
 
 

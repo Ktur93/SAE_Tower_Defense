@@ -2,6 +2,7 @@ package universite_paris8.iut.ademir.demo1.Vue;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
@@ -12,10 +13,12 @@ public class CarteVue {
 
     private Carte carte;
     private TilePane paneCarte;
+    private Pane paneDécoration;
 
-    public CarteVue(Carte carte, TilePane paneCarte) {
+    public CarteVue(Carte carte, TilePane paneCarte , Pane paneDécoration) {
         this.carte = carte;
         this.paneCarte = paneCarte;
+        this.paneDécoration = paneDécoration;
     }
 
     public void dessinerCarte() {
@@ -49,12 +52,16 @@ public class CarteVue {
         Image EmplacementToursBloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TBloquer.png"));
 
         Image eau = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
+        Image arbre = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
+        Image pierre = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
+
+
 
         int tailleTuile = 64;
 
-        for (int ligne = 0; ligne < carte.hauteur(); ligne++) {
+        for (int ligne = 0; ligne < carte.getHauteur(); ligne++) {
 
-            for (int col = 0; col < carte.largeur(); col++) {
+            for (int col = 0; col < carte.getLargeur(); col++) {
 
                 Image image = null;
 
@@ -149,18 +156,56 @@ public class CarteVue {
                         image = eau;
                         break;
 
+                    case 22:
+                        image = arbre;
+                        break;
+
+                    case 23:
+                        image = pierre;
+                        break;
+
                 }
-
                 ImageView tuile = new ImageView(image);
-
                 tuile.setFitWidth(tailleTuile);
                 tuile.setFitHeight(tailleTuile);
-
-                tuile.setPreserveRatio(true);
-
-
                 paneCarte.getChildren().add(tuile);
+
+            }
+        }
+
+        for (int ligne = 0; ligne < carte.getHauteurDécoration(); ligne++) {
+
+            for (int col = 0; col < carte.getLargeurDécoration(); col++) {
+
+                Image image = null;
+
+                switch (carte.TuileDécorations(col, ligne)) {
+
+                    case 22:
+                        image = arbre;
+                        break;
+
+                    case 23:
+                        image = pierre;
+                        break;
+
+                }
+                ImageView tuileDecoration = new ImageView(image);
+
+                tuileDecoration.setFitWidth(tailleTuile);
+                tuileDecoration.setFitHeight(tailleTuile);
+                tuileDecoration.setLayoutX(col * tailleTuile);
+                tuileDecoration.setLayoutY(ligne * tailleTuile);
+                paneDécoration.getChildren().add(tuileDecoration);
             }
         }
     }
+
+    public void viderCarte() {
+        paneCarte.getChildren().clear();
+    }
+
+
+
+
 }

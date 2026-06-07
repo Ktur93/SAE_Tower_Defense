@@ -5,14 +5,13 @@ import javafx.geometry.Pos;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import java.util.ArrayList;
 
-public abstract class Monstre {
+public class Monstre {
 
     private int pv;
     private int vitesse;
     private int recompense;
-    private ArrayList<Position> chemin;
     private int indiceChemin;
-
+    private ArrayList<Position> chemin;
     //position du monstre EN PIXEL
     private double x;
     private double y;
@@ -30,7 +29,7 @@ public abstract class Monstre {
         this.y = depart.getY() * 64;
     }
 
-    public void avancer(long now) {
+    public void avancer(long tempActuel) {
         if (!estArrive()) {
             Position position = chemin.get(indiceChemin);
             Position posSuivante = chemin.get(indiceChemin + 1);

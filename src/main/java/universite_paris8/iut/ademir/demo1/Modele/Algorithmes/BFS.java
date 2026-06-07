@@ -12,7 +12,6 @@ public class BFS {
 
     private Carte carte;
     private Position source;
-
     private ArrayList<Position> parcours;
     private Map<Position, Position> predecesseurs;
 
@@ -21,7 +20,6 @@ public class BFS {
         this.source = source;
         this.parcours = new ArrayList<>();
         this.predecesseurs = new HashMap<>();
-
         algoBFS();
     }
 
@@ -69,28 +67,4 @@ public class BFS {
         return chemin;
     }
 
-    public ArrayList<Position> getParcours() {
-        return parcours;
-    }
-
-    public Map<Position, Position> getPredecesseurs() {
-        return predecesseurs;
-    }
-
-    public void setSource(Position source) {
-        this.source = source;
-        clear();
-        algoBFS();
-    }
-
-    public void setCarte(Carte carte) {
-        this.carte = carte;
-        clear();
-        algoBFS();
-    }
-
-    private void clear() {
-        parcours.clear();
-        predecesseurs.clear();
-    }
 }

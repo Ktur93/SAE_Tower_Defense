@@ -9,30 +9,16 @@ import java.util.ArrayList;
 public class Vague {
 
     private ArrayList<Monstre> monstresVague;
-
     private int indiceMonstre;
     private long dernierSpawn;
     private long delaiSpawn;
 
-//    private ArrayList<Monstre> monstresVague1;
-//    private ArrayList<Monstre> monstresVague2;
-//    private ArrayList<Monstre> monstresVague3;
-//    private ArrayList<Monstre> monstresVague4;
-//    private ArrayList<Monstre> monstresVague5;
 
     public Vague () {
         this.monstresVague = new ArrayList<>();
-
         this.indiceMonstre = 0;
         this.dernierSpawn = 0;
-        this.delaiSpawn = 2_000_000_000L; // 2 secondes
-
-//        this.monstresVague2 = new ArrayList<>();
-//        this.monstresVague3 = new ArrayList<>();
-//        this.monstresVague4 = new ArrayList<>();
-//        this.monstresVague5 = new ArrayList<>();
-
-
+        this.delaiSpawn = 2_000_000_000L; // 2 seconde
     }
 
 
@@ -70,10 +56,6 @@ public class Vague {
         this.monstresVague.add(new Boss(chemin));
     }
 
-    public ArrayList<Monstre> getMonstresVague() {
-        return monstresVague;
-    }
-
     public void mettreAJourVague(long now, ObservableList<Monstre> monstresPartie) {
 
         if (indiceMonstre >= monstresVague.size()) {
@@ -88,8 +70,4 @@ public class Vague {
     public boolean tousLesMonstresEnvoyes() {
         return indiceMonstre >= monstresVague.size();
     }
-
-
-
-
 }

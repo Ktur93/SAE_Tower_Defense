@@ -10,82 +10,43 @@ import java.util.ArrayList;
 
 public class Partie {
 
-    private ObservableList<Monstre> monstres;
-    private ObservableList<Tour> tours;
-    private ArrayList<Position> chemin;
     private int rubis;
-
-
-    // Partie sur les vagues (d'ennemis)
+    private Carte carte;
+    private ObservableList<Tour> tours;
+    private ObservableList<Monstre> monstres;
+    private ArrayList<Position> chemin;
     private ArrayList<Vague> vagues;
     private int indiceVague;
     private boolean vagueEnCours;
 
     public Partie(ArrayList<Position> chemin) {
-
-        // Partie Chemin
-        this.chemin = chemin;
-
-        // Partie Monstres
-        this.monstres = FXCollections.observableArrayList();
-
-        this.tours = FXCollections.observableArrayList();
-
         this.rubis = 200;
-
-        // Partie Vagues
+        this.tours = FXCollections.observableArrayList();
+        this.monstres = FXCollections.observableArrayList();
+        this.chemin = chemin;
         this.vagues = new ArrayList<>();
         this.indiceVague = 0;
         this.vagueEnCours = false;
-        creeVagues();
-    }
-
-    public void ajouterZombie() {
-        this.monstres.add(new Zombie(this.chemin));
-    }
-
-    public void ajouterAraignee() {
-        monstres.add(new Araignee(chemin));
-    }
-
-    public void ajouterSquelette() {
-        monstres.add(new Squelette(chemin));
-    }
-
-    public void ajouterPillager() {
-        monstres.add(new Pillager(chemin));
-    }
-
-    public void ajouterBoss() {
-        monstres.add(new Boss(chemin));
+        Vagues();
     }
 
 
+    public int getRubis() {
+        return this.rubis;
+    }
 
-    public void mettreAJour(long now) {
-        faireAvancerMonstres(now);
-        faireAttaquerTours();
-        supprimerMonstresMorts();
 
-        if (this.vagueEnCours) {
-            Vague vagueActuelle = this.vagues.get(this.indiceVague);
-            vagueActuelle.mettreAJourVague(now, this.monstres);
+    public ObservableList<Monstre> getMonstres() {
+        return monstres;
+    }
 
-            if (vagueActuelle.tousLesMonstresEnvoyes() && this.monstres.isEmpty()) {
-                this.vagueEnCours = false;
-                this.indiceVague++;
-            }
+    private void faireAvancerMonstres(long tempActuel) {
+
+        for (int i = 0 ; i < getMonstres().size() ; i++){
+            Monstre monstre = getMonstres().get(i);
+            monstre.avancer(tempActuel);
         }
     }
-
-
-
-    private void faireAvancerMonstres(long now) {
-        for (Monstre monstre : monstres) {
-            monstre.avancer(now);
-        }
-    }
-
 
     private void supprimerMonstresMorts() {
         this.monstres.removeIf(monstre -> {
@@ -97,20 +58,22 @@ public class Partie {
         });
     }
 
-    public ObservableList<Monstre> getMonstres() {
-        return monstres;
-    }
 
+    public boolean acheterCase(Position position, Carte carte) {
 
-    private void faireAttaquerTours() {
-        for (Tour tour : tours) {
-            tour.attaquer(monstres);
+        if (rubis < 50) {
+            return false;
         }
+
+        rubis -= 50;
+        carte.caseDéboquer(position);
+
+        return true;
     }
 
 
 
-    //tours /placement des tours dans la liste observable/ajout
+
     public ObservableList<Tour> getTours() {
         return tours;
     }
@@ -132,11 +95,15 @@ public class Partie {
         return true;
     }
 
-    public int getRubis() {
-        return this.rubis;
+    public void faireAttaquerTours() {
+        for (Tour tour : tours) {
+            tour.attaquer(monstres);
+        }
     }
 
-    public boolean isVagueEnCours () {
+
+
+    public boolean getVagueEnCours () {
         return this.vagueEnCours;
     }
 
@@ -156,11 +123,7 @@ public class Partie {
         return this.vagues;
     }
 
-    public int getNbVagues() {
-        return this.vagues.size();
-    }
-
-    public void creeVagues() {
+    public void Vagues() {
         Vague vague1 = new Vague();
         vague1.creeVague1(chemin);
 
@@ -176,11 +139,12 @@ public class Partie {
         Vague vague5 = new Vague();
         vague5.creeVague5(chemin);
 
-        this.vagues.add(vague1);
-        this.vagues.add(vague2);
-        this.vagues.add(vague3);
-        this.vagues.add(vague4);
-        this.vagues.add(vague5);
+        getVagues().add(vague1);
+        getVagues().add(vague2);
+        getVagues().add(vague3);
+        getVagues().add(vague4);
+        getVagues().add(vague5);
+
     }
 
     public void lancerProchaineVague() {
@@ -194,8 +158,19 @@ public class Partie {
     }
 
 
+    public void mettreAJour(long tempActuel) {
+        faireAvancerMonstres(tempActuel);
+        faireAttaquerTours();
+        supprimerMonstresMorts();
 
+        if (this.vagueEnCours == true) {
+            Vague vagueActuelle = getVagues().get(indiceVague);
+            vagueActuelle.mettreAJourVague(tempActuel, getMonstres());
 
-
-
+            if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
+                this.vagueEnCours = false;
+                this.indiceVague++;
+            }
+        }
+    }
 }
