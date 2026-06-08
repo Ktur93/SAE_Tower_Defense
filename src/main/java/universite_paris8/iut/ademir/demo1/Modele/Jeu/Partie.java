@@ -69,7 +69,7 @@ public class Partie {
         }
 
         rubis -= 50;
-        carte.caseDeboquer(position);
+        carte.caseDebloquer(position);
 
         return true;
     }
