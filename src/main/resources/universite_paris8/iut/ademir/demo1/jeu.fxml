@@ -33,7 +33,7 @@
                   prefWidth="1600"
                   pickOnBounds="false"/>
 
-            <Pane fx:id="paneDécoration"
+            <Pane fx:id="paneDecoration"
                   prefHeight="1024"
                   prefWidth="1600"
                   pickOnBounds="false" />
