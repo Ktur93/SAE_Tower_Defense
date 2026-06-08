@@ -140,15 +140,17 @@ public class Carte {
     }
 
 
-    public void caseDebloquer(Position position) {
+    public boolean caseDebloquer(Position position) {
         for (int i = 0; i < carte.length; i++) {
             for (int j = 0; j < carte[i].length; j++) {
                 if (position.getX() == j && position.getY() == i && carte[i][j] == 20) {
                     carte[i][j] = 19;
                     System.out.println("achat de la case");
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public void caseBloquer(){

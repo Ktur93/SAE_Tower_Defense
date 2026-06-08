@@ -19,6 +19,7 @@ public class Partie {
     private ArrayList<Vague> vagues;
     private int indiceVague;
     private boolean vagueEnCours;
+    private int prixCase;
 
 
     public Partie(ArrayList<Position> chemin) {
@@ -29,6 +30,7 @@ public class Partie {
         this.vagues = new ArrayList<>();
         this.indiceVague = 0;
         this.vagueEnCours = false;
+        this.prixCase = 50;
 
         Vagues();
     }
@@ -62,19 +64,14 @@ public class Partie {
     }
 
 
-    public boolean acheterCase(Position position, Carte carte) {
-
-        if (rubis < 50) {
-            return false;
+    public void acheterCase(Position position, Carte carte) {
+        if (rubis > prixCase ) {
+            if (carte.caseDebloquer(position)) {
+                rubis -= prixCase;
+                prixCase += 50;
+            }
         }
-
-        rubis -= 50;
-        carte.caseDebloquer(position);
-
-        return true;
     }
-
-
 
 
     public ObservableList<Tour> getTours() {
@@ -165,6 +162,7 @@ public class Partie {
     public void recommnencer() {
         this.indiceVague = 0;
         this.rubis = 200;
+        this.prixCase = 50;
 
         // recreation des vagues
         vagues.get(0).creeVague1(this.chemin);
@@ -172,6 +170,8 @@ public class Partie {
         vagues.get(2).creeVague3(this.chemin);
         vagues.get(3).creeVague4(this.chemin);
         vagues.get(4).creeVague5(this.chemin);
+
+
 
 
         for (int i = 0; i < TAILLE_VAGUE;i++){
@@ -198,5 +198,9 @@ public class Partie {
                 this.indiceVague++;
             }
         }
+    }
+
+    public int getPrixCase() {
+        return this.prixCase;
     }
 }
