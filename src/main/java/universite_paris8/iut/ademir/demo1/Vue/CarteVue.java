@@ -52,7 +52,7 @@ public class CarteVue {
         Image EmplacementToursBloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TBloquer.png"));
 
         Image eau = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
-        Image arbre = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
+        Image arbre = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/pixel-arbre.png"));
         Image pierre = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
 
 
@@ -191,9 +191,8 @@ public class CarteVue {
 
                 }
                 ImageView tuileDecoration = new ImageView(image);
-
-                tuileDecoration.setFitWidth(tailleTuile);
-                tuileDecoration.setFitHeight(tailleTuile);
+                tuileDecoration.setFitWidth(64);
+                tuileDecoration.setFitHeight(64);
                 tuileDecoration.setLayoutX(col * tailleTuile);
                 tuileDecoration.setLayoutY(ligne * tailleTuile);
                 paneDécoration.getChildren().add(tuileDecoration);
