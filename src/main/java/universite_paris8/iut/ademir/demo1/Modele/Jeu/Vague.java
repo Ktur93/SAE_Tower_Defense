@@ -69,4 +69,8 @@ public class Vague {
     public boolean tousLesMonstresEnvoyes() {
         return indiceMonstre >= monstresVague.size();
     }
+
+    public void setIndiceMonstreZero() {
+        this.indiceMonstre = 0;
+    }
 }
