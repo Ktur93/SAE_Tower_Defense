@@ -28,9 +28,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     private static final int TAILLE_TUILE = 64;
-    
-    @FXML
-    private Button btnLancerVague;
+
     @FXML
     private Button btnRecommencer;
     @FXML
