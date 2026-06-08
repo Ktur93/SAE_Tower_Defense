@@ -36,7 +36,7 @@ public class Controller implements Initializable {
     @FXML
     private Pane paneSprites;
     @FXML
-    private Pane paneDécoration;
+    private Pane paneDecoration;
     @FXML
     private Label labelRubis;
     @FXML
@@ -66,7 +66,7 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         carte = new Carte();
-        CarteVue carteVue = new CarteVue(carte, paneCarte , paneDécoration);
+        CarteVue carteVue = new CarteVue(carte, paneCarte , paneDecoration);
         carteVue.dessinerCarte();
 
 

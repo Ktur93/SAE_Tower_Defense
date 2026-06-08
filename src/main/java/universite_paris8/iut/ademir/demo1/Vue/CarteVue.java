@@ -13,12 +13,12 @@ public class CarteVue {
 
     private Carte carte;
     private TilePane paneCarte;
-    private Pane paneDécoration;
+    private Pane paneDecoration;
 
-    public CarteVue(Carte carte, TilePane paneCarte , Pane paneDécoration) {
+    public CarteVue(Carte carte, TilePane paneCarte , Pane paneDecoration) {
         this.carte = carte;
         this.paneCarte = paneCarte;
-        this.paneDécoration = paneDécoration;
+        this.paneDecoration = paneDecoration;
     }
 
     public void dessinerCarte() {
@@ -48,7 +48,7 @@ public class CarteVue {
         Image cheminDepart90 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Depart/chemin-Depart90.png"));
         Image cheminDepart180 = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/SensChemin-Depart/chemin-Depart180.png"));
 
-        Image EmplacementToursDébloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TDébloquer.png"));
+        Image EmplacementToursDebloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TDebloquer.png"));
         Image EmplacementToursBloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TBloquer.png"));
 
         Image eau = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
@@ -145,7 +145,7 @@ public class CarteVue {
                         break;
 
                     case 19:
-                        image = EmplacementToursDébloquer;
+                        image = EmplacementToursDebloquer;
                         break;
 
                     case 20:
@@ -173,13 +173,13 @@ public class CarteVue {
             }
         }
 
-        for (int ligne = 0; ligne < carte.getHauteurDécoration(); ligne++) {
+        for (int ligne = 0; ligne < carte.getHauteurDecoration(); ligne++) {
 
-            for (int col = 0; col < carte.getLargeurDécoration(); col++) {
+            for (int col = 0; col < carte.getLargeurDecoration(); col++) {
 
                 Image image = null;
 
-                switch (carte.TuileDécorations(col, ligne)) {
+                switch (carte.TuileDecorations(col, ligne)) {
 
                     case 22:
                         image = arbre;
@@ -196,7 +196,7 @@ public class CarteVue {
                 tuileDecoration.setFitHeight(tailleTuile);
                 tuileDecoration.setLayoutX(col * tailleTuile);
                 tuileDecoration.setLayoutY(ligne * tailleTuile);
-                paneDécoration.getChildren().add(tuileDecoration);
+                paneDecoration.getChildren().add(tuileDecoration);
             }
         }
     }
