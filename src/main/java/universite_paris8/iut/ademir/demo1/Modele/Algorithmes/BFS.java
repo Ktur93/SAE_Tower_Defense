@@ -61,6 +61,15 @@ public class BFS {
         return chemin;
     }
 
+
+    public ArrayList<Position> getParcours() {
+        return this.parcours;
+    }
+
+    public Map<Position,Position> getPredecesseurs() {
+        return this.predecesseurs;
+    }
+
     public ArrayList<Position> cheminDeSourceVersCible(Position cible) {
         ArrayList<Position> chemin = cheminVersSource(cible);
         java.util.Collections.reverse(chemin);
