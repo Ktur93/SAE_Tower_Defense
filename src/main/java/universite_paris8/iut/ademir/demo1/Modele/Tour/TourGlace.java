@@ -4,6 +4,6 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 
 public class TourGlace extends Tour{
     public TourGlace(Position position){
-        super(25, 100, 3, position);
+        super(25, 100, 3, position,500_000_000L);
     }
 }

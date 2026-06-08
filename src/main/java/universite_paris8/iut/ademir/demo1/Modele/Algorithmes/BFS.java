@@ -16,54 +16,57 @@ public class BFS {
     private Map<Position, Position> predecesseurs;
 
     public BFS(Carte carte, Position source) {
-        this.carte = carte;
-        this.source = source;
-        this.parcours = new ArrayList<>();
-        this.predecesseurs = new HashMap<>();
+        this.carte = carte; // map du jeu
+        this.source = source; // point de depart du BFs
+        this.parcours = new ArrayList<>(); // toutes les cases visitees
+        this.predecesseurs = new HashMap<>(); // sert a memorise d'ou je viens (2,0) vient de (1,0) ...
         algoBFS();
     }
 
+    // Objectif BFS est de  Trouver un chemin dans la carte.
+
     private void algoBFS() {
-        LinkedList<Position> fifo = new LinkedList<>();
+        LinkedList<Position> fifo = new LinkedList<>(); // fifo = First In First Out = Premier dedans Premier dehors comme une file d'attente
 
-        fifo.add(source);
-        parcours.add(source);
-        predecesseurs.put(source, null);
+        fifo.add(source); // on met le depart dans la file
+        parcours.add(source); // on marque la source comme visite
+        predecesseurs.put(source, null); // null parce que ya pas de case precedente vu que source c'est le debut
 
-        while (!fifo.isEmpty()) {
-            Position positionActuelle = fifo.removeFirst();
+        while (!fifo.isEmpty()) { // tant qu'il reste des cases a visites
+            Position positionActuelle = fifo.removeFirst(); // on recupere la premiere case
 
-            for (Position voisin : carte.getVoisinsMarchables(positionActuelle)) {
+            for (Position voisin : carte.getVoisinsMarchables(positionActuelle)) { // On regarde les voisins marchable
 
-                if (!predecesseurs.containsKey(voisin)) {
-                    fifo.add(voisin);
-                    parcours.add(voisin);
-                    predecesseurs.put(voisin, positionActuelle);
+                if (!predecesseurs.containsKey(voisin)) { // ca veut dire = Est-ce qu'on a déjà visité cette case ? inverse ducoup avec "!"
+                    fifo.add(voisin); // sinon on ajoute a la file (fifo)
+                    parcours.add(voisin); // on marque comme visite
+                    predecesseurs.put(voisin, positionActuelle); // on memorise que voisin vient de positionActuelle
                 }
             }
-        }
+        } // quand la file est vide ca veut dire que toutes les cases accessibles ont été visitées.
     }
 
     public ArrayList<Position> cheminVersSource(Position cible) {
+        // exemple Source = A | A -> B -> C -> D
         ArrayList<Position> chemin = new ArrayList<>();
 
-        if (!predecesseurs.containsKey(cible)) {
-            return chemin;
+        if (!predecesseurs.containsKey(cible)) { // si la cible n'a jamais été atteinte
+            return chemin; // pas de chemin on retourne un liste vide
         }
 
-        Position positionActuelle = cible;
+        Position positionActuelle = cible; // on commence par la cible, donc le debut ici
 
         while (positionActuelle != null) {
-            chemin.add(positionActuelle);
-            positionActuelle = predecesseurs.get(positionActuelle);
+            chemin.add(positionActuelle); // premier tour
+            positionActuelle = predecesseurs.get(positionActuelle); // ca donne le truc d'avant donc dans l'exemple ici C puis B puis A
         }
 
-        return chemin;
+        return chemin; // chemin a l'envers car chemin vers source
     }
 
     public ArrayList<Position> cheminDeSourceVersCible(Position cible) {
-        ArrayList<Position> chemin = cheminVersSource(cible);
-        java.util.Collections.reverse(chemin);
+        ArrayList<Position> chemin = cheminVersSource(cible); // D,C,B,A
+        java.util.Collections.reverse(chemin); // donne A,B,C,D
         return chemin;
     }
 
