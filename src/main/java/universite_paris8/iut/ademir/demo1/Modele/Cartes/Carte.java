@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Carte {
 
     private int[][] carte;
-    private int[][] carteDécoration;
+    private int[][] carteDecoration;
 
     public Carte(){
         carte = new int[][]{
@@ -27,7 +27,7 @@ public class Carte {
                 { 0, 0, 0, 0, 0, 0, 0, 0,17, 0, 0,21,21,21,21,21,21,21,21,21,21,21, 0, 0, 0}
         };
 
-        carteDécoration = new int[][]{
+        carteDecoration = new int[][]{
                 {21,21,21,21,21,21,21,21,21,21,21,22,16, 0,22,21,21,21,21,21,21,21,21,21,21},
                 {21,21,21,21,21,21,21,21,21,21,22,22, 2, 0, 0,22,21,21,21,21,21,21,21,21,21},
                 {21,21,21,21,21,21,21,21,21,21,22, 0, 2, 0,20, 0,22,22,22,22,22,22,22,22,22},
@@ -75,14 +75,14 @@ public class Carte {
 
 
 
-    public int getLargeurDécoration() {
+    public int getLargeurDecoration() {
         return carte[0].length;
     }
-    public int getHauteurDécoration() {
+    public int getHauteurDecoration() {
         return carte.length;
     }
-    public int TuileDécorations(int col, int ligne) {
-        return carteDécoration[ligne][col];
+    public int TuileDecorations(int col, int ligne) {
+        return carteDecoration[ligne][col];
     }
 
 
@@ -140,7 +140,7 @@ public class Carte {
     }
 
 
-    public void caseDéboquer(Position position) {
+    public void caseDebloquer(Position position) {
         for (int i = 0; i < carte.length; i++) {
             for (int j = 0; j < carte[i].length; j++) {
                 if (position.getX() == j && position.getY() == i && carte[i][j] == 20) {

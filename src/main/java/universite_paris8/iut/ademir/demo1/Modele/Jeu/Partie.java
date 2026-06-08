@@ -67,7 +67,7 @@ public class Partie {
         }
 
         rubis -= 50;
-        carte.caseDéboquer(position);
+        carte.caseDebloquer(position);
 
         return true;
     }
