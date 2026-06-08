@@ -11,12 +11,16 @@ public class Tour {
     private int prix;
     private int porter;
     private Position position;
+    private long dernierTir;
+    private long cadence;
 
-    public Tour(int attaque, int prix, int porter, Position position) {
+    public Tour(int attaque, int prix, int porter, Position position, long cadence) {
         this.atk = attaque;
         this.prix = prix;
         this.porter = porter;
         this.position = position;
+        this.cadence = cadence;
+        this.dernierTir = 0;
     }
     public int getPrix() {
         return prix;
@@ -46,14 +50,30 @@ public class Tour {
         this.position = pos;
     }
 
-    public void attaquer(ObservableList<Monstre> monstres) {
+    public void attaquer(ObservableList<Monstre> monstres, long tempsActuel) {
+        if (tempsActuel - dernierTir >= cadence) {
+            Monstre cible = null;
 
-        for (Monstre m : monstres) {
-            if (estAPorter(m)) {
-                m.recevoirDegats(getAtk());
+            int i = 0;
+            while (i < monstres.size() && cible == null) {
+                // Monstre courant
+                Monstre monstre = monstres.get(i);
+                // Si le monstre est à portée, il devient la cible
+                if (estAPorter(monstre)) {
+                    cible = monstre;
+                }
+                // Passage au monstre suivant
+                i++;
+            }
+
+            // Si une cible a été trouvée, on l'attaque
+            if (cible != null) {
+                cible.recevoirDegats(atk);
+                dernierTir = tempsActuel;
             }
         }
     }
+
     private boolean estAPorter(Monstre monstre) {
         int x = position.getX() - monstre.getPosition().getX();
         int y = position.getY() - monstre.getPosition().getY();
