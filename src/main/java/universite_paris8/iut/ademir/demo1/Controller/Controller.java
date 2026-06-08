@@ -54,7 +54,6 @@ public class Controller implements Initializable {
     @FXML
     private Button btnAcheterCase;
 
-    private TextField acheterCase;
 
     private Carte carte;
     private Partie partie;
