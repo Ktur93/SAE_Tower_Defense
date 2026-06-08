@@ -102,7 +102,7 @@ public class Controller implements Initializable {
                 if (tempActuel - dernierDeplacement > 20_000_000) {
 
                     partie.mettreAJour(tempActuel);
-                    monstreVue.mettreAJourSprites();
+//                    monstreVue.mettreAJourSprites();
                     mettreAJourBoutonVague();
                     mettreAJourBoutonRecommencer();
                     rubisVue.afficherRubis();

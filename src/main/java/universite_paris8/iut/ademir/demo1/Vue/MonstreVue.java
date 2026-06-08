@@ -16,6 +16,7 @@ public class MonstreVue {
     private Partie partie;
     private Pane paneSprites;
 
+
     public MonstreVue(Partie partie, Pane paneSprites) {
         this.partie = partie;
         this.paneSprites = paneSprites;
@@ -29,29 +30,24 @@ public class MonstreVue {
             while (c.next()) {
 
                 if (c.wasAdded()) {
-                    afficherMonstres();
+                    creerSprite(c.getAddedSubList().get(0));
                 }
 
                 if (c.wasRemoved()) {
-                    supprimerAffichageMonstre();
+                    supprimerAffichageMonstre(c.getRemoved().get(0));
                 }
             }
         }
     };
 
-    public void afficherMonstres() {
-        for (int i = 0; i < partie.getMonstres().size(); i++) {
-            Monstre monstre = partie.getMonstres().get(i);
-            creerSprite(monstre);
-        }
-    }
 
-    public void supprimerAffichageMonstre(){
+
+    public void supprimerAffichageMonstre(Monstre m){
         for (int i = paneSprites.getChildren().size() - 1; i >= 0; i--) {
 
             Node node = paneSprites.getChildren().get(i);
 
-            if ("monstre".equals(node.getId())) {
+            if ((m.getMonstreID()).equals(node.getId()) ) {
                 paneSprites.getChildren().remove(i);
             }
         }
@@ -61,12 +57,15 @@ public class MonstreVue {
 
         Image image = imageMonstre(monstre);
         ImageView sprite = new ImageView(image);
-        sprite.setId("monstre");
-
+        sprite.setId(monstre.getMonstreID());
         sprite.setFitWidth(TAILLE_TUILE);
         sprite.setFitHeight(TAILLE_TUILE);
-        sprite.setLayoutX(monstre.getX());
-        sprite.setLayoutY(monstre.getY());
+
+        sprite.layoutXProperty().bind(monstre.xProperty());
+        sprite.layoutYProperty().bind(monstre.yProperty());
+
+        // sprite.setLayoutX(monstre.getX());
+        // sprite.setLayoutY(monstre.getY());
 
         paneSprites.getChildren().add(sprite);
     }
@@ -91,14 +90,14 @@ public class MonstreVue {
     }
 
     public void mettreAJourSprites() {
-        for (int i = paneSprites.getChildren().size() - 1; i >= 0; i--) {
-
-            Node node = paneSprites.getChildren().get(i);
-
-            if ("monstre".equals(node.getId())) {
-                paneSprites.getChildren().remove(i);
-            }
-        }
-        afficherMonstres();
+//        for (int i = paneSprites.getChildren().size() - 1; i >= 0; i--) {
+//
+//            Node node = paneSprites.getChildren().get(i);
+//
+//            if ("monstre".equals(node.getId())) {
+//                paneSprites.getChildren().remove(i);
+//            }
+//        }
+//        afficherMonstres();
     }
 }
