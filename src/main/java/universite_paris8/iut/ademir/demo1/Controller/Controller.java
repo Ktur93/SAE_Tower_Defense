@@ -85,10 +85,8 @@ public class Controller implements Initializable {
 
 
         //bouton pour lancer la vague/lancement du gameLoop/deplacement des monstre:
-        mettreAJourBoutonVague();
         btnVague.setOnAction(actionEvent -> {
             partie.lancerProchaineVague();
-            mettreAJourBoutonVague();
         });
 
         MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
@@ -102,6 +100,7 @@ public class Controller implements Initializable {
                     partie.mettreAJour(tempActuel);
                     monstreVue.mettreAJourSprites();
                     mettreAJourBoutonVague();
+                    mettreAJourBoutonRecommencer();
                     rubisVue.afficherRubis();
                     dernierDeplacement = tempActuel;
                 }
@@ -203,6 +202,14 @@ public class Controller implements Initializable {
         } else {
             btnVague.setDisable(false);
             btnVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
+        }
+    }
+
+    public void mettreAJourBoutonRecommencer() {
+        if (partie.getVagueEnCours()) {
+            btnRecommencer.setDisable(true);
+        } else {
+            btnRecommencer.setDisable(false);
         }
     }
 }

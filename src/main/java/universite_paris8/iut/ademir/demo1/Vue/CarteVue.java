@@ -3,7 +3,6 @@ package universite_paris8.iut.ademir.demo1.Vue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
 import universite_paris8.iut.ademir.demo1.Main;
@@ -52,7 +51,7 @@ public class CarteVue {
         Image EmplacementToursBloquer = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/EmplacementTours/TBloquer.png"));
 
         Image eau = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
-        Image arbre = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
+        Image arbre = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/pixel-arbre.png"));
         Image pierre = new Image(Main.class.getResourceAsStream("Tuiles/Bloc/eau/Uberren.gif"));
 
 
@@ -191,11 +190,11 @@ public class CarteVue {
 
                 }
                 ImageView tuileDecoration = new ImageView(image);
+                tuileDecoration.setLayoutX(col * 64);
+                tuileDecoration.setLayoutY(ligne * 60);
+                tuileDecoration.setFitWidth(64);
+                tuileDecoration.setFitHeight(90);
 
-                tuileDecoration.setFitWidth(tailleTuile);
-                tuileDecoration.setFitHeight(tailleTuile);
-                tuileDecoration.setLayoutX(col * tailleTuile);
-                tuileDecoration.setLayoutY(ligne * tailleTuile);
                 paneDecoration.getChildren().add(tuileDecoration);
             }
         }
@@ -204,8 +203,4 @@ public class CarteVue {
     public void viderCarte() {
         paneCarte.getChildren().clear();
     }
-
-
-
-
 }

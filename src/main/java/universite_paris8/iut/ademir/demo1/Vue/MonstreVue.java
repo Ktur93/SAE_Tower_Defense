@@ -24,7 +24,6 @@ public class MonstreVue {
 
     ListChangeListener<Monstre> listener = new ListChangeListener<Monstre>() {
 
-
         public void onChanged(Change<? extends Monstre> c) {
 
             while (c.next()) {
