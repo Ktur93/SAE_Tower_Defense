@@ -18,6 +18,7 @@ public class Partie {
     private int indiceVague;
     private boolean vagueEnCours;
 
+
     public Partie(ArrayList<Position> chemin) {
         this.rubis = 200;
         this.tours = FXCollections.observableArrayList();
@@ -26,6 +27,7 @@ public class Partie {
         this.vagues = new ArrayList<>();
         this.indiceVague = 0;
         this.vagueEnCours = false;
+
         Vagues();
     }
 
@@ -94,9 +96,10 @@ public class Partie {
         return true;
     }
 
-    public void faireAttaquerTours() {
+    public void faireAttaquerTours(long tempsActuel) {
+
         for (Tour tour : tours) {
-            tour.attaquer(monstres);
+            tour.attaquer(monstres,tempsActuel);
         }
     }
 
@@ -168,7 +171,7 @@ public class Partie {
 
     public void mettreAJour(long tempActuel) {
         faireAvancerMonstres();
-        faireAttaquerTours();
+        faireAttaquerTours(tempActuel);
         supprimerMonstresMorts();
 
         if (this.vagueEnCours == true) {
