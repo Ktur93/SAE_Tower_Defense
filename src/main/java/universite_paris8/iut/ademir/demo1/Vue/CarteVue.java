@@ -191,10 +191,10 @@ public class CarteVue {
 
                 }
                 ImageView tuileDecoration = new ImageView(image);
+                tuileDecoration.setLayoutX(col * 64);
+                tuileDecoration.setLayoutY(ligne * 60);
                 tuileDecoration.setFitWidth(64);
-                tuileDecoration.setFitHeight(64);
-                tuileDecoration.setLayoutX(col * tailleTuile);
-                tuileDecoration.setLayoutY(ligne * tailleTuile);
+                tuileDecoration.setFitHeight(90);
                 paneDécoration.getChildren().add(tuileDecoration);
             }
         }
@@ -203,8 +203,4 @@ public class CarteVue {
     public void viderCarte() {
         paneCarte.getChildren().clear();
     }
-
-
-
-
 }
