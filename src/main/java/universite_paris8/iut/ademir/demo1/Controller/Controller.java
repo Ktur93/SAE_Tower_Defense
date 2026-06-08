@@ -5,12 +5,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
+import javafx.scene.text.Text;
 import universite_paris8.iut.ademir.demo1.Modele.Algorithmes.BFS;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
@@ -51,6 +53,8 @@ public class Controller implements Initializable {
     private Button btnVague;
     @FXML
     private Button btnAcheterCase;
+
+    private TextField acheterCase;
 
     private Carte carte;
     private Partie partie;
@@ -103,6 +107,7 @@ public class Controller implements Initializable {
                     mettreAJourBoutonRecommencer();
                     rubisVue.afficherRubis();
                     dernierDeplacement = tempActuel;
+                    btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
                 }
             }
         };
