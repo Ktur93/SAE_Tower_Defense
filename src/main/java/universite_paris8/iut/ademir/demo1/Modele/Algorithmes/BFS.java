@@ -64,6 +64,15 @@ public class BFS {
         return chemin; // chemin a l'envers car chemin vers source
     }
 
+
+    public ArrayList<Position> getParcours() {
+        return this.parcours;
+    }
+
+    public Map<Position,Position> getPredecesseurs() {
+        return this.predecesseurs;
+    }
+
     public ArrayList<Position> cheminDeSourceVersCible(Position cible) {
         ArrayList<Position> chemin = cheminVersSource(cible); // D,C,B,A
         java.util.Collections.reverse(chemin); // donne A,B,C,D

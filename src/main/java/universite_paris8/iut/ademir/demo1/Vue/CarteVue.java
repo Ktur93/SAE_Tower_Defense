@@ -3,7 +3,6 @@ package universite_paris8.iut.ademir.demo1.Vue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
 import universite_paris8.iut.ademir.demo1.Main;
