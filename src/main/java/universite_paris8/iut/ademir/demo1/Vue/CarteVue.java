@@ -1,5 +1,6 @@
 package universite_paris8.iut.ademir.demo1.Vue;
 
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -13,11 +14,16 @@ public class CarteVue {
     private Carte carte;
     private TilePane paneCarte;
     private Pane paneDecoration;
+    private Label labelDefaite;
 
     public CarteVue(Carte carte, TilePane paneCarte , Pane paneDecoration) {
         this.carte = carte;
         this.paneCarte = paneCarte;
         this.paneDecoration = paneDecoration;
+        this.labelDefaite = new Label("Vous êtes mort");
+        labelDefaite.setLayoutX(600);
+        labelDefaite.setLayoutY(425);
+        labelDefaite.setStyle("-fx-font-size: 75px;");
     }
 
     public void dessinerCarte() {
@@ -197,6 +203,14 @@ public class CarteVue {
                 paneDecoration.getChildren().add(tuileDecoration);
             }
         }
+    }
+
+    public void ajouterEcranDefaite() {
+        paneDecoration.getChildren().add(this.labelDefaite);
+    }
+
+    public void retirerEcranDefaite() {
+        paneDecoration.getChildren().remove(paneDecoration.getChildren().size() - 1);
     }
 
     public void viderCarte() {
