@@ -115,7 +115,7 @@ public class Controller implements Initializable {
 
                     // partie victoire
 
-                    if (partie.getIndiceVague() > (partie.getVagues().size() - 1) && victoireLanceBoucle) {
+                    if (partie.getIndiceVague() > (partie.getVagues().size() - 1) && victoireLanceBoucle && !(partie.portailMort())) {
                         desactiverToutLesBoutons();
                         carteVue.ajouterEcranVictoire();
                         victoireLanceBoucle = false;
