@@ -1,5 +1,7 @@
 package universite_paris8.iut.ademir.demo1.Modele.Tour;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
@@ -13,7 +15,7 @@ public abstract class Tour {
     private Position position;
     private long dernierTir;
     private long cadence;
-    private int nivT;
+    private IntegerProperty nivT;
     private int nivMax;
 
     public Tour(int attaque, int prix, int porter, Position position, long cadence , int nivMax) {
@@ -23,7 +25,7 @@ public abstract class Tour {
         this.position = position;
         this.cadence = cadence;
         this.dernierTir = 0;
-        this.nivT = 1;
+        this.nivT = new SimpleIntegerProperty(1);
         this.nivMax = nivMax;
     }
     public int getPrix() {
@@ -62,6 +64,14 @@ public abstract class Tour {
 
 
     public int getNivT() {
+        return nivT.getValue();
+    }
+
+    public void setNivT(int nivT) {
+        this.nivT.setValue(nivT);
+    }
+
+    public IntegerProperty nivTProperty() {
         return nivT;
     }
 
@@ -71,10 +81,6 @@ public abstract class Tour {
 
     public void setNivMax(int nivMax) {
         this.nivMax = nivMax;
-    }
-
-    public void setNivT(int nivT) {
-        this.nivT = nivT;
     }
 
     public void attaquer(ObservableList<Monstre> monstres, long tempsActuel) {

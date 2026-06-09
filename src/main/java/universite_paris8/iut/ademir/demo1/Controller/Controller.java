@@ -59,9 +59,7 @@ public class Controller implements Initializable {
     private boolean ameliorerTour = false;
     private CarteVue carteVue;
     private boolean defaiteLance;
-
-
-
+    private ToursVue toursVue;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -225,6 +223,7 @@ public class Controller implements Initializable {
 
                     if (tour.getPosition().equals(position)) {
                         partie.faireAmeliorerTours(tour);
+                        toursVue.affichageNiveau(tour);
                         System.out.println("envoyer");
                     }
 

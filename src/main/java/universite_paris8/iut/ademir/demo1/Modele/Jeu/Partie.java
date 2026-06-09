@@ -29,7 +29,7 @@ public class Partie {
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
-        this.rubis = 200;
+        this.rubis = 2000;
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
         this.chemin = chemin;
@@ -117,7 +117,7 @@ public class Partie {
     }
 
     public void faireAmeliorerTours(Tour t){
-        if (t.getNivT() < t.getNivMax() ) {
+        if (t.getNivT() < t.getNivMax() && rubis >= 50) {
             t.ameliorer();
             rubis -= prixAmelioration;
         }
