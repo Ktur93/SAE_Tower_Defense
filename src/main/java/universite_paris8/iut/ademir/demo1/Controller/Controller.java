@@ -223,6 +223,7 @@ public class Controller implements Initializable {
 
                     if (tour.getPosition().equals(position)) {
                         partie.faireAmeliorerTours(tour);
+                        T.MiseAjourImage(tour);
                         System.out.println("envoyer");
                     }
 
@@ -285,6 +286,7 @@ public class Controller implements Initializable {
         carte.caseBloquer();
         carteVue.viderCarte();
         carteVue.dessinerCarte();
+        paneSprites.getChildren().clear();
     }
 
     public void desactiverToutLesBoutons() {

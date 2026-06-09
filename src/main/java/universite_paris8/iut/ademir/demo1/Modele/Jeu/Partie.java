@@ -113,7 +113,7 @@ public class Partie {
     }
 
     public void faireAmeliorerTours(Tour t){
-        if (t.getNivT() <= t.getNivMax() && rubis >= 50) {
+        if (t.getNivT() < t.getNivMax() && rubis >= 50) {
             t.ameliorer();
             rubis -= prixAmelioration;
             t.setNivT(t.getNivT() + 1);

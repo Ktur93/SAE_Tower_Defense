@@ -17,6 +17,8 @@ public class ToursVue {
 
     private Partie partie;
     private Pane paneSprites;
+    private Image imageTour = null;
+    private ImageView sprite;
 
     public ToursVue(Partie partie , Pane paneSprites) {
         this.partie = partie;
@@ -47,8 +49,6 @@ public class ToursVue {
 
     public void creerSpriteTour(Tour tour) {
 
-        Image imageTour = null;
-
         if (tour instanceof TourCanon) {
             imageTour = new Image(Main.class.getResourceAsStream("Tours/canon.png"));
         }
@@ -77,7 +77,7 @@ public class ToursVue {
         nivL.textProperty().bind(tour.nivTProperty().asString("niveau: %d"));
 
 
-        ImageView sprite = new ImageView(imageTour);
+        sprite = new ImageView(imageTour);
         sprite.setId("tour");
 
         sprite.setFitWidth(TAILLE_TUILE);
@@ -87,6 +87,61 @@ public class ToursVue {
         sprite.setLayoutY(position.getY() * TAILLE_TUILE);
 
 
+        paneSprites.getChildren().add(sprite);
+
+    }
+
+    public void MiseAjourImage(Tour t){
+        System.out.println("caca");
+        if (t instanceof TourCanon) {
+            if(t.getNivT() == 2){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/canon2.png"));
+            }
+            if(t.getNivT() == 3){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/canon3.png"));
+            }
+            if(t.getNivT() == 4){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/canon4.png"));
+            }
+        }
+
+        if (t instanceof TourArcher) {
+            if(t.getNivT() == 2){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/archer2.png"));
+            }
+            if(t.getNivT() == 3){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/archer3.png"));
+            }
+            if(t.getNivT() == 4){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/archer4.png"));
+            }
+            if(t.getNivT() == 5){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/archer5.png"));
+            }
+        }
+
+        if (t instanceof TourGlace) {
+            if(t.getNivT() == 2){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/glace2.png"));
+            }
+            if(t.getNivT() == 3){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/glace3.png"));
+            }
+        }
+
+        if (t instanceof TourPoison) {
+            if(t.getNivT() == 2){
+                imageTour = new Image(Main.class.getResourceAsStream("Tours/poison2.png"));
+            }
+        }
+        Position position = t.getPosition();
+
+        sprite = new ImageView(imageTour);
+        sprite.setFitWidth(TAILLE_TUILE);
+        sprite.setFitHeight(TAILLE_TUILE);
+
+        sprite.setLayoutX(position.getX() * TAILLE_TUILE);
+        sprite.setLayoutY(position.getY() * TAILLE_TUILE);
         paneSprites.getChildren().add(sprite);
 
     }
