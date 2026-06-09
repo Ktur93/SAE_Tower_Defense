@@ -5,7 +5,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
 
-public class Tour {
+public abstract class Tour {
 
     private int atk;
     private int prix;
@@ -36,6 +36,13 @@ public class Tour {
     }
     public int getPorter() {
         return porter;
+    }
+    public long getCadence(){
+        return cadence;
+    }
+    public void setCadence(long cadence){
+        this.cadence = cadence;
+
     }
 
     public void setPorter(int portee) {
@@ -83,4 +90,6 @@ public class Tour {
         }
         return false;
     }
+
+    public abstract void ameliorer();
 }

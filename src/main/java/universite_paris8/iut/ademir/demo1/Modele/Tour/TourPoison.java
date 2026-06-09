@@ -7,4 +7,11 @@ public class TourPoison extends Tour{
         super(25, 100, 3, position,500_000_000L ); // 0,5 seconde
 
     }
+    @Override
+    public void ameliorer() {
+        this.setAtk(this.getAtk() + 10);
+        this.setPorter(this.getPorter() + 10);
+        this.setCadence(this.getCadence() + 10);
+        this.setPrix(this.getPrix() + 10);
+    }
 }
