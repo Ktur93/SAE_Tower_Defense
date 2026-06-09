@@ -24,36 +24,41 @@ public class Vague {
 
     public void creeVague1(ArrayList<Position> chemin) {
         this.monstresVague.clear();
-//        for (int i = 0; i < 15; i++) {
-//            monstresVague.add(new Zombie(chemin));
-//        }
+        for (int i = 0; i < 1; i++) {
+        monstresVague.add(new Zombie(chemin));
+        }
     }
 
     public void creeVague2(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague1(chemin);
-//        this.monstresVague.add(new Araignee(chemin));
-//        this.monstresVague.add(new Araignee(chemin));
+        for (int i = 0; i < 1; i++) {
+            this.monstresVague.add(new Araignee(chemin));
+        }
     }
 
     public void creeVague3(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague2(chemin);
-//        this.monstresVague.add(new Squelette(chemin));
-//        this.monstresVague.add(new Squelette(chemin));
+        for (int i = 0; i < 1; i++) {
+            this.monstresVague.add(new Squelette(chemin));
+        }
     }
 
     public void creeVague4(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague3(chemin);
-//        this.monstresVague.add(new Pillager(chemin));
-//        this.monstresVague.add(new Pillager(chemin));
+        for (int i = 0; i < 1; i++) {
+        this.monstresVague.add(new Pillager(chemin));
+        }
     }
 
     public void creeVague5 (ArrayList<Position> chemin ) {
         this.monstresVague.clear();
         creeVague4(chemin);
-//        this.monstresVague.add(new Boss(chemin));
+        for (int i = 0; i < 1; i++) {
+            this.monstresVague.add(new Boss(chemin));
+        }
     }
 
     public void mettreAJourVague(long tempsActuelle, ObservableList<Monstre> monstresPartie) {
