@@ -1,31 +1,41 @@
 package universite_paris8.iut.ademir.demo1.Modele.Monstres;
 
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import java.util.ArrayList;
 
 public class Monstre {
 
-    private int pv;
+    private static int compteur = 0;
+
     private int vitesse;
     private int recompense;
     private int indiceChemin;
+    private int degat;
     private ArrayList<Position> chemin;
-    private double x;
-    private double y;
+    private IntegerProperty pv;
+    private DoubleProperty x;
+    private DoubleProperty y;
+    private String monstreID;
 
 
-
-    public Monstre(int pv, int vitesse, int recompense, ArrayList<Position> chemin) {
+    public Monstre(int pv, int vitesse, int recompense, int degat, ArrayList<Position> chemin) {
         Position depart = chemin.get(0);
-        this.pv = pv;
+        this.pv = new SimpleIntegerProperty(pv);
         this.vitesse = vitesse;
         this.recompense = recompense;
         this.chemin = chemin;
         this.indiceChemin = 0;
-        this.x = depart.getX() * 64;
-        this.y = depart.getY() * 64;
+        this.degat = degat;
+        this.x = new SimpleDoubleProperty(depart.getX() * 64);
+        this.y = new SimpleDoubleProperty(depart.getY() * 64);
+        this.monstreID = "monstre" + compteur;
+        compteur++;
     }
 
     public void avancer() {
@@ -36,36 +46,36 @@ public class Monstre {
             double cibleY = posSuivante.getY() * 64;
 
             // si il est a gauche de la cible, on le fait avancer via sa vitesse
-            if (this.x < cibleX) {
-                x += this.vitesse;
+            if (x.get() < cibleX) {
+                x.set(x.get()+this.vitesse);
 
-                if (this.x > cibleX) {
-                    x = cibleX;
+                if (x.get() > cibleX) {
+                    x.set(cibleX);
                 }
-            } else if (this.x > cibleX) {
-                x -= this.vitesse;
+            } else if (x.get() > cibleX) {
+                x.set( x.get() - this.vitesse);
 
-                if (this.x < cibleX) {
-                    this.x = cibleX;
-                }
-            }
-
-            if (this.y > cibleY) {
-                y -= this.vitesse;
-
-                if (this.y < cibleY) {
-                    y = cibleY;
-                }
-            } else if (this.y < cibleY) {
-                y += this.vitesse;
-
-                if (this.y > cibleY) {
-                    y = cibleY;
+                if (x.get() < cibleX) {
+                    x.set(cibleX);
                 }
             }
 
+            if (y.get() > cibleY) {
+                y.set(y.get() - this.vitesse);
 
-            if (this.x == posSuivante.getX() * 64 && this.y == posSuivante.getY() * 64) {
+                if (y.get() < cibleY) {
+                    y.set(cibleY);
+                }
+            } else if (y.get() < cibleY) {
+                y.set(y.get() + this.vitesse);
+
+                if (y.get() > cibleY) {
+                    y.set(cibleY);
+                }
+            }
+
+
+            if (x.get() == posSuivante.getX() * 64 && y.get() == posSuivante.getY() * 64) {
                 this.indiceChemin++;
 
                 System.out.println(posSuivante.getY());
@@ -117,11 +127,11 @@ public class Monstre {
     }
 
     public int getPv() {
-        return this.pv;
+        return this.pv.intValue();
     }
 
-    public void setPv(int pv) {
-        this.pv = pv;
+    public void setPv(int nouveauPv) {
+        this.pv.setValue(nouveauPv);
     }
 
     public int getVitesse() {
@@ -132,22 +142,66 @@ public class Monstre {
         return this.recompense;
     }
 
-    public void recevoirDegats(int degats) {
-        this.pv -= degats;
+    public int getDegat() {
+        return this.degat;
+    }
 
+    public void recevoirDegats(int degats) {
+        pv.setValue(getPv() - degats);
     }
 
     public double getX () {
-        return this.x;
+        return this.x.doubleValue();
     }
 
     public double getY() {
-        return this.y;
+        return this.y.doubleValue();
     }
 
+    public void setX (double newX) {
+        this.x.setValue(newX);
+    }
+
+    public void setY (double newY) {
+        this.y.setValue(newY);
+    }
+
+    public DoubleProperty xProperty() {
+        return x;
+    }
+
+    public DoubleProperty yProperty() {
+        return y;
+    }
+
+    public IntegerProperty pvProperty(){
+        return pv;
+    }
 
     public boolean estMort() {
-        return this.pv <= 0;
+        return this.pv.intValue() <= 0;
     }
+
+    public String getMonstreID() {
+        return monstreID;
+    }
+
+    public double getDernierePositionX() {
+        return this.chemin.get(this.chemin.size() - 1).getX();
+    }
+
+    public double getDernierePositionY(){
+        return this.chemin.get(this.chemin.size() - 1).getY();
+    }
+
+    public boolean estADestination() {
+        return (getDernierePositionX() == this.getPosition().getX() && getDernierePositionY() == this.getPosition().getY());
+    }
+
+    public void setRecompense(int recompense) {
+        this.recompense = recompense;
+    }
+
+
 }
 

@@ -5,14 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
-import javafx.scene.text.Text;
 import universite_paris8.iut.ademir.demo1.Modele.Algorithmes.BFS;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
@@ -54,14 +50,12 @@ public class Controller implements Initializable {
     @FXML
     private Button btnAcheterCase;
 
-    private TextField acheterCase;
-
     private Carte carte;
     private Partie partie;
     private String tourSelectionne;
     private boolean AchatCase = false;
-
-
+    private CarteVue carteVue;
+    private boolean defaiteLance;
 
 
 
@@ -70,21 +64,30 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         carte = new Carte();
-        CarteVue carteVue = new CarteVue(carte, paneCarte , paneDecoration);
+        this.carteVue = new CarteVue(carte, paneCarte , paneDecoration);
         carteVue.dessinerCarte();
-
-
+        Label labelDefaite = new Label("Vous etes mort ! ");
 
 
         Position depart = new Position(0, 7);
+        Position depart2 = new Position(12, 0);
+        Position depart3 = new Position(8, 15);
         Position arrivee = carte.trouverArrivee();
         BFS bfs = new BFS(carte, depart);
+        BFS bfs2 = new BFS(carte,depart2);
+        BFS bfs3 = new BFS(carte,depart3);
         ArrayList<Position> chemin = bfs.cheminDeSourceVersCible(arrivee);
-        partie = new Partie(chemin);
+        ArrayList<Position> chemin2 = bfs2.cheminDeSourceVersCible(arrivee);
+        ArrayList<Position> chemin3 = bfs3.cheminDeSourceVersCible(arrivee);
+        partie = new Partie(chemin,chemin2,chemin3);
 
 
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
         rubisVue.afficherRubis();
+
+
+         // 5 secondes
+
 
 
 
@@ -97,17 +100,37 @@ public class Controller implements Initializable {
 
         AnimationTimer gameLoop = new AnimationTimer() {
             long dernierDeplacement = 0;
+            boolean defaiteLanceBoucle = false;
+            long momentDefaite = 0;
             public void handle(long tempActuel) {
 
                 if (tempActuel - dernierDeplacement > 20_000_000) {
 
                     partie.mettreAJour(tempActuel);
-                    monstreVue.mettreAJourSprites();
+                    //monstreVue.mettreAJourSprites();
+
                     mettreAJourBoutonVague();
                     mettreAJourBoutonRecommencer();
                     rubisVue.afficherRubis();
                     dernierDeplacement = tempActuel;
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
+                    if (partie.portailMort()) {
+                        if (!(partie.getVagueEnCours())) {
+                            if (!defaiteLanceBoucle) {
+                                carteVue.ajouterEcranDefaite();
+                                momentDefaite = tempActuel;
+                                defaiteLanceBoucle = true;
+                                desactiverToutLesBoutons();
+                            }
+
+                            if (tempActuel - momentDefaite >= 5_000_000_000L) {
+                                carteVue.retirerEcranDefaite();
+                                recommencer();
+                                defaiteLanceBoucle = false;
+                                activerToutLesBoutons();
+                            }
+                        }
+                    }
                 }
             }
         };
@@ -115,10 +138,7 @@ public class Controller implements Initializable {
 
         //pour recommencer
         btnRecommencer.setOnAction(actionEvent -> {
-            partie.recommnencer();
-            carte.caseBloquer();
-            carteVue.viderCarte();
-            carteVue.dessinerCarte();
+            recommencer();
         });
 
 
@@ -204,17 +224,54 @@ public class Controller implements Initializable {
         } else if (partie.getVagueEnCours()) {
             btnVague.setDisable(true);
             btnVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " En cours");
+        } else if (this.defaiteLance) {
+            btnVague.setDisable(true);
         } else {
             btnVague.setDisable(false);
             btnVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
         }
+
+
     }
 
     public void mettreAJourBoutonRecommencer() {
         if (partie.getVagueEnCours()) {
             btnRecommencer.setDisable(true);
+        } else if (this.defaiteLance) {
+            btnRecommencer.setDisable(true);
         } else {
             btnRecommencer.setDisable(false);
         }
+    }
+
+    public void recommencer() {
+        partie.recommnencer();
+        carte.caseBloquer();
+        carteVue.viderCarte();
+        carteVue.dessinerCarte();
+    }
+
+    public void desactiverToutLesBoutons() {
+        btnRecommencer.setDisable(true);
+        btnVague.setDisable(true);
+        btnArcher.setDisable(true);
+        btnCanon.setDisable(true);
+        btnAcheterCase.setDisable(true);
+        btnGlace.setDisable(true);
+        btnRecommencer.setDisable(true);
+        btnPoison.setDisable(true);
+        this.defaiteLance = true;
+    }
+
+    public void activerToutLesBoutons() {
+        btnRecommencer.setDisable(false);
+        btnVague.setDisable(false);
+        btnArcher.setDisable(false);
+        btnCanon.setDisable(false);
+        btnAcheterCase.setDisable(false);
+        btnGlace.setDisable(false);
+        btnRecommencer.setDisable(false);
+        btnPoison.setDisable(false);
+        this.defaiteLance = false;
     }
 }

@@ -16,21 +16,27 @@ public class Partie {
     private ObservableList<Tour> tours;
     private ObservableList<Monstre> monstres;
     private ArrayList<Position> chemin;
+    private ArrayList<Position> chemin2;
+    private ArrayList<Position> chemin3;
     private ArrayList<Vague> vagues;
     private int indiceVague;
     private boolean vagueEnCours;
     private int prixCase;
+    private int pvPortail;
 
 
-    public Partie(ArrayList<Position> chemin) {
+    public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
         this.rubis = 200;
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
         this.chemin = chemin;
+        this.chemin2 = chemin2;
+        this.chemin3 = chemin3;
         this.vagues = new ArrayList<>();
         this.indiceVague = 0;
         this.vagueEnCours = false;
         this.prixCase = 50;
+        this.pvPortail = 10;
 
         Vagues();
     }
@@ -50,6 +56,11 @@ public class Partie {
         for (int i = 0 ; i < getMonstres().size() ; i++){
             Monstre monstre = getMonstres().get(i);
             monstre.avancer();
+            if (monstre.estADestination()) {
+                recevoirDegatPortail(monstre.getDegat());
+                monstre.setRecompense(0);
+                monstre.setPv(0);
+            }
         }
     }
 
@@ -96,7 +107,6 @@ public class Partie {
     }
 
     public void faireAttaquerTours(long tempsActuel) {
-
         for (Tour tour : tours) {
             tour.attaquer(monstres,tempsActuel);
         }
@@ -129,16 +139,16 @@ public class Partie {
         vague1.creeVague1(chemin);
 
         Vague vague2 = new Vague();
-        vague2.creeVague2(chemin);
+        vague2.creeVague2(chemin2);
 
         Vague vague3 = new Vague();
-        vague3.creeVague3(chemin);
+        vague3.creeVague3(chemin3);
 
         Vague vague4 = new Vague();
         vague4.creeVague4(chemin);
 
         Vague vague5 = new Vague();
-        vague5.creeVague5(chemin);
+        vague5.creeVague5(chemin3);
 
         getVagues().add(vague1);
         getVagues().add(vague2);
@@ -163,13 +173,14 @@ public class Partie {
         this.indiceVague = 0;
         this.rubis = 200;
         this.prixCase = 50;
+        this.pvPortail = 10;
 
         // recreation des vagues
         vagues.get(0).creeVague1(this.chemin);
-        vagues.get(1).creeVague2(this.chemin);
-        vagues.get(2).creeVague3(this.chemin);
+        vagues.get(1).creeVague2(this.chemin2);
+        vagues.get(2).creeVague3(this.chemin3);
         vagues.get(3).creeVague4(this.chemin);
-        vagues.get(4).creeVague5(this.chemin);
+        vagues.get(4).creeVague5(this.chemin3);
 
 
 
@@ -203,4 +214,18 @@ public class Partie {
     public int getPrixCase() {
         return this.prixCase;
     }
+
+    public int getPvPortail() {
+        return this.pvPortail;
+    }
+
+    public void recevoirDegatPortail(int nbDegat) {
+        this.pvPortail -= nbDegat;
+    }
+
+    public boolean portailMort() {
+        return this.pvPortail <= 0;
+    }
+
+
 }
