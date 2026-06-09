@@ -13,14 +13,18 @@ public abstract class Tour {
     private Position position;
     private long dernierTir;
     private long cadence;
+    private int nivT;
+    private int nivMax;
 
-    public Tour(int attaque, int prix, int porter, Position position, long cadence) {
+    public Tour(int attaque, int prix, int porter, Position position, long cadence , int nivMax) {
         this.atk = attaque;
         this.prix = prix;
         this.porter = porter;
         this.position = position;
         this.cadence = cadence;
         this.dernierTir = 0;
+        this.nivT = 1;
+        this.nivMax = nivMax;
     }
     public int getPrix() {
         return prix;
@@ -42,7 +46,6 @@ public abstract class Tour {
     }
     public void setCadence(long cadence){
         this.cadence = cadence;
-
     }
 
     public void setPorter(int portee) {
@@ -55,6 +58,23 @@ public abstract class Tour {
 
     public void setPosition(Position pos){
         this.position = pos;
+    }
+
+
+    public int getNivT() {
+        return nivT;
+    }
+
+    public int getNivMax() {
+        return nivMax;
+    }
+
+    public void setNivMax(int nivMax) {
+        this.nivMax = nivMax;
+    }
+
+    public void setNivT(int nivT) {
+        this.nivT = nivT;
     }
 
     public void attaquer(ObservableList<Monstre> monstres, long tempsActuel) {

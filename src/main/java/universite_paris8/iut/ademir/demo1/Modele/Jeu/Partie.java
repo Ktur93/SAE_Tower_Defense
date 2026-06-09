@@ -6,6 +6,8 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
+import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
+
 import java.util.ArrayList;
 
 public class Partie {
@@ -23,6 +25,7 @@ public class Partie {
     private boolean vagueEnCours;
     private int prixCase;
     private int pvPortail;
+    private int prixAmelioration;
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
@@ -37,6 +40,7 @@ public class Partie {
         this.vagueEnCours = false;
         this.prixCase = 50;
         this.pvPortail = 10;
+        this.prixAmelioration = 50;
 
         Vagues();
     }
@@ -109,6 +113,13 @@ public class Partie {
     public void faireAttaquerTours(long tempsActuel) {
         for (Tour tour : tours) {
             tour.attaquer(monstres,tempsActuel);
+        }
+    }
+
+    public void faireAmeliorerTours(Tour t){
+        if (t.getNivT() < t.getNivMax() ) {
+            t.ameliorer();
+            rubis -= prixAmelioration;
         }
     }
 
