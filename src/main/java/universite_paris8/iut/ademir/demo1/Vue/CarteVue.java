@@ -15,6 +15,7 @@ public class CarteVue {
     private TilePane paneCarte;
     private Pane paneDecoration;
     private Label labelDefaite;
+    private Label labelVictoire;
 
     public CarteVue(Carte carte, TilePane paneCarte , Pane paneDecoration) {
         this.carte = carte;
@@ -24,6 +25,11 @@ public class CarteVue {
         labelDefaite.setLayoutX(600);
         labelDefaite.setLayoutY(425);
         labelDefaite.setStyle("-fx-font-size: 75px;");
+
+        this.labelVictoire = new Label("VICTOIRE !");
+        labelVictoire.setLayoutX(550);
+        labelVictoire.setLayoutY(400);
+        labelVictoire.setStyle("-fx-font-size: 150px;");
     }
 
     public void dessinerCarte() {
@@ -206,9 +212,8 @@ public class CarteVue {
     }
 
     public void timerRecommencer (long tempsQuiReste) {
-
         long seconde = 5 - (tempsQuiReste / 1_000_000_000);
-        labelDefaite.setText("Recommencer - " + seconde);
+        labelDefaite.setText("Vous êtes mort - " + seconde);
     }
 
     public void ajouterEcranDefaite() {
@@ -216,7 +221,11 @@ public class CarteVue {
     }
 
     public void retirerEcranDefaite() {
-        paneDecoration.getChildren().remove(paneDecoration.getChildren().size() - 1);
+        paneDecoration.getChildren().remove(this.labelDefaite);
+    }
+
+    public void ajouterEcranVictoire() {
+        paneDecoration.getChildren().add(this.labelVictoire);
     }
 
     public void viderCarte() {

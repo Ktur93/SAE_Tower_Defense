@@ -67,7 +67,6 @@ public class Controller implements Initializable {
         carte = new Carte();
         this.carteVue = new CarteVue(carte, paneCarte , paneDecoration);
         carteVue.dessinerCarte();
-        Label labelDefaite = new Label("Vous etes mort ! ");
 
 
         Position depart = new Position(0, 7);
@@ -99,6 +98,7 @@ public class Controller implements Initializable {
         AnimationTimer gameLoop = new AnimationTimer() {
             long dernierDeplacement = 0;
             boolean defaiteLanceBoucle = false;
+            boolean victoireLanceBoucle = true;
             long momentDefaite = 0;
             public void handle(long tempActuel) {
 
@@ -112,6 +112,18 @@ public class Controller implements Initializable {
                     rubisVue.afficherRubis();
                     dernierDeplacement = tempActuel;
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
+
+                    // partie victoire
+
+                    if (partie.getIndiceVague() > 4 && victoireLanceBoucle) {
+                        desactiverToutLesBoutons();
+                        carteVue.ajouterEcranVictoire();
+                        victoireLanceBoucle = false;
+                    }
+
+
+
+                    // partie defaite
                     if (partie.portailMort()) {
                         if (!(partie.getVagueEnCours())) {
                             if (!defaiteLanceBoucle) {
