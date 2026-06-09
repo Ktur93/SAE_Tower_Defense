@@ -45,11 +45,9 @@ public class Partie {
         Vagues();
     }
 
-
     public int getRubis() {
         return this.rubis;
     }
-
 
     public ObservableList<Monstre> getMonstres() {
         return monstres;
@@ -78,7 +76,6 @@ public class Partie {
         });
     }
 
-
     public void acheterCase(Position position, Carte carte) {
         if (rubis > prixCase ) {
             if (carte.caseDebloquer(position)) {
@@ -87,7 +84,6 @@ public class Partie {
             }
         }
     }
-
 
     public ObservableList<Tour> getTours() {
         return tours;
@@ -117,13 +113,12 @@ public class Partie {
     }
 
     public void faireAmeliorerTours(Tour t){
-        if (t.getNivT() < t.getNivMax() && rubis >= 50) {
+        if (t.getNivT() <= t.getNivMax() && rubis >= 50) {
             t.ameliorer();
             rubis -= prixAmelioration;
+            t.setNivT(t.getNivT() + 1);
         }
     }
-
-
 
     public boolean getVagueEnCours () {
         return this.vagueEnCours;
@@ -179,7 +174,6 @@ public class Partie {
         }
     }
 
-
     public void recommnencer() {
         this.indiceVague = 0;
         this.rubis = 200;
@@ -204,7 +198,6 @@ public class Partie {
             tours.remove(i);
         }
     }
-
 
     public void mettreAJour(long tempActuel) {
         faireAvancerMonstres();

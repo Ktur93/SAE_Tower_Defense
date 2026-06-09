@@ -43,15 +43,6 @@ public class ToursVue {
         }
     };
 
-    public void affichageNiveau(Tour tour){
-        int niv = 1;
-        Label nivL = new Label();
-        nivL.setText("niveau: " + tour.getNivT());
-        nivL.setTextFill(new Color(1,1,1,1));
-        nivL.setStyle("-fx-font-weight: bold; -fx-font-size: 15px;");
-
-    }
-
 
 
     public void creerSpriteTour(Tour tour) {
@@ -73,26 +64,30 @@ public class ToursVue {
         if (tour instanceof TourPoison) {
             imageTour = new Image(Main.class.getResourceAsStream("Tours/poison.png"));
         }
+        Position position = tour.getPosition();
 
         Label nivL = new Label();
+        nivL.setText("niveau: " + tour.getNivT());
+        nivL.setTextFill(Color.WHITE);
+        nivL.setStyle("-fx-font-weight: bold; -fx-font-size: 15px;");
+        nivL.setLayoutX(position.getX() * TAILLE_TUILE);
+        nivL.setLayoutY(position.getY() * TAILLE_TUILE - 20);
+        paneSprites.getChildren().add(nivL);
+
+        nivL.textProperty().bind(tour.nivTProperty().asString("niveau: %d"));
+
+
         ImageView sprite = new ImageView(imageTour);
         sprite.setId("tour");
 
         sprite.setFitWidth(TAILLE_TUILE);
         sprite.setFitHeight(TAILLE_TUILE);
 
-        Position position = tour.getPosition();
         sprite.setLayoutX(position.getX() * TAILLE_TUILE);
         sprite.setLayoutY(position.getY() * TAILLE_TUILE);
 
-        nivL.setLayoutX(position.getX() * TAILLE_TUILE);
-        nivL.setLayoutY(position.getY() * TAILLE_TUILE);
-        nivL.setTranslateY(-20);
-        nivL.setTranslateX(1);
 
         paneSprites.getChildren().add(sprite);
-        paneSprites.getChildren().add(nivL);
-
 
     }
 

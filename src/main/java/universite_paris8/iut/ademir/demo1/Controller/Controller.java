@@ -223,7 +223,6 @@ public class Controller implements Initializable {
 
                     if (tour.getPosition().equals(position)) {
                         partie.faireAmeliorerTours(tour);
-                        toursVue.affichageNiveau(tour);
                         System.out.println("envoyer");
                     }
 
