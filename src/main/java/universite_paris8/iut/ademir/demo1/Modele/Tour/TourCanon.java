@@ -5,6 +5,14 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 public class TourCanon extends Tour {
 
     public TourCanon(Position position) {
-        super(35, 125, 4, position,500_000_000L);
+        super(35, 125, 4, position,500_000_000L , 4);
+    }
+
+    @Override
+    public void ameliorer() {
+        this.setAtk(this.getAtk() + 10);
+        this.setPorter(this.getPorter() + 10);
+        this.setCadence(this.getCadence() + 10);
+        this.setPrix(this.getPrix() + 10);
     }
 }

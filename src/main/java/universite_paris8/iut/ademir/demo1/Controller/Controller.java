@@ -49,11 +49,14 @@ public class Controller implements Initializable {
     private Button btnVague;
     @FXML
     private Button btnAcheterCase;
+    @FXML
+    private Button btnAmeliorer;
 
     private Carte carte;
     private Partie partie;
     private String tourSelectionne;
-    private boolean AchatCase = false;
+    private boolean achatCase = false;
+    private boolean ameliorerTour = false;
     private CarteVue carteVue;
     private boolean defaiteLance;
 
@@ -164,8 +167,16 @@ public class Controller implements Initializable {
 
 
         btnAcheterCase.setOnAction(actionEvent -> {
-            AchatCase = true;
+            achatCase = true;
         });
+
+        btnAmeliorer.setOnAction(actionEvent -> {
+            ameliorerTour = true;
+            System.out.println("click");
+        });
+
+
+
 
         paneCarte.setOnMouseClicked(event -> {
 
@@ -176,14 +187,15 @@ public class Controller implements Initializable {
 
             Position position = new Position(colonne, ligne);
 
-            if (AchatCase == true) {
+            if (achatCase == true) {
                 partie.acheterCase(position , carte);
                 carteVue.viderCarte();
                 carteVue.dessinerCarte();
                 rubisVue.afficherRubis();
-                AchatCase = false;
+                achatCase = false;
                 return;
             }
+
 
             Tour tour = creerTourSelectionnee(tourSelectionne, position);
 
@@ -197,6 +209,32 @@ public class Controller implements Initializable {
             }
 
         });
+
+        paneSprites.setOnMouseClicked(event -> {
+
+            int colonne = (int) (event.getX() / TAILLE_TUILE);
+            int ligne = (int) (event.getY() / TAILLE_TUILE);
+
+            Position position = new Position(colonne, ligne);
+
+            if(ameliorerTour == true){
+                int i = 0;
+                while (i < partie.getTours().size()) {
+                    System.out.println("envoyer");
+                    Tour tour = partie.getTours().get(i);
+
+                    if (tour.getPosition().equals(position)) {
+                        partie.faireAmeliorerTours(tour);
+                        System.out.println("envoyer");
+                    }
+
+                    i++;
+                }
+                ameliorerTour = false;
+
+            }
+        }
+        );
     }
 
 
