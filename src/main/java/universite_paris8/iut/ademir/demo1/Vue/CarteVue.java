@@ -216,4 +216,8 @@ public class CarteVue {
     public void viderCarte() {
         paneCarte.getChildren().clear();
     }
+
+    public void affichageViePortail(){
+
+    }
 }

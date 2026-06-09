@@ -1,6 +1,4 @@
 package universite_paris8.iut.ademir.demo1.Vue;
-
-
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
