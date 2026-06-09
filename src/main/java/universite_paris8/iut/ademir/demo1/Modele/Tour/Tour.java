@@ -5,7 +5,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
 
-public class Tour {
+public abstract class Tour {
 
     private int atk;
     private int prix;
@@ -13,14 +13,18 @@ public class Tour {
     private Position position;
     private long dernierTir;
     private long cadence;
+    private int nivT;
+    private int nivMax;
 
-    public Tour(int attaque, int prix, int porter, Position position, long cadence) {
+    public Tour(int attaque, int prix, int porter, Position position, long cadence , int nivMax) {
         this.atk = attaque;
         this.prix = prix;
         this.porter = porter;
         this.position = position;
         this.cadence = cadence;
         this.dernierTir = 0;
+        this.nivT = 1;
+        this.nivMax = nivMax;
     }
     public int getPrix() {
         return prix;
@@ -37,6 +41,12 @@ public class Tour {
     public int getPorter() {
         return porter;
     }
+    public long getCadence(){
+        return cadence;
+    }
+    public void setCadence(long cadence){
+        this.cadence = cadence;
+    }
 
     public void setPorter(int portee) {
         this.porter = portee;
@@ -48,6 +58,23 @@ public class Tour {
 
     public void setPosition(Position pos){
         this.position = pos;
+    }
+
+
+    public int getNivT() {
+        return nivT;
+    }
+
+    public int getNivMax() {
+        return nivMax;
+    }
+
+    public void setNivMax(int nivMax) {
+        this.nivMax = nivMax;
+    }
+
+    public void setNivT(int nivT) {
+        this.nivT = nivT;
     }
 
     public void attaquer(ObservableList<Monstre> monstres, long tempsActuel) {
@@ -83,4 +110,6 @@ public class Tour {
         }
         return false;
     }
+
+    public abstract void ameliorer();
 }

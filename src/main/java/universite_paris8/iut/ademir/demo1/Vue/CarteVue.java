@@ -206,6 +206,7 @@ public class CarteVue {
                 tuileDecoration.setLayoutY(ligne * 60);
                 tuileDecoration.setFitWidth(64);
                 tuileDecoration.setFitHeight(90);
+
                 paneDecoration.getChildren().add(tuileDecoration);
             }
         }
