@@ -61,13 +61,13 @@ public class Controller implements Initializable {
     private boolean defaiteLance;
     private ToursVue toursVue;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         carte = new Carte();
         this.carteVue = new CarteVue(carte, paneCarte , paneDecoration);
         carteVue.dessinerCarte();
-        Label labelDefaite = new Label("Vous etes mort ! ");
 
 
         Position depart = new Position(0, 7);
@@ -87,9 +87,6 @@ public class Controller implements Initializable {
         rubisVue.afficherRubis();
 
 
-         // 5 secondes
-
-
 
 
         //bouton pour lancer la vague/lancement du gameLoop/deplacement des monstre:
@@ -102,28 +99,40 @@ public class Controller implements Initializable {
         AnimationTimer gameLoop = new AnimationTimer() {
             long dernierDeplacement = 0;
             boolean defaiteLanceBoucle = false;
+            boolean victoireLanceBoucle = true;
             long momentDefaite = 0;
             public void handle(long tempActuel) {
 
                 if (tempActuel - dernierDeplacement > 20_000_000) {
-
                     partie.mettreAJour(tempActuel);
                     //monstreVue.mettreAJourSprites();
-
                     mettreAJourBoutonVague();
                     mettreAJourBoutonRecommencer();
                     rubisVue.afficherRubis();
                     dernierDeplacement = tempActuel;
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
+
+                    // partie victoire
+                    if (partie.getIndiceVague() > (partie.getVagues().size() - 1) && victoireLanceBoucle && !(partie.portailMort())) {
+                        desactiverToutLesBoutons();
+                        carteVue.ajouterEcranVictoire();
+                        victoireLanceBoucle = false;
+                    }
+
+                    // partie defaite
                     if (partie.portailMort()) {
                         if (!(partie.getVagueEnCours())) {
-                            if (!defaiteLanceBoucle) {
-                                carteVue.ajouterEcranDefaite();
+                            if (!defaiteLanceBoucle){
                                 momentDefaite = tempActuel;
+                                carteVue.ajouterEcranDefaite();
                                 defaiteLanceBoucle = true;
                                 desactiverToutLesBoutons();
-                            }
 
+                            }
+                            if (tempActuel - momentDefaite < 5_000_000_000L) {
+                                 carteVue.timerRecommencer(tempActuel - momentDefaite);
+                            }
+                            
                             if (tempActuel - momentDefaite >= 5_000_000_000L) {
                                 carteVue.retirerEcranDefaite();
                                 recommencer();
