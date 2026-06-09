@@ -86,9 +86,6 @@ public class Controller implements Initializable {
         rubisVue.afficherRubis();
 
 
-         // 5 secondes
-
-
 
 
         //bouton pour lancer la vague/lancement du gameLoop/deplacement des monstre:
@@ -121,13 +118,15 @@ public class Controller implements Initializable {
                                 momentDefaite = tempActuel;
                                 defaiteLanceBoucle = true;
                                 desactiverToutLesBoutons();
+                                // activer timer a coté du bouton recommencer
                             }
 
-                            if (tempActuel - momentDefaite >= 5_000_000_000L) {
+                            if (tempActuel - momentDefaite >= 5_000_000_000L) { // si il appiue sur le bouton au bout des 5 secondes
                                 carteVue.retirerEcranDefaite();
                                 recommencer();
                                 defaiteLanceBoucle = false;
                                 activerToutLesBoutons();
+                                // 
                             }
                         }
                     }
