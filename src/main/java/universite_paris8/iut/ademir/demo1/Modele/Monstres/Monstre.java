@@ -16,6 +16,7 @@ public class Monstre {
     private int vitesse;
     private int recompense;
     private int indiceChemin;
+    private int degat;
     private ArrayList<Position> chemin;
     private IntegerProperty pv;
     private DoubleProperty x;
@@ -23,13 +24,14 @@ public class Monstre {
     private String monstreID;
 
 
-    public Monstre(int pv, int vitesse, int recompense, ArrayList<Position> chemin) {
+    public Monstre(int pv, int vitesse, int recompense, int degat, ArrayList<Position> chemin) {
         Position depart = chemin.get(0);
         this.pv = new SimpleIntegerProperty(pv);
         this.vitesse = vitesse;
         this.recompense = recompense;
         this.chemin = chemin;
         this.indiceChemin = 0;
+        this.degat = degat;
         this.x = new SimpleDoubleProperty(depart.getX() * 64);
         this.y = new SimpleDoubleProperty(depart.getY() * 64);
         this.monstreID = "monstre" + compteur;
@@ -140,6 +142,10 @@ public class Monstre {
         return this.recompense;
     }
 
+    public int getDegat() {
+        return this.degat;
+    }
+
     public void recevoirDegats(int degats) {
         pv.setValue(getPv() - degats);
     }
@@ -179,5 +185,23 @@ public class Monstre {
     public String getMonstreID() {
         return monstreID;
     }
+
+    public double getDernierePositionX() {
+        return this.chemin.get(this.chemin.size() - 1).getX();
+    }
+
+    public double getDernierePositionY(){
+        return this.chemin.get(this.chemin.size() - 1).getY();
+    }
+
+    public boolean estADestination() {
+        return (getDernierePositionX() == this.getPosition().getX() && getDernierePositionY() == this.getPosition().getY());
+    }
+
+    public void setRecompense(int recompense) {
+        this.recompense = recompense;
+    }
+
+
 }
 
