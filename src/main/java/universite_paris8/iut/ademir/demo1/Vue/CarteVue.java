@@ -205,6 +205,12 @@ public class CarteVue {
         }
     }
 
+    public void timerRecommencer (long tempsQuiReste) {
+
+        long seconde = 5 - (tempsQuiReste / 1_000_000_000);
+        labelDefaite.setText("Recommencer - " + seconde);
+    }
+
     public void ajouterEcranDefaite() {
         paneDecoration.getChildren().add(this.labelDefaite);
     }

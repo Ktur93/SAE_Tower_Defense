@@ -60,6 +60,7 @@ public class Controller implements Initializable {
 
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -114,19 +115,23 @@ public class Controller implements Initializable {
                     if (partie.portailMort()) {
                         if (!(partie.getVagueEnCours())) {
                             if (!defaiteLanceBoucle) {
-                                carteVue.ajouterEcranDefaite();
                                 momentDefaite = tempActuel;
+                                carteVue.ajouterEcranDefaite();
                                 defaiteLanceBoucle = true;
                                 desactiverToutLesBoutons();
-                                // activer timer a coté du bouton recommencer
+
                             }
 
-                            if (tempActuel - momentDefaite >= 5_000_000_000L) { // si il appiue sur le bouton au bout des 5 secondes
+                             if (tempActuel - momentDefaite < 5_000_000_000L) {
+                                 carteVue.timerRecommencer(tempActuel - momentDefaite);
+                             }
+
+
+                            if (tempActuel - momentDefaite >= 5_000_000_000L) {
                                 carteVue.retirerEcranDefaite();
                                 recommencer();
                                 defaiteLanceBoucle = false;
                                 activerToutLesBoutons();
-                                // 
                             }
                         }
                     }
