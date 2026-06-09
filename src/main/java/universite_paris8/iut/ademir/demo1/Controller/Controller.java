@@ -53,7 +53,7 @@ public class Controller implements Initializable {
     private Carte carte;
     private Partie partie;
     private String tourSelectionne;
-    private boolean AchatCase = false;
+    private boolean achatCase = false;
     private CarteVue carteVue;
     private boolean defaiteLance;
 
@@ -180,7 +180,7 @@ public class Controller implements Initializable {
 
 
         btnAcheterCase.setOnAction(actionEvent -> {
-            AchatCase = true;
+            achatCase = true;
         });
 
         paneCarte.setOnMouseClicked(event -> {
@@ -192,12 +192,12 @@ public class Controller implements Initializable {
 
             Position position = new Position(colonne, ligne);
 
-            if (AchatCase == true) {
+            if (achatCase == true) {
                 partie.acheterCase(position , carte);
                 carteVue.viderCarte();
                 carteVue.dessinerCarte();
                 rubisVue.afficherRubis();
-                AchatCase = false;
+                achatCase = false;
                 return;
             }
 
