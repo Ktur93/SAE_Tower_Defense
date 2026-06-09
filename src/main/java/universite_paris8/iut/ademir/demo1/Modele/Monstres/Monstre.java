@@ -2,7 +2,9 @@ package universite_paris8.iut.ademir.demo1.Modele.Monstres;
 
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import java.util.ArrayList;
@@ -11,11 +13,11 @@ public class Monstre {
 
     private static int compteur = 0;
 
-    private int pv;
     private int vitesse;
     private int recompense;
     private int indiceChemin;
     private ArrayList<Position> chemin;
+    private IntegerProperty pv;
     private DoubleProperty x;
     private DoubleProperty y;
     private String monstreID;
@@ -23,7 +25,7 @@ public class Monstre {
 
     public Monstre(int pv, int vitesse, int recompense, ArrayList<Position> chemin) {
         Position depart = chemin.get(0);
-        this.pv = pv;
+        this.pv = new SimpleIntegerProperty(pv);
         this.vitesse = vitesse;
         this.recompense = recompense;
         this.chemin = chemin;
@@ -123,11 +125,11 @@ public class Monstre {
     }
 
     public int getPv() {
-        return this.pv;
+        return this.pv.intValue();
     }
 
-    public void setPv(int pv) {
-        this.pv = pv;
+    public void setPv(int nouveauPv) {
+        this.pv.setValue(nouveauPv);
     }
 
     public int getVitesse() {
@@ -139,8 +141,7 @@ public class Monstre {
     }
 
     public void recevoirDegats(int degats) {
-        this.pv -= degats;
-
+        pv.setValue(getPv() - degats);
     }
 
     public double getX () {
@@ -167,8 +168,12 @@ public class Monstre {
         return y;
     }
 
+    public IntegerProperty pvProperty(){
+        return pv;
+    }
+
     public boolean estMort() {
-        return this.pv <= 0;
+        return this.pv.intValue() <= 0;
     }
 
     public String getMonstreID() {

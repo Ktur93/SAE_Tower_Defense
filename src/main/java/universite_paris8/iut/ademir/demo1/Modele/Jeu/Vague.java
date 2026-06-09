@@ -18,15 +18,15 @@ public class Vague {
         this.monstresVague = new ArrayList<>();
         this.indiceMonstre = 0;
         this.dernierSpawn = 0;
-        this.delaiSpawn = 2_000_000_000L; // 2 seconde
+        this.delaiSpawn = 500_000_000L; // 2 seconde
     }
 
 
     public void creeVague1(ArrayList<Position> chemin) {
         this.monstresVague.clear();
-        this.monstresVague.add(new Zombie(chemin));
-        this.monstresVague.add(new Zombie(chemin));
-        this.monstresVague.add(new Zombie(chemin));
+        for (int i = monstresVague.size(); i < 15; i++) {
+            monstresVague.add(new Zombie(chemin));
+        }
     }
 
     public void creeVague2(ArrayList<Position> chemin) {
