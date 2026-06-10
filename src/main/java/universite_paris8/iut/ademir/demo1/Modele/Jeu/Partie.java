@@ -1,5 +1,9 @@
 package universite_paris8.iut.ademir.demo1.Modele.Jeu;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
@@ -7,6 +11,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
+import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
 
 import java.util.ArrayList;
 
@@ -21,11 +26,12 @@ public class Partie {
     private ArrayList<Position> chemin2;
     private ArrayList<Position> chemin3;
     private ArrayList<Vague> vagues;
-    private int indiceVague;
-    private boolean vagueEnCours;
+    private IntegerProperty indiceVague;
+    private BooleanProperty vagueEnCours;
     private int prixCase;
     private int pvPortail;
     private int prixAmelioration;
+    private BooleanProperty toutesLesVaguesTermine;
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
@@ -36,11 +42,12 @@ public class Partie {
         this.chemin2 = chemin2;
         this.chemin3 = chemin3;
         this.vagues = new ArrayList<>();
-        this.indiceVague = 0;
-        this.vagueEnCours = false;
+        this.indiceVague = new SimpleIntegerProperty(0);
+        this.vagueEnCours = new SimpleBooleanProperty(false);
         this.prixCase = 50;
         this.pvPortail = 10;
         this.prixAmelioration = 50;
+        this.toutesLesVaguesTermine = new SimpleBooleanProperty(false);
 
         Vagues();
     }
@@ -121,15 +128,15 @@ public class Partie {
     }
 
     public boolean getVagueEnCours () {
-        return this.vagueEnCours;
+        return this.vagueEnCours.get();
     }
 
     public int getIndiceVague () {
-        return this.indiceVague;
+        return this.indiceVague.get();
     }
 
     public int getIndiceVaguePlusUn () {
-        return (this.indiceVague + 1);
+        return (this.indiceVague.get() + 1);
     }
 
     public boolean toutesLesVaguesTerminees () {
@@ -165,18 +172,18 @@ public class Partie {
     }
 
     public void lancerProchaineVague() {
-        if (this.vagueEnCours) {
+        if (this.vagueEnCours.get()) {
 
-        } else if (indiceVague >= vagues.size()) {
+        } else if (indiceVague.get() >= vagues.size()) {
 
         } else {
-            this.vagueEnCours = true;
+            this.vagueEnCours.set(true);
         }
     }
 
     public void recommnencer() {
-        this.indiceVague = 0;
-        this.rubis = 200;
+        this.indiceVague.set(0);
+        this.rubis = 2000;
         this.prixCase = 50;
         this.pvPortail = 10;
 
@@ -199,20 +206,36 @@ public class Partie {
         }
     }
 
-    public void mettreAJour(long tempActuel) {
+    public void mettreAJour(long tempActuel, RubisVue rubisVue) {
+        // Faire avancer les modeles bougeables
         faireAvancerMonstres();
         faireAttaquerTours(tempActuel);
         supprimerMonstresMorts();
 
-        if (this.vagueEnCours == true) {
-            Vague vagueActuelle = getVagues().get(indiceVague);
+        // Verification de si la vague est en cours pour envoyer les monstres et sinon avancer la vague suivante
+        if (this.vagueEnCours.get()) {
+            Vague vagueActuelle = getVagues().get(indiceVague.get());
             vagueActuelle.mettreAJourVague(tempActuel, getMonstres());
 
             if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
-                this.vagueEnCours = false;
-                this.indiceVague++;
+                this.vagueEnCours.set(false);
+                this.indiceVague.set(this.indiceVague.get() + 1);
             }
         }
+
+        rubisVue.afficherRubis();
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public int getPrixCase() {
@@ -232,4 +255,14 @@ public class Partie {
     }
 
 
+    public BooleanProperty vagueEnCoursProperty() {
+        return vagueEnCours;
+    }
+
+    public BooleanProperty toutesLesVaguesTermineProperty() {
+        if (this.getIndiceVague() >= this.vagues.size()) {
+            this.toutesLesVaguesTermine.set(true);
+        }
+        return toutesLesVaguesTermine;
+    }
 }

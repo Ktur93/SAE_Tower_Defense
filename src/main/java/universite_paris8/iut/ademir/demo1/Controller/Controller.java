@@ -80,11 +80,29 @@ public class Controller implements Initializable {
         ArrayList<Position> chemin = bfs.cheminDeSourceVersCible(arrivee);
         ArrayList<Position> chemin2 = bfs2.cheminDeSourceVersCible(arrivee);
         ArrayList<Position> chemin3 = bfs3.cheminDeSourceVersCible(arrivee);
-        partie = new Partie(chemin,chemin2,chemin3);
 
+        partie = new Partie(chemin,chemin2,chemin3);
 
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
         rubisVue.afficherRubis();
+
+        partie.vagueEnCoursProperty().addListener( (obs, old, nouv) -> {
+                if (nouv) {
+                    btnVague.setDisable(true);
+                    btnVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " en cours");
+                } else {
+                    if (!partie.toutesLesVaguesTerminees()) {
+                        activerBoutonVague();
+                    } else {
+                        btnVague.setText("Vagues terminéqdszes");
+                        btnVague.setDisable(true);
+                    }
+                }
+            }
+        );
+
+
+
 
 
 
@@ -104,11 +122,10 @@ public class Controller implements Initializable {
             public void handle(long tempActuel) {
 
                 if (tempActuel - dernierDeplacement > 20_000_000) {
-                    partie.mettreAJour(tempActuel);
+                    partie.mettreAJour(tempActuel,rubisVue);
                     //monstreVue.mettreAJourSprites();
-                    mettreAJourBoutonVague();
+                    // mettreAJourBoutonVague();
                     mettreAJourBoutonRecommencer();
-                    rubisVue.afficherRubis();
                     dernierDeplacement = tempActuel;
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
 
@@ -122,13 +139,13 @@ public class Controller implements Initializable {
                     // partie defaite
                     if (partie.portailMort()) {
                         if (!(partie.getVagueEnCours())) {
-                            if (!defaiteLanceBoucle){
+                            if (!defaiteLanceBoucle) {
                                 momentDefaite = tempActuel;
                                 carteVue.ajouterEcranDefaite();
                                 defaiteLanceBoucle = true;
                                 desactiverToutLesBoutons();
-
                             }
+
                             if (tempActuel - momentDefaite < 5_000_000_000L) {
                                  carteVue.timerRecommencer(tempActuel - momentDefaite);
                             }
@@ -265,11 +282,11 @@ public class Controller implements Initializable {
 
     public void mettreAJourBoutonVague() {
         if (partie.toutesLesVaguesTerminees()) {
-            btnVague.setDisable(true);
-            btnVague.setText("Toutes les vagues sont terminees");
+//            btnVague.setDisable(true);
+//            btnVague.setText("Vagues terminées");
         } else if (partie.getVagueEnCours()) {
-            btnVague.setDisable(true);
-            btnVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " En cours");
+//            btnVague.setDisable(true);
+//            btnVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " En cours");
         } else if (this.defaiteLance) {
             btnVague.setDisable(true);
         } else {
@@ -307,6 +324,7 @@ public class Controller implements Initializable {
         btnGlace.setDisable(true);
         btnRecommencer.setDisable(true);
         btnPoison.setDisable(true);
+        btnAmeliorer.setDisable(true);
         this.defaiteLance = true;
     }
 
@@ -319,6 +337,12 @@ public class Controller implements Initializable {
         btnGlace.setDisable(false);
         btnRecommencer.setDisable(false);
         btnPoison.setDisable(false);
+        btnAmeliorer.setDisable(false);
         this.defaiteLance = false;
+    }
+
+    public void activerBoutonVague() {
+        btnVague.setDisable(false);
+        btnVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
     }
 }
