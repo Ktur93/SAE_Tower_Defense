@@ -218,7 +218,9 @@ public class CarteVue {
     }
 
     public void ajouterEcranDefaite() {
-        paneDecoration.getChildren().add(this.labelDefaite);
+        if (!paneDecoration.getChildren().contains(labelDefaite)) {
+            paneDecoration.getChildren().add(labelDefaite);
+        }
     }
 
     public void retirerEcranDefaite() {
@@ -226,7 +228,9 @@ public class CarteVue {
     }
 
     public void ajouterEcranVictoire() {
-        paneDecoration.getChildren().add(this.labelVictoire);
+        if (!paneDecoration.getChildren().contains(labelVictoire)) {
+            paneDecoration.getChildren().add(labelVictoire);
+        }
     }
 
     public void viderCarte() {

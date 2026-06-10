@@ -26,28 +26,30 @@ public class Partie {
     private ArrayList<Position> chemin2;
     private ArrayList<Position> chemin3;
     private ArrayList<Vague> vagues;
-    private IntegerProperty indiceVague;
-    private BooleanProperty vagueEnCours;
+    private int indiceVague;
     private int prixCase;
     private int pvPortail;
     private int prixAmelioration;
-    private BooleanProperty toutesLesVaguesTermine;
+    private BooleanProperty vagueEnCours; //
+    private BooleanProperty toutesLesVaguesTermine; //
+    private BooleanProperty portailMort; //
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
-        this.rubis = 2000;
+        this.rubis = 1112000;
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
         this.chemin = chemin;
         this.chemin2 = chemin2;
         this.chemin3 = chemin3;
         this.vagues = new ArrayList<>();
-        this.indiceVague = new SimpleIntegerProperty(0);
+        this.indiceVague = 0;
         this.vagueEnCours = new SimpleBooleanProperty(false);
         this.prixCase = 50;
         this.pvPortail = 10;
         this.prixAmelioration = 50;
         this.toutesLesVaguesTermine = new SimpleBooleanProperty(false);
+        this.portailMort = new SimpleBooleanProperty(false);
 
         Vagues();
     }
@@ -132,11 +134,11 @@ public class Partie {
     }
 
     public int getIndiceVague () {
-        return this.indiceVague.get();
+        return this.indiceVague;
     }
 
     public int getIndiceVaguePlusUn () {
-        return (this.indiceVague.get() + 1);
+        return indiceVague + 1;
     }
 
     public boolean toutesLesVaguesTerminees () {
@@ -174,7 +176,7 @@ public class Partie {
     public void lancerProchaineVague() {
         if (this.vagueEnCours.get()) {
 
-        } else if (indiceVague.get() >= vagues.size()) {
+        } else if (indiceVague >= vagues.size()) {
 
         } else {
             this.vagueEnCours.set(true);
@@ -182,7 +184,7 @@ public class Partie {
     }
 
     public void recommnencer() {
-        this.indiceVague.set(0);
+        this.indiceVague = 0;
         this.rubis = 2000;
         this.prixCase = 50;
         this.pvPortail = 10;
@@ -201,9 +203,7 @@ public class Partie {
             vagues.get(i).setIndiceMonstreZero();
         }
 
-        for(int i = 0 ; i < tours.size() ; i++){
-            tours.remove(i);
-        }
+        tours.clear();
     }
 
     public void mettreAJour(long tempActuel, RubisVue rubisVue) {
@@ -214,12 +214,13 @@ public class Partie {
 
         // Verification de si la vague est en cours pour envoyer les monstres et sinon avancer la vague suivante
         if (this.vagueEnCours.get()) {
-            Vague vagueActuelle = getVagues().get(indiceVague.get());
+            Vague vagueActuelle = getVagues().get(this.indiceVague);
             vagueActuelle.mettreAJourVague(tempActuel, getMonstres());
 
             if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
+                this.indiceVague++;
                 this.vagueEnCours.set(false);
-                this.indiceVague.set(this.indiceVague.get() + 1);
+
             }
         }
 
@@ -260,9 +261,12 @@ public class Partie {
     }
 
     public BooleanProperty toutesLesVaguesTermineProperty() {
-        if (this.getIndiceVague() >= this.vagues.size()) {
-            this.toutesLesVaguesTermine.set(true);
-        }
         return toutesLesVaguesTermine;
     }
+
+    public BooleanProperty portailMortProperty() {
+        return portailMort;
+    }
+
+
 }

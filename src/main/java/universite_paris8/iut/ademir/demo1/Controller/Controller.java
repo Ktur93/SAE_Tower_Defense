@@ -86,21 +86,7 @@ public class Controller implements Initializable {
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
         rubisVue.afficherRubis();
 
-        partie.vagueEnCoursProperty().addListener( (obs, old, nouv) -> {
-                if (nouv) {
-                    btnVague.setDisable(true);
-                    btnVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " en cours");
-                } else {
-                    if (!partie.toutesLesVaguesTerminees()) {
-                        activerBoutonVague();
-                    } else {
-                        btnVague.setText("Vagues terminéqdszes");
-                        btnVague.setDisable(true);
-                    }
-                }
-            }
-        );
-
+        initialiserListeners();
 
 
 
@@ -114,54 +100,6 @@ public class Controller implements Initializable {
 
         MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
 
-        AnimationTimer gameLoop = new AnimationTimer() {
-            long dernierDeplacement = 0;
-            boolean defaiteLanceBoucle = false;
-            boolean victoireLanceBoucle = true;
-            long momentDefaite = 0;
-            public void handle(long tempActuel) {
-
-                if (tempActuel - dernierDeplacement > 20_000_000) {
-                    partie.mettreAJour(tempActuel,rubisVue);
-                    //monstreVue.mettreAJourSprites();
-                    // mettreAJourBoutonVague();
-                    mettreAJourBoutonRecommencer();
-                    dernierDeplacement = tempActuel;
-                    btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
-
-                    // partie victoire
-                    if (partie.getIndiceVague() > (partie.getVagues().size() - 1) && victoireLanceBoucle && !(partie.portailMort())) {
-                        desactiverToutLesBoutons();
-                        carteVue.ajouterEcranVictoire();
-                        victoireLanceBoucle = false;
-                    }
-
-                    // partie defaite
-                    if (partie.portailMort()) {
-                        if (!(partie.getVagueEnCours())) {
-                            if (!defaiteLanceBoucle) {
-                                momentDefaite = tempActuel;
-                                carteVue.ajouterEcranDefaite();
-                                defaiteLanceBoucle = true;
-                                desactiverToutLesBoutons();
-                            }
-
-                            if (tempActuel - momentDefaite < 5_000_000_000L) {
-                                 carteVue.timerRecommencer(tempActuel - momentDefaite);
-                            }
-                            
-                            if (tempActuel - momentDefaite >= 5_000_000_000L) {
-                                carteVue.retirerEcranDefaite();
-                                recommencer();
-                                defaiteLanceBoucle = false;
-                                activerToutLesBoutons();
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        gameLoop.start();
 
         //pour recommencer
         btnRecommencer.setOnAction(actionEvent -> {
@@ -260,6 +198,75 @@ public class Controller implements Initializable {
             }
         }
         );
+
+        AnimationTimer gameLoop = new AnimationTimer() {
+            long dernierDeplacement = 0;
+            boolean defaiteLanceBoucle = false;
+            boolean victoireLanceBoucle = true;
+            long momentDefaite = 0;
+            public void handle(long tempActuel) {
+
+                if (tempActuel - dernierDeplacement > 20_000_000) {
+                    partie.mettreAJour(tempActuel,rubisVue);
+                    //monstreVue.mettreAJourSprites();
+                    // mettreAJourBoutonVague();
+                    //mettreAJourBoutonRecommencer();
+                    dernierDeplacement = tempActuel;
+                    btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
+
+                    // partie victoire
+                    if (partie.getIndiceVague() > (partie.getVagues().size() - 1) && victoireLanceBoucle && !(partie.portailMort())) {
+                        desactiverToutLesBoutons();
+                        carteVue.ajouterEcranVictoire();
+                        victoireLanceBoucle = false;
+                    }
+
+                    // partie defaite
+                    if (partie.portailMort()) {
+                        if (!(partie.getVagueEnCours())) {
+                            if (!defaiteLanceBoucle) {
+                                momentDefaite = tempActuel;
+                                carteVue.ajouterEcranDefaite();
+                                defaiteLanceBoucle = true;
+                                desactiverToutLesBoutons();
+                            }
+
+                            if (tempActuel - momentDefaite < 5_000_000_000L) {
+                                carteVue.timerRecommencer(tempActuel - momentDefaite);
+                            }
+
+                            if (tempActuel - momentDefaite >= 5_000_000_000L) {
+                                carteVue.retirerEcranDefaite();
+                                recommencer();
+                                defaiteLanceBoucle = false;
+                                activerToutLesBoutons();
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        gameLoop.start();
+
+    }
+
+    public void initialiserListeners() {
+
+        partie.vagueEnCoursProperty().addListener((obs,old,now) -> {
+                mettreAJourBoutonRecommencer();
+                mettreAJourBoutonVague();
+        });
+
+        partie.toutesLesVaguesTermineProperty().addListener((obs,old,now) -> {
+            mettreAJourBoutonRecommencer();
+            mettreAJourBoutonVague();
+        });
+
+        partie.portailMortProperty().addListener((obs,old,now) -> {
+            mettreAJourBoutonRecommencer();
+            mettreAJourBoutonVague();
+        });
+
     }
 
 
@@ -282,11 +289,11 @@ public class Controller implements Initializable {
 
     public void mettreAJourBoutonVague() {
         if (partie.toutesLesVaguesTerminees()) {
-//            btnVague.setDisable(true);
-//            btnVague.setText("Vagues terminées");
+            btnVague.setDisable(true);
+            btnVague.setText("Vagues terminées");
         } else if (partie.getVagueEnCours()) {
-//            btnVague.setDisable(true);
-//            btnVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " En cours");
+            btnVague.setDisable(true);
+            btnVague.setText("Vague " + partie.getIndiceVaguePlusUn() + " en cours");
         } else if (this.defaiteLance) {
             btnVague.setDisable(true);
         } else {
@@ -345,4 +352,52 @@ public class Controller implements Initializable {
         btnVague.setDisable(false);
         btnVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
