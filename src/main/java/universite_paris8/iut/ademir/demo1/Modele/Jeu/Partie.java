@@ -6,11 +6,13 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
+import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
 import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
 
@@ -34,7 +36,12 @@ public class Partie {
     private BooleanProperty vagueEnCours; //
     private BooleanProperty toutesLesVaguesTermine; //
     private BooleanProperty portailMort; //
-    private int compteur = 0;
+    private BooleanProperty victoire;
+    private BooleanProperty defaite;
+    private int compteur;
+    private boolean victoireBoucleLanceUneFois;
+    private int compteurDefaite;
+    private boolean defaiteBoucleLanceUneFois;
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
@@ -52,6 +59,12 @@ public class Partie {
         this.prixAmelioration = 50;
         this.toutesLesVaguesTermine = new SimpleBooleanProperty(false);
         this.portailMort = new SimpleBooleanProperty(false);
+        this.victoire = new SimpleBooleanProperty(false);
+        this.victoireBoucleLanceUneFois = false;
+        this.defaite = new SimpleBooleanProperty(false);
+        this.compteur = 0;
+        this.compteurDefaite = 0;
+        this.defaiteBoucleLanceUneFois = false;
 
         Vagues();
     }
@@ -210,11 +223,13 @@ public class Partie {
     }
 
 
-    public void mettreAJour() {
+    public void mettreAJour(CarteVue carteVue, RubisVue rubisVue , Button button) {
         // Faire avancer les modeles bougeables
         faireAvancerMonstres();
         faireAttaquerTours(compteur);
         supprimerMonstresMorts();
+        rubisVue.afficherRubis();
+        button.setText("Acheter case - " + getPrixCase());
 
 
         // Verification de si la vague est en cours pour envoyer les monstres et sinon avancer la vague suivante
@@ -230,9 +245,37 @@ public class Partie {
             }
         }
 
-        compteur++;
-        System.out.println(compteur);
 
+        // partie Victoire
+        if (getIndiceVague() > (getVagues().size() - 1) && !(victoireBoucleLanceUneFois) && !(portailMort())) {
+            this.victoireBoucleLanceUneFois = true;
+            this.victoire.set(true);
+        }
+
+        // partie defaite
+        if (portailMort() && !defaiteBoucleLanceUneFois) {
+            if (!(getVagueEnCours())) {
+                    defaite.set(true);
+                    this.compteurDefaite = compteur;
+                    defaiteBoucleLanceUneFois = true;
+            }
+        }
+
+        if (!(portailMort())) {
+            defaite.set(false);
+        }
+
+
+
+        if ((compteur - compteurDefaite) > 300 && defaite.get()) {
+
+            defaite.set(false);
+            defaiteBoucleLanceUneFois = false;
+        } else {
+            carteVue.timerRecommencer(compteur - compteurDefaite);
+        }
+
+        compteur++;
     }
 
     public int getPrixCase() {
@@ -264,5 +307,15 @@ public class Partie {
         return portailMort;
     }
 
+    public BooleanProperty defaiteProperty() {
+        return defaite;
+    }
 
+    public BooleanProperty victoireProperty() {
+        return victoire;
+    }
+
+    public void setIndiceVague (int i) {
+        this.indiceVague = i;
+    }
 }

@@ -101,55 +101,7 @@ public class Controller implements Initializable {
         MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
 
 
-        AnimationTimer gameLoop = new AnimationTimer() {
-            long dernierDeplacement = 0;
-            boolean defaiteLanceBoucle = false;
-            boolean victoireLanceBoucle = true;
-            long momentDefaite = 0;
-            public void handle(long tempActuel) {
 
-                if (tempActuel - dernierDeplacement > 20_000_000) {
-                    partie.mettreAJour();
-                    //monstreVue.mettreAJourSprites();
-                    mettreAJourBoutonVague();
-                    mettreAJourBoutonRecommencer();
-                    rubisVue.afficherRubis();
-                    dernierDeplacement = tempActuel;
-                    btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
-
-                    // partie victoire
-                    if (partie.getIndiceVague() > (partie.getVagues().size() - 1) && victoireLanceBoucle && !(partie.portailMort())) {
-                        desactiverToutLesBoutons();
-                        carteVue.ajouterEcranVictoire();
-                        victoireLanceBoucle = false;
-                    }
-
-                    // partie defaite
-                    if (partie.portailMort()) {
-                        if (!(partie.getVagueEnCours())) {
-                            if (!defaiteLanceBoucle){
-                                momentDefaite = tempActuel;
-                                carteVue.ajouterEcranDefaite();
-                                defaiteLanceBoucle = true;
-                                desactiverToutLesBoutons();
-
-                            }
-                            if (tempActuel - momentDefaite < 5_000_000_000L) {
-                                 carteVue.timerRecommencer(tempActuel - momentDefaite);
-                            }
-                            
-                            if (tempActuel - momentDefaite >= 5_000_000_000L) {
-                                carteVue.retirerEcranDefaite();
-                                recommencer();
-                                defaiteLanceBoucle = false;
-                                activerToutLesBoutons();
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        gameLoop.start();
 
 
         //pour recommencer
@@ -250,6 +202,14 @@ public class Controller implements Initializable {
         }
         );
 
+        AnimationTimer gameLoop = new AnimationTimer() {
+
+            public void handle(long tempActuel) {
+                    partie.mettreAJour(carteVue,rubisVue,btnAcheterCase);
+            }
+        };
+        gameLoop.start();
+
     }
 
     public void initialiserListeners() {
@@ -268,6 +228,29 @@ public class Controller implements Initializable {
             mettreAJourBoutonRecommencer();
             mettreAJourBoutonVague();
         });
+
+        partie.victoireProperty().addListener((obs,old,now) -> {
+            desactiverToutLesBoutons();
+            carteVue.ajouterEcranVictoire();
+        });
+
+        partie.defaiteProperty().addListener((obs,old,now) -> {
+            if (now) {
+//                A GARDER SI ON VEUT QUE QUAND ON A L'ECRAN DE DEFAITE
+//                IL Y A ECRIT LANCER VAGUE 1 SINON YAURA MARQUE LANCER VAGUE 2
+//                partie.setIndiceVague(0);
+//                mettreAJourBoutonVague();
+                desactiverToutLesBoutons();
+                carteVue.ajouterEcranDefaite();
+            } else {
+                carteVue.retirerEcranDefaite();
+                recommencer();
+                activerToutLesBoutons();
+                mettreAJourBoutonVague();
+            }
+        });
+
+
 
     }
 
@@ -349,12 +332,6 @@ public class Controller implements Initializable {
         btnAmeliorer.setDisable(false);
         this.defaiteLance = false;
     }
-
-    public void activerBoutonVague() {
-        btnVague.setDisable(false);
-        btnVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
-    }
-
 
 
 

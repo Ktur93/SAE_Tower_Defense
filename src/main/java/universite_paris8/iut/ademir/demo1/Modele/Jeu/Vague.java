@@ -32,7 +32,7 @@ public class Vague {
     public void creeVague2(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague1(chemin);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 0; i++) {
             this.monstresVague.add(new Araignee(chemin));
         }
     }
@@ -40,7 +40,7 @@ public class Vague {
     public void creeVague3(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague2(chemin);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 0; i++) {
             this.monstresVague.add(new Squelette(chemin));
         }
     }
@@ -48,7 +48,7 @@ public class Vague {
     public void creeVague4(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague3(chemin);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 0; i++) {
         this.monstresVague.add(new Pillager(chemin));
         }
     }
@@ -56,7 +56,7 @@ public class Vague {
     public void creeVague5 (ArrayList<Position> chemin ) {
         this.monstresVague.clear();
         creeVague4(chemin);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 0; i++) {
             this.monstresVague.add(new Boss(chemin));
         }
     }

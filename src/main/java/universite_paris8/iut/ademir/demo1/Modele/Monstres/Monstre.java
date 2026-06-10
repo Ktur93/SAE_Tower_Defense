@@ -89,8 +89,6 @@ public class Monstre {
 
             if (x.get() == posSuivante.getX() * 64 && y.get() == posSuivante.getY() * 64) {
                 this.indiceChemin++;
-
-                System.out.println(posSuivante.getY());
             }
         }
     }

@@ -213,8 +213,7 @@ public class CarteVue {
     }
 
     public void timerRecommencer (long tempsQuiReste) {
-        long seconde = 5 - (tempsQuiReste / 1_000_000_000);
-        labelDefaite.setText("Vous êtes mort - " + seconde);
+        labelDefaite.setText("Vous êtes mort - " + (5 -(tempsQuiReste / 60)));
     }
 
     public void ajouterEcranDefaite() {
