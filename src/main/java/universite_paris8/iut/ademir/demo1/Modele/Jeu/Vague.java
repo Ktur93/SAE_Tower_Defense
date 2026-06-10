@@ -18,7 +18,7 @@ public class Vague {
         this.monstresVague = new ArrayList<>();
         this.indiceMonstre = 0;
         this.dernierSpawn = 0;
-        this.delaiSpawn = 20;
+        this.delaiSpawn = 120; // jeu environ 60 images/secondes donc 2 secondes = 120
     }
 
 
