@@ -1,10 +1,11 @@
 package universite_paris8.iut.ademir.demo1.Modele.Projectile;
 
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
+import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
 public class ProjectileBoulet extends Projectile{
 
-    public ProjectileBoulet(Position position){
-        super(2, position);
+    public ProjectileBoulet(Position position, Monstre cible ){
+        super(2, position, cible);
     }
 }
