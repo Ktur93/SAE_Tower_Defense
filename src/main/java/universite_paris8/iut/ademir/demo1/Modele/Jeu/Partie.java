@@ -5,8 +5,7 @@ import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
-import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
-import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
+import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
 
 import java.util.ArrayList;
 
@@ -26,6 +25,7 @@ public class Partie {
     private int prixCase;
     private int pvPortail;
     private int prixAmelioration;
+    private int compteur = 0;
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
@@ -106,9 +106,10 @@ public class Partie {
         return true;
     }
 
-    public void faireAttaquerTours(long tempsActuel) {
-        for (Tour tour : tours) {
-            tour.attaquer(monstres,tempsActuel);
+    public void faireAttaquerTours(int compteur){
+        for (int i = 0 ; i < tours.size() ; i++) {
+            Tour tour = tours.get(i);
+            tour.attaquer(monstres,compteur,tour);
         }
     }
 
@@ -199,20 +200,22 @@ public class Partie {
         }
     }
 
-    public void mettreAJour(long tempActuel) {
+    public void mettreAJour() {
         faireAvancerMonstres();
-        faireAttaquerTours(tempActuel);
+        faireAttaquerTours(compteur);
         supprimerMonstresMorts();
 
         if (this.vagueEnCours == true) {
             Vague vagueActuelle = getVagues().get(indiceVague);
-            vagueActuelle.mettreAJourVague(tempActuel, getMonstres());
+            vagueActuelle.mettreAJourVague(compteur, getMonstres());
 
             if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
                 this.vagueEnCours = false;
                 this.indiceVague++;
             }
         }
+        compteur++;
+        System.out.println(compteur);
     }
 
     public int getPrixCase() {

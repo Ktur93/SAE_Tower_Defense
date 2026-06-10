@@ -104,7 +104,7 @@ public class Controller implements Initializable {
             public void handle(long tempActuel) {
 
                 if (tempActuel - dernierDeplacement > 20_000_000) {
-                    partie.mettreAJour(tempActuel);
+                    partie.mettreAJour();
                     //monstreVue.mettreAJourSprites();
                     mettreAJourBoutonVague();
                     mettreAJourBoutonRecommencer();
