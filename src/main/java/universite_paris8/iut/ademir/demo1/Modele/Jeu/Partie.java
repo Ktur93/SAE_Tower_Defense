@@ -6,7 +6,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
-import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
+import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,7 @@ public class Partie {
     private ArrayList<Position> chemin2;
     private ArrayList<Position> chemin3;
     private ArrayList<Vague> vagues;
+    private ObservableList<Projectile> projectiles;
     private int indiceVague;
     private boolean vagueEnCours;
     private int prixCase;
