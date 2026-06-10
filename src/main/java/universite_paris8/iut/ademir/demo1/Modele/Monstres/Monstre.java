@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Monstre {
 
-    private static int compteur = 0;
+    private static int compteurID = 0;
 
     private int vitesse;
     private int recompense;
@@ -22,6 +22,9 @@ public class Monstre {
     private DoubleProperty x;
     private DoubleProperty y;
     private String monstreID;
+    private int cadence;
+    private int compteurDegats;
+    private boolean monstreEmpoisone = false;
 
 
     public Monstre(int pv, int vitesse, int recompense, int degat, ArrayList<Position> chemin) {
@@ -34,11 +37,20 @@ public class Monstre {
         this.degat = degat;
         this.x = new SimpleDoubleProperty(depart.getX() * 64);
         this.y = new SimpleDoubleProperty(depart.getY() * 64);
-        this.monstreID = "monstre" + compteur;
-        compteur++;
+        this.monstreID = "monstre" + compteurID;
+        this.cadence = 10;
+        this.compteurDegats = 0;
+        compteurID++;
     }
 
     public void avancer() {
+        if(monstreEmpoisone == true){
+            pv.setValue(getPv() - 1);
+//            if (compteurDegats%5==0) {
+//                pv.setValue(getPv() - 5);
+//            }
+            compteurDegats++;
+        }
         if (!estArrive()) {
             Position position = chemin.get(indiceChemin);
             Position posSuivante = chemin.get(indiceChemin + 1);
@@ -80,7 +92,6 @@ public class Monstre {
 
                 System.out.println(posSuivante.getY());
             }
-
         }
     }
 
@@ -138,6 +149,10 @@ public class Monstre {
         return this.vitesse;
     }
 
+    public void setVitesse(int vitesse) {
+        this.vitesse = vitesse;
+    }
+
     public int getRecompense() {
         return this.recompense;
     }
@@ -148,6 +163,18 @@ public class Monstre {
 
     public void recevoirDegats(int degats) {
         pv.setValue(getPv() - degats);
+
+    }
+
+    public void recevoirDegatsGlace(int degats) {
+        pv.setValue(getPv() - degats);
+        setVitesse(getVitesse() - 1);
+    }
+
+    public void recevoirDegatsPoison(int degats) {
+        pv.setValue(getPv() - degats);
+        monstreEmpoisone = true;
+
     }
 
     public double getX () {

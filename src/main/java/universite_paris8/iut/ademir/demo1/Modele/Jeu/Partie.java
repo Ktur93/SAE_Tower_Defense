@@ -12,6 +12,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
 import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
+import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class Partie {
     private BooleanProperty vagueEnCours; //
     private BooleanProperty toutesLesVaguesTermine; //
     private BooleanProperty portailMort; //
+    private int compteur = 0;
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
@@ -115,9 +117,10 @@ public class Partie {
         return true;
     }
 
-    public void faireAttaquerTours(long tempsActuel) {
-        for (Tour tour : tours) {
-            tour.attaquer(monstres,tempsActuel);
+    public void faireAttaquerTours(int compteur){
+        for (int i = 0 ; i < tours.size() ; i++) {
+            Tour tour = tours.get(i);
+            tour.attaquer(monstres,compteur,tour);
         }
     }
 
@@ -206,16 +209,19 @@ public class Partie {
         tours.clear();
     }
 
-    public void mettreAJour(long tempActuel, RubisVue rubisVue) {
+
+    public void mettreAJour() {
         // Faire avancer les modeles bougeables
         faireAvancerMonstres();
-        faireAttaquerTours(tempActuel);
+        faireAttaquerTours(compteur);
         supprimerMonstresMorts();
+
 
         // Verification de si la vague est en cours pour envoyer les monstres et sinon avancer la vague suivante
         if (this.vagueEnCours.get()) {
-            Vague vagueActuelle = getVagues().get(this.indiceVague);
-            vagueActuelle.mettreAJourVague(tempActuel, getMonstres());
+            Vague vagueActuelle = getVagues().get(indiceVague);
+            vagueActuelle.mettreAJourVague(compteur, getMonstres());
+
 
             if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
                 this.indiceVague++;
@@ -224,18 +230,8 @@ public class Partie {
             }
         }
 
-        rubisVue.afficherRubis();
-
-
-
-
-
-
-
-
-
-
-
+        compteur++;
+        System.out.println(compteur);
 
     }
 

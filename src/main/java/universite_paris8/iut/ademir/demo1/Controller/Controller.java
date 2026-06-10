@@ -101,6 +101,57 @@ public class Controller implements Initializable {
         MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
 
 
+        AnimationTimer gameLoop = new AnimationTimer() {
+            long dernierDeplacement = 0;
+            boolean defaiteLanceBoucle = false;
+            boolean victoireLanceBoucle = true;
+            long momentDefaite = 0;
+            public void handle(long tempActuel) {
+
+                if (tempActuel - dernierDeplacement > 20_000_000) {
+                    partie.mettreAJour();
+                    //monstreVue.mettreAJourSprites();
+                    mettreAJourBoutonVague();
+                    mettreAJourBoutonRecommencer();
+                    rubisVue.afficherRubis();
+                    dernierDeplacement = tempActuel;
+                    btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
+
+                    // partie victoire
+                    if (partie.getIndiceVague() > (partie.getVagues().size() - 1) && victoireLanceBoucle && !(partie.portailMort())) {
+                        desactiverToutLesBoutons();
+                        carteVue.ajouterEcranVictoire();
+                        victoireLanceBoucle = false;
+                    }
+
+                    // partie defaite
+                    if (partie.portailMort()) {
+                        if (!(partie.getVagueEnCours())) {
+                            if (!defaiteLanceBoucle){
+                                momentDefaite = tempActuel;
+                                carteVue.ajouterEcranDefaite();
+                                defaiteLanceBoucle = true;
+                                desactiverToutLesBoutons();
+
+                            }
+                            if (tempActuel - momentDefaite < 5_000_000_000L) {
+                                 carteVue.timerRecommencer(tempActuel - momentDefaite);
+                            }
+                            
+                            if (tempActuel - momentDefaite >= 5_000_000_000L) {
+                                carteVue.retirerEcranDefaite();
+                                recommencer();
+                                defaiteLanceBoucle = false;
+                                activerToutLesBoutons();
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        gameLoop.start();
+
+
         //pour recommencer
         btnRecommencer.setOnAction(actionEvent -> {
             recommencer();
@@ -198,55 +249,6 @@ public class Controller implements Initializable {
             }
         }
         );
-
-        AnimationTimer gameLoop = new AnimationTimer() {
-            long dernierDeplacement = 0;
-            boolean defaiteLanceBoucle = false;
-            boolean victoireLanceBoucle = true;
-            long momentDefaite = 0;
-            public void handle(long tempActuel) {
-
-                if (tempActuel - dernierDeplacement > 20_000_000) {
-                    partie.mettreAJour(tempActuel,rubisVue);
-                    //monstreVue.mettreAJourSprites();
-                    // mettreAJourBoutonVague();
-                    //mettreAJourBoutonRecommencer();
-                    dernierDeplacement = tempActuel;
-                    btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
-
-                    // partie victoire
-                    if (partie.getIndiceVague() > (partie.getVagues().size() - 1) && victoireLanceBoucle && !(partie.portailMort())) {
-                        desactiverToutLesBoutons();
-                        carteVue.ajouterEcranVictoire();
-                        victoireLanceBoucle = false;
-                    }
-
-                    // partie defaite
-                    if (partie.portailMort()) {
-                        if (!(partie.getVagueEnCours())) {
-                            if (!defaiteLanceBoucle) {
-                                momentDefaite = tempActuel;
-                                carteVue.ajouterEcranDefaite();
-                                defaiteLanceBoucle = true;
-                                desactiverToutLesBoutons();
-                            }
-
-                            if (tempActuel - momentDefaite < 5_000_000_000L) {
-                                carteVue.timerRecommencer(tempActuel - momentDefaite);
-                            }
-
-                            if (tempActuel - momentDefaite >= 5_000_000_000L) {
-                                carteVue.retirerEcranDefaite();
-                                recommencer();
-                                defaiteLanceBoucle = false;
-                                activerToutLesBoutons();
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        gameLoop.start();
 
     }
 

@@ -4,7 +4,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 
 public class TourArcher extends Tour{
     public TourArcher(Position position){
-        super(25, 75, 4, position,500_000_000L , 5); // 1 seconde
+        super(25, 75, 4, position,50 , 5); // 1 seconde
     }
     @Override
     public void ameliorer() {

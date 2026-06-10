@@ -18,7 +18,7 @@ public class Vague {
         this.monstresVague = new ArrayList<>();
         this.indiceMonstre = 0;
         this.dernierSpawn = 0;
-        this.delaiSpawn = 500_000_000L; // 2 seconde
+        this.delaiSpawn = 20;
     }
 
 
@@ -61,13 +61,13 @@ public class Vague {
         }
     }
 
-    public void mettreAJourVague(long tempsActuelle, ObservableList<Monstre> monstresPartie) {
+    public void mettreAJourVague(int compteur, ObservableList<Monstre> monstresPartie) {
         if (indiceMonstre >= monstresVague.size()) {
 
-        } else if (indiceMonstre == 0 || tempsActuelle - dernierSpawn >= delaiSpawn) {
+        } else if (indiceMonstre == 0 || compteur - dernierSpawn >= delaiSpawn) {
             monstresPartie.add(monstresVague.get(indiceMonstre));
             indiceMonstre++;
-            dernierSpawn = tempsActuelle;
+            dernierSpawn = compteur;
         }
     }
 

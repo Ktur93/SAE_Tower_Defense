@@ -5,7 +5,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 public class TourCanon extends Tour {
 
     public TourCanon(Position position) {
-        super(35, 125, 4, position,500_000_000L , 4);
+        super(35, 125, 4, position,50 , 4);
     }
 
     @Override
