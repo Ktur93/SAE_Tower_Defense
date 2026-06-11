@@ -4,9 +4,9 @@ import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
-public class ProjectileBoulet extends Projectile{
+public class ProjectileBoulet extends Projectile {
 
-    public ProjectileBoulet(Position position, ObservableList<Monstre> cible ){
-        super(2, position, cible);
+    public ProjectileBoulet(double x, double y, Monstre cible) {
+        super(x, y, 6, cible);
     }
 }

@@ -70,7 +70,6 @@ public class Partie {
         this.compteur = 0;
         this.compteurDefaite = 0;
         this.defaiteBoucleLanceUneFois = false;
-
         Vagues();
     }
 
@@ -140,14 +139,14 @@ public class Partie {
         return true;
     }
 
-    public void faireAttaquerTours(int compteur){
-        Position posT;
-        for (int i = 0 ; i < tours.size() ; i++) {
+    public void faireAttaquerTours(int compteur) {
+
+        for (int i = 0; i < tours.size(); i++) {
             Tour tour = tours.get(i);
-            tour.attaquer(monstres,compteur,tour);
-            posT = tour.getPosition();
-            Projectile p = new ProjectileBoulet(posT , monstres);
-            projectiles.add(p);
+            Projectile projectile = tour.attaquer(monstres, compteur);
+            if (projectile != null) {
+                projectiles.add(projectile);
+            }
         }
     }
 
@@ -225,9 +224,6 @@ public class Partie {
         vagues.get(2).creeVague3(this.chemin3);
         vagues.get(3).creeVague4(this.chemin);
         vagues.get(4).creeVague5(this.chemin3);
-
-
-
 
         for (int i = 0; i < TAILLE_VAGUE;i++){
             vagues.get(i).setIndiceMonstreZero();
@@ -335,7 +331,7 @@ public class Partie {
         this.indiceVague = i;
     }
 
-    public void projectilePourMettreAJour() {
+    public void projectilePourMettreAJour(){
 
         int i = 0;
 
@@ -343,13 +339,14 @@ public class Partie {
 
             Projectile projectile = projectiles.get(i);
 
-            if (projectile.tir()) {
+            if (projectile.toucher()) {
                 projectiles.remove(i);
                 System.out.println("supp");
             } else {
-             //   System.out.println("testeProfRU");
                 i++;
             }
         }
     }
+
+
 }

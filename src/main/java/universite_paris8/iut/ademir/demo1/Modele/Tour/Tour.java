@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
+import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
+import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileBoulet;
 
 
 public abstract class Tour {
@@ -83,30 +85,33 @@ public abstract class Tour {
         this.nivMax = nivMax;
     }
 
-    public void attaquer(ObservableList<Monstre> monstres, int compteur , Tour t) {
+    public Projectile attaquer(ObservableList<Monstre> monstres, int compteur) {
 
         if (compteur - dernierTir >= cadence) {
+
             Monstre cible = null;
 
             int i = 0;
             while (i < monstres.size() && cible == null) {
-                // Monstre courant
                 Monstre monstre = monstres.get(i);
-                // Si le monstre est à portée, il devient la cible
+
                 if (estAPorter(monstre)) {
                     cible = monstre;
                 }
-                // Passage au monstre suivant
+
                 i++;
             }
 
-            // Si une cible a été trouvée, on l'attaque
             if (cible != null) {
-                this.infligerDegat(cible);
+                infligerDegat(cible);
                 dernierTir = compteur;
+                return creerProjectile(cible);
             }
         }
+
+        return null;
     }
+
 
     public void infligerDegat(Monstre cible){
         cible.recevoirDegats(atk);
@@ -125,4 +130,5 @@ public abstract class Tour {
     }
 
     public abstract void ameliorer();
+    public abstract Projectile creerProjectile(Monstre cible);
 }

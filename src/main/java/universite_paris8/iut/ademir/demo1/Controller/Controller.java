@@ -14,10 +14,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
-import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
-import universite_paris8.iut.ademir.demo1.Vue.MonstreVue;
-import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
-import universite_paris8.iut.ademir.demo1.Vue.ToursVue;
+import universite_paris8.iut.ademir.demo1.Vue.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -88,11 +85,6 @@ public class Controller implements Initializable {
 
         initialiserListeners();
 
-
-
-
-
-
         //bouton pour lancer la vague/lancement du gameLoop/deplacement des monstre:
         btnVague.setOnAction(actionEvent -> {
             partie.lancerProchaineVague();
@@ -126,6 +118,7 @@ public class Controller implements Initializable {
         });
 
         ToursVue T = new ToursVue(partie, paneSprites);
+        ProjectileVue projectileVue = new ProjectileVue(partie, paneSprites);
 
 
         btnAcheterCase.setOnAction(actionEvent -> {
@@ -141,7 +134,6 @@ public class Controller implements Initializable {
 
 
         paneCarte.setOnMouseClicked(event -> {
-
 
             int colonne = (int) (event.getX() / TAILLE_TUILE);
             int ligne = (int) (event.getY() / TAILLE_TUILE);
@@ -194,10 +186,8 @@ public class Controller implements Initializable {
                     i++;
                 }
                 ameliorerTour = false;
-
             }
-        }
-        );
+        });
 
         AnimationTimer gameLoop = new AnimationTimer() {
 

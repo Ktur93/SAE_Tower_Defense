@@ -13,7 +13,7 @@ public class Monstre {
 
     private static int compteurID = 0;
 
-    private int vitesse;
+    private double vitesse;
     private int recompense;
     private int indiceChemin;
     private int degat;
@@ -23,11 +23,13 @@ public class Monstre {
     private DoubleProperty y;
     private String monstreID;
     private int cadence;
-    private int compteurDegats;
+    private int compteurPoison;
+    private int compteurGlace;
     private boolean monstreEmpoisone = false;
+    private int monstreGlacee;
 
 
-    public Monstre(int pv, int vitesse, int recompense, int degat, ArrayList<Position> chemin) {
+    public Monstre(int pv, double vitesse, int recompense, int degat, ArrayList<Position> chemin) {
         Position depart = chemin.get(0);
         this.pv = new SimpleIntegerProperty(pv);
         this.vitesse = vitesse;
@@ -39,17 +41,27 @@ public class Monstre {
         this.y = new SimpleDoubleProperty(depart.getY() * 64);
         this.monstreID = "monstre" + compteurID;
         this.cadence = 10;
-        this.compteurDegats = 0;
+        this.compteurPoison = 0;
+        this.compteurGlace = 0;
+        this.monstreGlacee = 0;
         compteurID++;
     }
 
     public void avancer() {
         if(monstreEmpoisone == true){
-            pv.setValue(getPv() - 1);
-//            if (compteurDegats%5==0) {
-//                pv.setValue(getPv() - 5);
-//            }
-            compteurDegats++;
+            if (compteurPoison%150==0) {
+                pv.setValue(getPv() - 5);
+            }
+            compteurPoison++;
+        }
+        if(monstreGlacee == 1){
+            setVitesse(0.5);
+            if(compteurGlace%600 == 0){
+                monstreGlacee = 0;
+                setVitesse(1);
+                System.out.println("fin de effet Glace");
+            }
+            compteurGlace++;
         }
         if (!estArrive()) {
             Position position = chemin.get(indiceChemin);
@@ -143,11 +155,11 @@ public class Monstre {
         this.pv.setValue(nouveauPv);
     }
 
-    public int getVitesse() {
+    public double getVitesse() {
         return this.vitesse;
     }
 
-    public void setVitesse(int vitesse) {
+    public void setVitesse(double vitesse) {
         this.vitesse = vitesse;
     }
 
@@ -159,6 +171,8 @@ public class Monstre {
         return this.degat;
     }
 
+
+
     public void recevoirDegats(int degats) {
         pv.setValue(getPv() - degats);
 
@@ -166,14 +180,14 @@ public class Monstre {
 
     public void recevoirDegatsGlace(int degats) {
         pv.setValue(getPv() - degats);
-        setVitesse(getVitesse() - 1);
+        monstreGlacee = 1;
     }
 
     public void recevoirDegatsPoison(int degats) {
         pv.setValue(getPv() - degats);
         monstreEmpoisone = true;
-
     }
+
 
     public double getX () {
         return this.x.doubleValue();
