@@ -18,13 +18,13 @@ public class Vague {
         this.monstresVague = new ArrayList<>();
         this.indiceMonstre = 0;
         this.dernierSpawn = 0;
-        this.delaiSpawn = 500_000_000L; // 2 seconde
+        this.delaiSpawn = 120; // jeu environ 60 images/secondes donc 2 secondes = 120
     }
 
 
     public void creeVague1(ArrayList<Position> chemin) {
         this.monstresVague.clear();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 1; i++) {
             monstresVague.add(new Zombie(chemin));
         }
     }
@@ -32,7 +32,7 @@ public class Vague {
     public void creeVague2(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague1(chemin);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 0; i++) {
             this.monstresVague.add(new Araignee(chemin));
         }
     }
@@ -40,7 +40,7 @@ public class Vague {
     public void creeVague3(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague2(chemin);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 0; i++) {
             this.monstresVague.add(new Squelette(chemin));
         }
     }
@@ -48,7 +48,7 @@ public class Vague {
     public void creeVague4(ArrayList<Position> chemin) {
         this.monstresVague.clear();
         creeVague3(chemin);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 0; i++) {
         this.monstresVague.add(new Pillager(chemin));
         }
     }
@@ -56,18 +56,18 @@ public class Vague {
     public void creeVague5 (ArrayList<Position> chemin ) {
         this.monstresVague.clear();
         creeVague4(chemin);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 0; i++) {
             this.monstresVague.add(new Boss(chemin));
         }
     }
 
-    public void mettreAJourVague(long tempsActuelle, ObservableList<Monstre> monstresPartie) {
+    public void mettreAJourVague(int compteur, ObservableList<Monstre> monstresPartie) {
         if (indiceMonstre >= monstresVague.size()) {
 
-        } else if (indiceMonstre == 0 || tempsActuelle - dernierSpawn >= delaiSpawn) {
+        } else if (indiceMonstre == 0 || compteur - dernierSpawn >= delaiSpawn) {
             monstresPartie.add(monstresVague.get(indiceMonstre));
             indiceMonstre++;
-            dernierSpawn = tempsActuelle;
+            dernierSpawn = compteur;
         }
     }
 

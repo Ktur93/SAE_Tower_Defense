@@ -1,12 +1,22 @@
 package universite_paris8.iut.ademir.demo1.Modele.Jeu;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
+import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
+import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
+import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
+import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
+
 
 import java.util.ArrayList;
 
@@ -17,30 +27,48 @@ public class Partie {
     private int rubis;
     private ObservableList<Tour> tours;
     private ObservableList<Monstre> monstres;
+    private ObservableList<Projectile> projectiles;
     private ArrayList<Position> chemin;
     private ArrayList<Position> chemin2;
     private ArrayList<Position> chemin3;
     private ArrayList<Vague> vagues;
     private int indiceVague;
-    private boolean vagueEnCours;
     private int prixCase;
     private int pvPortail;
     private int prixAmelioration;
+    private BooleanProperty vagueEnCours; //
+    private BooleanProperty toutesLesVaguesTermine; //
+    private BooleanProperty portailMort; //
+    private BooleanProperty victoire;
+    private BooleanProperty defaite;
+    private int compteur;
+    private boolean victoireBoucleLanceUneFois;
+    private int compteurDefaite;
+    private boolean defaiteBoucleLanceUneFois;
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
-        this.rubis = 2000;
+        this.rubis = 1112000;
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
+        this.projectiles = FXCollections.observableArrayList();
         this.chemin = chemin;
         this.chemin2 = chemin2;
         this.chemin3 = chemin3;
         this.vagues = new ArrayList<>();
         this.indiceVague = 0;
-        this.vagueEnCours = false;
+        this.vagueEnCours = new SimpleBooleanProperty(false);
         this.prixCase = 50;
         this.pvPortail = 10;
         this.prixAmelioration = 50;
+        this.toutesLesVaguesTermine = new SimpleBooleanProperty(false);
+        this.portailMort = new SimpleBooleanProperty(false);
+        this.victoire = new SimpleBooleanProperty(false);
+        this.victoireBoucleLanceUneFois = false;
+        this.defaite = new SimpleBooleanProperty(false);
+        this.compteur = 0;
+        this.compteurDefaite = 0;
+        this.defaiteBoucleLanceUneFois = false;
 
         Vagues();
     }
@@ -51,6 +79,10 @@ public class Partie {
 
     public ObservableList<Monstre> getMonstres() {
         return monstres;
+    }
+
+    public ObservableList<Projectile> getProjectiles(){
+        return projectiles;
     }
 
     private void faireAvancerMonstres() {
@@ -106,9 +138,10 @@ public class Partie {
         return true;
     }
 
-    public void faireAttaquerTours(long tempsActuel) {
-        for (Tour tour : tours) {
-            tour.attaquer(monstres,tempsActuel);
+    public void faireAttaquerTours(int compteur){
+        for (int i = 0 ; i < tours.size() ; i++) {
+            Tour tour = tours.get(i);
+            tour.attaquer(monstres,compteur,tour);
         }
     }
 
@@ -121,7 +154,7 @@ public class Partie {
     }
 
     public boolean getVagueEnCours () {
-        return this.vagueEnCours;
+        return this.vagueEnCours.get();
     }
 
     public int getIndiceVague () {
@@ -129,7 +162,7 @@ public class Partie {
     }
 
     public int getIndiceVaguePlusUn () {
-        return (this.indiceVague + 1);
+        return indiceVague + 1;
     }
 
     public boolean toutesLesVaguesTerminees () {
@@ -165,18 +198,18 @@ public class Partie {
     }
 
     public void lancerProchaineVague() {
-        if (this.vagueEnCours) {
+        if (this.vagueEnCours.get()) {
 
         } else if (indiceVague >= vagues.size()) {
 
         } else {
-            this.vagueEnCours = true;
+            this.vagueEnCours.set(true);
         }
     }
 
     public void recommnencer() {
         this.indiceVague = 0;
-        this.rubis = 200;
+        this.rubis = 2000;
         this.prixCase = 50;
         this.pvPortail = 10;
 
@@ -194,25 +227,63 @@ public class Partie {
             vagues.get(i).setIndiceMonstreZero();
         }
 
-        for(int i = 0 ; i < tours.size() ; i++){
-            tours.remove(i);
-        }
+        tours.clear();
     }
 
-    public void mettreAJour(long tempActuel) {
-        faireAvancerMonstres();
-        faireAttaquerTours(tempActuel);
-        supprimerMonstresMorts();
 
-        if (this.vagueEnCours == true) {
+    public void mettreAJour(CarteVue carteVue, RubisVue rubisVue , Button button) {
+        // Faire avancer les modeles bougeables
+        faireAvancerMonstres();
+        faireAttaquerTours(compteur);
+        supprimerMonstresMorts();
+        rubisVue.afficherRubis();
+        button.setText("Acheter case - " + getPrixCase());
+
+
+        // Verification de si la vague est en cours pour envoyer les monstres et sinon avancer la vague suivante
+        if (this.vagueEnCours.get()) {
             Vague vagueActuelle = getVagues().get(indiceVague);
-            vagueActuelle.mettreAJourVague(tempActuel, getMonstres());
+            vagueActuelle.mettreAJourVague(compteur, getMonstres());
+
 
             if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
-                this.vagueEnCours = false;
                 this.indiceVague++;
+                this.vagueEnCours.set(false);
+
             }
         }
+
+
+        // partie Victoire
+        if (getIndiceVague() > (getVagues().size() - 1) && !(victoireBoucleLanceUneFois) && !(portailMort())) {
+            this.victoireBoucleLanceUneFois = true;
+            this.victoire.set(true);
+        }
+
+        // partie defaite
+        if (portailMort() && !defaiteBoucleLanceUneFois) {
+            if (!(getVagueEnCours())) {
+                    defaite.set(true);
+                    this.compteurDefaite = compteur;
+                    defaiteBoucleLanceUneFois = true;
+            }
+        }
+
+        if (!(portailMort())) {
+            defaite.set(false);
+        }
+
+
+
+        if ((compteur - compteurDefaite) > 300 && defaite.get()) {
+
+            defaite.set(false);
+            defaiteBoucleLanceUneFois = false;
+        } else {
+            carteVue.timerRecommencer(compteur - compteurDefaite);
+        }
+
+        compteur++;
     }
 
     public int getPrixCase() {
@@ -232,4 +303,27 @@ public class Partie {
     }
 
 
+    public BooleanProperty vagueEnCoursProperty() {
+        return vagueEnCours;
+    }
+
+    public BooleanProperty toutesLesVaguesTermineProperty() {
+        return toutesLesVaguesTermine;
+    }
+
+    public BooleanProperty portailMortProperty() {
+        return portailMort;
+    }
+
+    public BooleanProperty defaiteProperty() {
+        return defaite;
+    }
+
+    public BooleanProperty victoireProperty() {
+        return victoire;
+    }
+
+    public void setIndiceVague (int i) {
+        this.indiceVague = i;
+    }
 }
