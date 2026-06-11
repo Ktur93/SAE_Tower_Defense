@@ -92,7 +92,6 @@ public class ToursVue {
     }
 
     public void MiseAjourImage(Tour t){
-        System.out.println("caca");
         if (t instanceof TourCanon) {
             if(t.getNivT() == 2){
                 imageTour = new Image(Main.class.getResourceAsStream("Tours/canon2.png"));

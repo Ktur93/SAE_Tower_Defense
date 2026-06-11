@@ -132,7 +132,7 @@ public class Controller implements Initializable {
                             if (tempActuel - momentDefaite < 5_000_000_000L) {
                                  carteVue.timerRecommencer(tempActuel - momentDefaite);
                             }
-                            
+
                             if (tempActuel - momentDefaite >= 5_000_000_000L) {
                                 carteVue.retirerEcranDefaite();
                                 recommencer();
