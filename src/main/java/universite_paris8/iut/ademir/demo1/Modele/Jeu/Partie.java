@@ -17,11 +17,11 @@ public class Partie {
     private int rubis;
     private ObservableList<Tour> tours;
     private ObservableList<Monstre> monstres;
+    private ObservableList<Projectile> projectiles;
     private ArrayList<Position> chemin;
     private ArrayList<Position> chemin2;
     private ArrayList<Position> chemin3;
     private ArrayList<Vague> vagues;
-    private ObservableList<Projectile> projectiles;
     private int indiceVague;
     private boolean vagueEnCours;
     private int prixCase;
@@ -33,6 +33,7 @@ public class Partie {
         this.rubis = 2000;
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
+        this.projectiles = FXCollections.observableArrayList();
         this.chemin = chemin;
         this.chemin2 = chemin2;
         this.chemin3 = chemin3;
@@ -52,6 +53,10 @@ public class Partie {
 
     public ObservableList<Monstre> getMonstres() {
         return monstres;
+    }
+
+    public ObservableList<Projectile> getProjectiles(){
+        return projectiles;
     }
 
     private void faireAvancerMonstres() {

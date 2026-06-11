@@ -41,16 +41,35 @@ public class  Projectile {
     }
 
     public void tir(){
-        if(cible.estMort()) {
+        if(cible == null || cible.estMort()) {
             touche = true;
             return;
         }
-        int x = cible.getPosition().getX() - pos.getX();
-        int y = cible.getPosition().getY() - pos.getY();
+        int x = pos.getX() - cible.getPosition().getX();
+        int y = pos.getY() - cible.getPosition().getY();
+
+        int distanceCarree = x * x + y * y;
+
+        if(distanceCarree <= vitesse * vitesse){
+            touche = true;
+        }
+
+        int nouvX = pos.getX();
+        int nouvY = pos.getY();
 
         if(x > 0){
-
+            nouvX -= vitesse;
+        } else if (x < 0) {
+            nouvX += vitesse;
         }
+        if(y > 0){
+            nouvY -= vitesse;
+        } else if (y < 0){
+            nouvY += vitesse;
+        }
+
+        pos = new Position(nouvX, nouvY);
+
 
     }
 }
