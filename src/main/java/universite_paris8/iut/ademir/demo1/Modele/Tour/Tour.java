@@ -83,8 +83,9 @@ public abstract class Tour {
         this.nivMax = nivMax;
     }
 
-    public void attaquer(ObservableList<Monstre> monstres, long tempsActuel) {
-        if (tempsActuel - dernierTir >= cadence) {
+    public void attaquer(ObservableList<Monstre> monstres, int compteur , Tour t) {
+
+        if (compteur - dernierTir >= cadence) {
             Monstre cible = null;
 
             int i = 0;
@@ -102,10 +103,18 @@ public abstract class Tour {
             // Si une cible a été trouvée, on l'attaque
             if (cible != null) {
                 cible.recevoirDegats(atk);
-                dernierTir = tempsActuel;
+                if(t instanceof TourGlace){
+                    cible.recevoirDegatsGlace(atk);
+                }
+                if(t instanceof TourPoison){
+                    cible.recevoirDegatsPoison(atk);
+                }
+                dernierTir = compteur;
             }
         }
     }
+
+
 
     private boolean estAPorter(Monstre monstre) {
         int x = position.getX() - monstre.getPosition().getX();

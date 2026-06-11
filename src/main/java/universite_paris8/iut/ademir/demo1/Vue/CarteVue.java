@@ -213,12 +213,13 @@ public class CarteVue {
     }
 
     public void timerRecommencer (long tempsQuiReste) {
-        long seconde = 5 - (tempsQuiReste / 1_000_000_000);
-        labelDefaite.setText("Vous êtes mort - " + seconde);
+        labelDefaite.setText("Vous êtes mort - " + (5 -(tempsQuiReste / 60)));
     }
 
     public void ajouterEcranDefaite() {
-        paneDecoration.getChildren().add(this.labelDefaite);
+        if (!paneDecoration.getChildren().contains(labelDefaite)) {
+            paneDecoration.getChildren().add(labelDefaite);
+        }
     }
 
     public void retirerEcranDefaite() {
@@ -226,7 +227,9 @@ public class CarteVue {
     }
 
     public void ajouterEcranVictoire() {
-        paneDecoration.getChildren().add(this.labelVictoire);
+        if (!paneDecoration.getChildren().contains(labelVictoire)) {
+            paneDecoration.getChildren().add(labelVictoire);
+        }
     }
 
     public void viderCarte() {
