@@ -54,15 +54,16 @@ public class ProjectileVue {
         sprite.setLayoutY(projectile.getPos().getY() * TAILLE_TUILE);
 
         paneSprites.getChildren().add(sprite);
+
     }
 
     private Image imageProjectile(Projectile projectile) {
         imageProjectile = null;
 
         if (projectile instanceof ProjectileBoulet) {
-            imageProjectile = new Image(Main.class.getResourceAsStream("Projectiles/canon.png"));
+            imageProjectile = new Image(Main.class.getResourceAsStream("Projectiles/boulet.png"));
         } else if (projectile instanceof ProjectileFleche) {
-            imageProjectile = new Image(Main.class.getResourceAsStream("Projectiles/archer.png"));
+            imageProjectile = new Image(Main.class.getResourceAsStream("Projectiles/fleche.png"));
         } else if (projectile instanceof ProjectileGlace) {
             imageProjectile = new Image(Main.class.getResourceAsStream("Projectiles/glace.png"));
         } else if (projectile instanceof ProjectilePoison) {
