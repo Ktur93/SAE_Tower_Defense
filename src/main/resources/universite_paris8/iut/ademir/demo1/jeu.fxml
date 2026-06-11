@@ -27,7 +27,6 @@
                       prefHeight="1024"
                       prefWidth="1600" />
 
-
             <Pane fx:id="paneSprites"
                   prefHeight="1024"
                   prefWidth="1600"

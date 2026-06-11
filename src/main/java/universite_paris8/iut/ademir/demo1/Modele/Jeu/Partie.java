@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
+import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileBoulet;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
@@ -85,7 +86,7 @@ public class Partie {
         return projectiles;
     }
 
-    private void faireAvancerMonstres() {
+    public void faireAvancerMonstres() {
 
         for (int i = 0 ; i < getMonstres().size() ; i++){
             Monstre monstre = getMonstres().get(i);
@@ -98,7 +99,7 @@ public class Partie {
         }
     }
 
-    private void supprimerMonstresMorts() {
+    public void supprimerMonstresMorts() {
         this.monstres.removeIf(monstre -> {
             if (monstre.estMort()) {
                 this.rubis += monstre.getRecompense();
@@ -107,6 +108,7 @@ public class Partie {
             return false;
         });
     }
+
 
     public void acheterCase(Position position, Carte carte) {
         if (rubis > prixCase ) {
@@ -139,9 +141,13 @@ public class Partie {
     }
 
     public void faireAttaquerTours(int compteur){
+        Position posT;
         for (int i = 0 ; i < tours.size() ; i++) {
             Tour tour = tours.get(i);
             tour.attaquer(monstres,compteur,tour);
+            posT = tour.getPosition();
+            Projectile p = new ProjectileBoulet(posT , monstres);
+            projectiles.add(p);
         }
     }
 
@@ -236,8 +242,10 @@ public class Partie {
         faireAvancerMonstres();
         faireAttaquerTours(compteur);
         supprimerMonstresMorts();
+        projectilePourMettreAJour();
         rubisVue.afficherRubis();
         button.setText("Acheter case - " + getPrixCase());
+
 
 
         // Verification de si la vague est en cours pour envoyer les monstres et sinon avancer la vague suivante
@@ -325,5 +333,23 @@ public class Partie {
 
     public void setIndiceVague (int i) {
         this.indiceVague = i;
+    }
+
+    public void projectilePourMettreAJour() {
+
+        int i = 0;
+
+        while (i < projectiles.size()) {
+
+            Projectile projectile = projectiles.get(i);
+
+            if (projectile.tir()) {
+                projectiles.remove(i);
+                System.out.println("supp");
+            } else {
+             //   System.out.println("testeProfRU");
+                i++;
+            }
+        }
     }
 }

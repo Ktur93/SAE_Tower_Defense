@@ -1,6 +1,7 @@
 package universite_paris8.iut.ademir.demo1.Modele.Tour;
 
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
+import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
 public class TourPoison extends Tour{
     public TourPoison(Position position){
@@ -13,5 +14,10 @@ public class TourPoison extends Tour{
         this.setPorter(this.getPorter() + 10);
         this.setCadence(this.getCadence() + 10);
         this.setPrix(this.getPrix() + 10);
+    }
+
+    @Override
+    public void infligerDegat(Monstre cible){
+        cible.recevoirDegatsPoison(getAtk());
     }
 }

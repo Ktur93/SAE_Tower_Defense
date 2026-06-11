@@ -102,16 +102,14 @@ public abstract class Tour {
 
             // Si une cible a été trouvée, on l'attaque
             if (cible != null) {
-                cible.recevoirDegats(atk);
-                if(t instanceof TourGlace){
-                    cible.recevoirDegatsGlace(atk);
-                }
-                if(t instanceof TourPoison){
-                    cible.recevoirDegatsPoison(atk);
-                }
+                this.infligerDegat(cible);
                 dernierTir = compteur;
             }
         }
+    }
+
+    public void infligerDegat(Monstre cible){
+        cible.recevoirDegats(atk);
     }
 
 
