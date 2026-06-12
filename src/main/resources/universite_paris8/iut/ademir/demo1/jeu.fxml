@@ -37,6 +37,11 @@
                   prefWidth="1600"
                   pickOnBounds="false" />
 
+            <Pane fx:id="paneCoeurs"
+                  prefHeight="1024"
+                  prefWidth="1600"
+                  pickOnBounds="false"/>
+
         </StackPane>
     </center>
 

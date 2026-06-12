@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
 public class Controller implements Initializable {
 
     private static final int TAILLE_TUILE = 64;
@@ -29,6 +30,8 @@ public class Controller implements Initializable {
     private TilePane paneCarte;
     @FXML
     private Pane paneSprites;
+    @FXML
+    private Pane paneCoeurs;
     @FXML
     private Pane paneDecoration;
 
@@ -62,6 +65,10 @@ public class Controller implements Initializable {
     private boolean ameliorerTour = false;
     private boolean defaiteLance;
 
+    private ToursVue toursVue;
+    private CoeurVue coeurVue;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -93,6 +100,7 @@ public class Controller implements Initializable {
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
         rubisVue.afficherRubis();
 
+
         // Creation de MonstreVue
         MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
 
@@ -101,6 +109,12 @@ public class Controller implements Initializable {
 
         // Creation de ProjectileVue
         ProjectileVue projectileVue = new ProjectileVue(partie, paneSprites);
+
+
+
+
+        coeurVue = new CoeurVue(partie, paneCoeurs);
+
 
         // Initialisation des listeners
         initialiserListeners();
@@ -271,8 +285,6 @@ public class Controller implements Initializable {
             }
         });
 
-
-
     }
 
 
@@ -326,6 +338,7 @@ public class Controller implements Initializable {
         carteVue.viderCarte();
         carteVue.dessinerCarte();
         paneSprites.getChildren().clear();
+        coeurVue.mettreAJourPvPortail(3);
     }
 
     public void desactiverToutLesBoutons() {
@@ -353,51 +366,6 @@ public class Controller implements Initializable {
         btnAmeliorer.setDisable(false);
         this.defaiteLance = false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
