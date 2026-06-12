@@ -35,7 +35,7 @@ public class Partie {
     private ArrayList<Vague> vagues;
     private int indiceVague;
     private int prixCase;
-    private int pvPortail;
+    private IntegerProperty pvPortail;
     private int prixAmelioration;
     private BooleanProperty vagueEnCours; //
     private BooleanProperty toutesLesVaguesTermine; //
@@ -49,7 +49,7 @@ public class Partie {
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
-        this.rubis = 1112000;
+        this.rubis = 10000;
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
@@ -60,7 +60,7 @@ public class Partie {
         this.indiceVague = 0;
         this.vagueEnCours = new SimpleBooleanProperty(false);
         this.prixCase = 50;
-        this.pvPortail = 10;
+        this.pvPortail = new SimpleIntegerProperty(3);
         this.prixAmelioration = 50;
         this.toutesLesVaguesTermine = new SimpleBooleanProperty(false);
         this.portailMort = new SimpleBooleanProperty(false);
@@ -216,7 +216,7 @@ public class Partie {
         this.indiceVague = 0;
         this.rubis = 2000;
         this.prixCase = 50;
-        this.pvPortail = 10;
+        pvPortail.set(3);
 
         // recreation des vagues
         vagues.get(0).creeVague1(this.chemin);
@@ -294,16 +294,20 @@ public class Partie {
         return this.prixCase;
     }
 
+    public IntegerProperty pvPortailProperty(){
+        return pvPortail;
+    }
+
     public int getPvPortail() {
-        return this.pvPortail;
+        return pvPortail.get();
     }
 
     public void recevoirDegatPortail(int nbDegat) {
-        this.pvPortail -= nbDegat;
+        pvPortail.set(pvPortail.get() - nbDegat);
     }
 
     public boolean portailMort() {
-        return this.pvPortail <= 0;
+        return pvPortail.get() <= 0;
     }
 
 

@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
 public class Controller implements Initializable {
 
     private static final int TAILLE_TUILE = 64;
@@ -30,6 +31,8 @@ public class Controller implements Initializable {
     private TilePane paneCarte;
     @FXML
     private Pane paneSprites;
+    @FXML
+    private Pane paneCoeurs;
     @FXML
     private Pane paneDecoration;
     @FXML
@@ -57,6 +60,7 @@ public class Controller implements Initializable {
     private CarteVue carteVue;
     private boolean defaiteLance;
     private ToursVue toursVue;
+    private CoeurVue coeurVue;
 
 
     @Override
@@ -82,6 +86,8 @@ public class Controller implements Initializable {
 
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
         rubisVue.afficherRubis();
+
+        coeurVue = new CoeurVue(paneCoeurs);
 
         initialiserListeners();
 
@@ -236,6 +242,10 @@ public class Controller implements Initializable {
                 mettreAJourBoutonVague();
             }
         });
+        //previens quand le monstre touche le poratil pour enlever un coeur
+        partie.pvPortailProperty().addListener((obs,old,now) -> {
+            coeurVue.mettreAJourPvPortail(now.intValue());
+        });
 
 
 
@@ -292,6 +302,7 @@ public class Controller implements Initializable {
         carteVue.viderCarte();
         carteVue.dessinerCarte();
         paneSprites.getChildren().clear();
+        coeurVue.mettreAJourPvPortail(3);
     }
 
     public void desactiverToutLesBoutons() {
@@ -319,51 +330,6 @@ public class Controller implements Initializable {
         btnAmeliorer.setDisable(false);
         this.defaiteLance = false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
