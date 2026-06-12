@@ -9,6 +9,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
 public class CoeurVue {
     public static final int TAILLE_COEUR = 32;
 
+    private Partie partie;
     private Pane paneCoeurs;
 
     private Image coeurRouge;
@@ -18,13 +19,19 @@ public class CoeurVue {
     private ImageView coeur2;
     private ImageView coeur3;
 
-    public CoeurVue(Pane paneCoeurs){
+    public CoeurVue(Partie partie, Pane paneCoeurs){
+        this.partie = partie;
         this.paneCoeurs = paneCoeurs;
 
         this.coeurRouge = new Image(Main.class.getResourceAsStream("Coeurs/coeurRouge.png"));
         this.coeurVide = new Image(Main.class.getResourceAsStream("Coeurs/coeurVide.png"));
 
         creerSpriteCoeur();
+        mettreAJourPvPortail(partie.getPvPortail());
+
+        partie.pvPortailProperty().addListener((obs, oldValue, newValue) -> {
+            mettreAJourPvPortail(newValue.intValue());
+        });
     }
 
     public void creerSpriteCoeur(){

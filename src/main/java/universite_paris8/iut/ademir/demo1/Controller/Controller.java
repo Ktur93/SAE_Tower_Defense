@@ -87,7 +87,7 @@ public class Controller implements Initializable {
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
         rubisVue.afficherRubis();
 
-        coeurVue = new CoeurVue(paneCoeurs);
+        coeurVue = new CoeurVue(partie, paneCoeurs);
 
         initialiserListeners();
 
@@ -242,12 +242,6 @@ public class Controller implements Initializable {
                 mettreAJourBoutonVague();
             }
         });
-        //previens quand le monstre touche le poratil pour enlever un coeur
-        partie.pvPortailProperty().addListener((obs,old,now) -> {
-            coeurVue.mettreAJourPvPortail(now.intValue());
-        });
-
-
 
     }
 
