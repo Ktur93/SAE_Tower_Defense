@@ -24,16 +24,21 @@ public class Controller implements Initializable {
 
     private static final int TAILLE_TUILE = 64;
 
-    @FXML
-    private Button btnRecommencer;
+    // Pane
     @FXML
     private TilePane paneCarte;
     @FXML
     private Pane paneSprites;
     @FXML
     private Pane paneDecoration;
+
+    // Label
     @FXML
     private Label labelRubis;
+
+    // Boutons
+    @FXML
+    private Button btnRecommencer;
     @FXML
     private Button btnCanon;
     @FXML
@@ -51,12 +56,11 @@ public class Controller implements Initializable {
 
     private Carte carte;
     private Partie partie;
+    private CarteVue carteVue;
     private String tourSelectionne;
     private boolean achatCase = false;
     private boolean ameliorerTour = false;
-    private CarteVue carteVue;
     private boolean defaiteLance;
-    private ToursVue toursVue;
 
 
     @Override
@@ -66,41 +70,54 @@ public class Controller implements Initializable {
         this.carteVue = new CarteVue(carte, paneCarte , paneDecoration);
         carteVue.dessinerCarte();
 
-
+        // Positions
         Position depart = new Position(0, 7);
         Position depart2 = new Position(12, 0);
         Position depart3 = new Position(8, 15);
         Position arrivee = carte.trouverArrivee();
+
+        // BFS
         BFS bfs = new BFS(carte, depart);
         BFS bfs2 = new BFS(carte,depart2);
         BFS bfs3 = new BFS(carte,depart3);
+
+        // Chemins
         ArrayList<Position> chemin = bfs.cheminDeSourceVersCible(arrivee);
         ArrayList<Position> chemin2 = bfs2.cheminDeSourceVersCible(arrivee);
         ArrayList<Position> chemin3 = bfs3.cheminDeSourceVersCible(arrivee);
 
+        // Creation de la partie
         partie = new Partie(chemin,chemin2,chemin3);
 
+        // Creation de RubisVue
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
         rubisVue.afficherRubis();
 
+        // Creation de MonstreVue
+        MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
+
+        // Creation de ToursVue
+        ToursVue T = new ToursVue(partie, paneSprites);
+
+        // Creation de ProjectileVue
+        ProjectileVue projectileVue = new ProjectileVue(partie, paneSprites);
+
+        // Initialisation des listeners
         initialiserListeners();
 
-        //bouton pour lancer la vague/lancement du gameLoop/deplacement des monstre:
+        // Bouton pour lancer la vague/lancement du gameLoop/deplacement des monstre:
         btnVague.setOnAction(actionEvent -> {
             partie.lancerProchaineVague();
         });
 
-        MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
 
-
-        //pour recommencer
+        // Bouton pour recommencer
         btnRecommencer.setOnAction(actionEvent -> {
             recommencer();
         });
 
 
-
-        // pour selectionnée les tours via des boutons:
+        // Bouton pour selectionnée les tours via des boutons:
         btnCanon.setOnAction(actionEvent -> {
             tourSelectionne = "CANON";
         });
@@ -117,31 +134,26 @@ public class Controller implements Initializable {
             tourSelectionne = "POISON";
         });
 
-        ToursVue T = new ToursVue(partie, paneSprites);
-        ProjectileVue projectileVue = new ProjectileVue(partie, paneSprites);
-
-
         btnAcheterCase.setOnAction(actionEvent -> {
             achatCase = true;
         });
 
         btnAmeliorer.setOnAction(actionEvent -> {
             ameliorerTour = true;
-            System.out.println("click");
+            // System.out.println("click");
         });
 
 
 
 
         paneCarte.setOnMouseClicked(event -> {
-
+            // Sauvegarde de la position ou l'utilisateur a cliqué
             int colonne = (int) (event.getX() / TAILLE_TUILE);
             int ligne = (int) (event.getY() / TAILLE_TUILE);
-
-
             Position position = new Position(colonne, ligne);
 
-            if (achatCase == true) {
+            // Achete la case si possible
+            if (achatCase) {
                 partie.acheterCase(position , carte);
                 carteVue.viderCarte();
                 carteVue.dessinerCarte();
@@ -150,11 +162,13 @@ public class Controller implements Initializable {
                 return;
             }
 
-
+            // Creation de la tour a partir des coordonées
             Tour tour = creerTourSelectionnee(tourSelectionne, position);
 
+            // Verification de si la carte est placable
             boolean placeDisponible = partie.placerTour(tour, carte);
 
+            // Si oui on place la tour
             if (placeDisponible) {
                 rubisVue.afficherRubis();
                 System.out.println("placement");
@@ -163,6 +177,7 @@ public class Controller implements Initializable {
             }
 
         });
+
 
         paneSprites.setOnMouseClicked(event -> {
 
@@ -174,13 +189,13 @@ public class Controller implements Initializable {
             if(ameliorerTour == true){
                 int i = 0;
                 while (i < partie.getTours().size()) {
-                    System.out.println("envoyer");
+                    // System.out.println("envoyer");
                     Tour tour = partie.getTours().get(i);
 
                     if (tour.getPosition().equals(position)) {
                         partie.faireAmeliorerTours(tour);
                         T.MiseAjourImage(tour);
-                        System.out.println("envoyer");
+                        // System.out.println("envoyer");
                     }
 
                     i++;
@@ -192,11 +207,22 @@ public class Controller implements Initializable {
         AnimationTimer gameLoop = new AnimationTimer() {
 
             public void handle(long tempActuel) {
-                    partie.mettreAJour(carteVue,rubisVue,btnAcheterCase);
+                partie.mettreAJour(carteVue,rubisVue,btnAcheterCase);
+
+                rubisVue.afficherRubis();
+                btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
+
+                if ((partie.getCompteur() - partie.getCompteurDefaite()) > 300 && partie.defaiteProperty().get()) {
+
+                    partie.setDefaiteProperty(false);
+                } else {
+                    carteVue.timerRecommencer(partie.getCompteur() - partie.getCompteurDefaite());
+                }
+
+                partie.setCompteurPlusPlus();
             }
         };
         gameLoop.start();
-
     }
 
     public void initialiserListeners() {
@@ -260,7 +286,7 @@ public class Controller implements Initializable {
 
 
     public void mettreAJourBoutonVague() {
-        if (partie.toutesLesVaguesTerminees()) {
+        if (partie.getToutesLesVaguesTerminees()) {
             btnVague.setDisable(true);
             btnVague.setText("Vagues terminées");
         } else if (partie.getVagueEnCours()) {

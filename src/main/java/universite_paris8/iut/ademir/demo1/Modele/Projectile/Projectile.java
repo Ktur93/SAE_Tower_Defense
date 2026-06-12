@@ -14,12 +14,15 @@ public class Projectile {
     private DoubleProperty yProperty;
 
     private int vitesse;
+
     private Monstre cible;
 
     public Projectile(double x, double y, int vitesse, Monstre cible) {
         this.xProperty = new SimpleDoubleProperty(x);
         this.yProperty = new SimpleDoubleProperty(y);
+
         this.vitesse = vitesse;
+
         this.cible = cible;
     }
 
@@ -50,20 +53,22 @@ public class Projectile {
         return xProperty.getValue();
     }
 
-    public void setX(double x) {
-        xProperty.setValue(x);
-    }
-
-    public DoubleProperty xProperty() {
-        return xProperty;
-    }
-
     public double getY() {
         return yProperty.getValue();
     }
 
+
     public void setY(double y) {
         yProperty.setValue(y);
+    }
+
+    public void setX(double x) {
+        xProperty.setValue(x);
+    }
+
+
+    public DoubleProperty xProperty() {
+        return xProperty;
     }
 
     public DoubleProperty yProperty() {

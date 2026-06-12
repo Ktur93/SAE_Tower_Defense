@@ -14,76 +14,32 @@ public abstract class Tour {
     private int atk;
     private int prix;
     private int porter;
-    private Position position;
+    private int nivMax;
+
+
     private long dernierTir;
     private long cadence;
+
+    private Position position;
+
     private IntegerProperty nivT;
-    private int nivMax;
+
 
     public Tour(int attaque, int prix, int porter, Position position, long cadence , int nivMax) {
         this.atk = attaque;
         this.prix = prix;
         this.porter = porter;
-        this.position = position;
-        this.cadence = cadence;
+        this.nivMax = nivMax;
+
         this.dernierTir = 0;
-        this.nivT = new SimpleIntegerProperty(1);
-        this.nivMax = nivMax;
-    }
-    public int getPrix() {
-        return prix;
-    }
-    public void setPrix(int prix){
-        this.prix = prix;
-    }
-    public int getAtk(){
-        return this.atk;
-    }
-    public void setAtk(int atk){
-        this.atk = atk;
-    }
-    public int getPorter() {
-        return porter;
-    }
-    public long getCadence(){
-        return cadence;
-    }
-    public void setCadence(long cadence){
         this.cadence = cadence;
-    }
-
-    public void setPorter(int portee) {
-        this.porter = portee;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position pos){
-        this.position = pos;
-    }
 
 
-    public int getNivT() {
-        return nivT.getValue();
+        this.position = position;
+
+        this.nivT = new SimpleIntegerProperty(1);
     }
 
-    public void setNivT(int nivT) {
-        this.nivT.setValue(nivT);
-    }
-
-    public IntegerProperty nivTProperty() {
-        return nivT;
-    }
-
-    public int getNivMax() {
-        return nivMax;
-    }
-
-    public void setNivMax(int nivMax) {
-        this.nivMax = nivMax;
-    }
 
     public Projectile attaquer(ObservableList<Monstre> monstres, int compteur) {
 
@@ -131,4 +87,63 @@ public abstract class Tour {
 
     public abstract void ameliorer();
     public abstract Projectile creerProjectile(Monstre cible);
+
+
+
+
+    public int getPrix() {
+        return prix;
+    }
+    public void setPrix(int prix){
+        this.prix = prix;
+    }
+
+    public int getAtk(){
+        return this.atk;
+    }
+    public void setAtk(int atk){
+        this.atk = atk;
+    }
+
+    public int getPorter() {
+        return porter;
+    }
+    public void setPorter(int portee) {
+        this.porter = portee;
+    }
+
+    public long getCadence(){
+        return cadence;
+    }
+    public void setCadence(long cadence){
+        this.cadence = cadence;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position pos){
+        this.position = pos;
+    }
+
+    public int getNivT() {
+        return nivT.getValue();
+    }
+
+    public void setNivT(int nivT) {
+        this.nivT.setValue(nivT);
+    }
+
+    public IntegerProperty nivTProperty() {
+        return nivT;
+    }
+
+    public int getNivMax() {
+        return nivMax;
+    }
+
+    public void setNivMax(int nivMax) {
+        this.nivMax = nivMax;
+    }
 }
