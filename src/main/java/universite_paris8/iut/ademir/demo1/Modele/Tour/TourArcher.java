@@ -7,9 +7,11 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileBoulet;
 import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileFleche;
 
 public class TourArcher extends Tour{
+
     public TourArcher(Position position){
         super(25, 75, 4, position,50 , 5); // 1 seconde
     }
+
     @Override
     public void ameliorer() {
         this.setAtk(this.getAtk() + 10);

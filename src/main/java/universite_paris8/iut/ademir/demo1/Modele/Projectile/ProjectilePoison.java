@@ -5,7 +5,6 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
 public class ProjectilePoison extends Projectile {
-
     public ProjectilePoison(double x, double y, Monstre cible) {
         super(x, y, 8, cible);
     }

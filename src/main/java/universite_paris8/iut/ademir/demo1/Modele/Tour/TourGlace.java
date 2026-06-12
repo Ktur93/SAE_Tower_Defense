@@ -11,6 +11,7 @@ public class TourGlace extends Tour{
     public TourGlace(Position position){
         super(1, 100, 3, position,120 , 3);
     }
+
     @Override
     public void ameliorer() {
         this.setAtk(this.getAtk() + 10);
