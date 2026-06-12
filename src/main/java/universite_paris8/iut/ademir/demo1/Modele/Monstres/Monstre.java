@@ -22,11 +22,11 @@ public class Monstre {
     private DoubleProperty x;
     private DoubleProperty y;
     private String monstreID;
-    private int cadence;
     private int compteurPoison;
     private int compteurGlace;
+
     private boolean monstreEmpoisone = false;
-    private int monstreGlacee;
+    private boolean monstreGlacee = false;
 
 
     public Monstre(int pv, double vitesse, int recompense, int degat, ArrayList<Position> chemin) {
@@ -40,29 +40,29 @@ public class Monstre {
         this.x = new SimpleDoubleProperty(depart.getX() * 64);
         this.y = new SimpleDoubleProperty(depart.getY() * 64);
         this.monstreID = "monstre" + compteurID;
-        this.cadence = 10;
         this.compteurPoison = 0;
         this.compteurGlace = 0;
-        this.monstreGlacee = 0;
         compteurID++;
     }
 
     public void avancer() {
         if(monstreEmpoisone == true){
-            if (compteurPoison%150==0) {
+            if (compteurPoison%60==0) {
                 pv.setValue(getPv() - 5);
             }
             compteurPoison++;
         }
-        if(monstreGlacee == 1){
-            setVitesse(0.5);
-            if(compteurGlace%600 == 0){
-                monstreGlacee = 0;
-                setVitesse(1);
+
+        if(monstreGlacee == true){
+            setVitesse(2);
+            if(compteurGlace != 0 && compteurGlace%600 == 0){
+                monstreGlacee = false;
+                setVitesse(4);
                 System.out.println("fin de effet Glace");
             }
             compteurGlace++;
         }
+
         if (!estArrive()) {
             Position position = chemin.get(indiceChemin);
             Position posSuivante = chemin.get(indiceChemin + 1);
@@ -106,39 +106,6 @@ public class Monstre {
     }
 
 
-//    public boolean diffEntreLesPositionsHaut (Position point, Position pointSuivant) {
-//        boolean reponse = false;
-//        if (pointSuivant.getLigne() < point.getLigne()) {
-//            reponse = true;
-//        }
-//        return reponse;
-//    }
-//
-//    public boolean diffEntreLesPositionsBas (Position point, Position pointSuivant) {
-//        boolean reponse = false;
-//        if (pointSuivant.getLigne() > point.getLigne()) {
-//            reponse = true;
-//        }
-//        return reponse;
-//    }
-//
-//    public boolean diffEntreLesPositionsGauche (Position point, Position pointSuivant) {
-//        boolean reponse = false;
-//        if (pointSuivant.getColonne() < point.getColonne()) {
-//            reponse = true;
-//        }
-//        return reponse;
-//    }
-//
-//    public boolean diffEntreLesPositionsDroite (Position point, Position pointSuivant) {
-//        boolean reponse = false;
-//        if (pointSuivant.getColonne() > point.getColonne()) {
-//            reponse = true;
-//        }
-//        return reponse;
-//    }
-
-
     public boolean estArrive() {
         return this.indiceChemin >= this.chemin.size() - 1;
     }
@@ -180,7 +147,7 @@ public class Monstre {
 
     public void recevoirDegatsGlace(int degats) {
         pv.setValue(getPv() - degats);
-        monstreGlacee = 1;
+        monstreGlacee = true;
     }
 
     public void recevoirDegatsPoison(int degats) {

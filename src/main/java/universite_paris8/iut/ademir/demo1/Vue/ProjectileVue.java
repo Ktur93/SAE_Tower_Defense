@@ -10,7 +10,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.*;
 
 public class ProjectileVue {
 
-    private static final int TAILLE_PROJECTILE = 32;
+    private static final int TAILLE_PROJECTILE = 64;
 
     private Partie partie;
     private Pane paneSprites;
@@ -85,7 +85,6 @@ public class ProjectileVue {
     }
 
     public void supprimerSpritesProjectiles() {
-
         for (int i = paneSprites.getChildren().size() - 1; i >= 0; i--) {
 
             if ("projectile".equals(paneSprites.getChildren().get(i).getId())) {
@@ -95,7 +94,6 @@ public class ProjectileVue {
     }
 
     public void afficherProjectiles() {
-
         for (int i = 0; i < partie.getProjectiles().size(); i++) {
             Projectile projectile = partie.getProjectiles().get(i);
             creerSpriteProjectile(projectile);

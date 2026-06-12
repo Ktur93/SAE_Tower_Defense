@@ -191,12 +191,20 @@ public class Controller implements Initializable {
 
         AnimationTimer gameLoop = new AnimationTimer() {
 
+            long dernierTemps = 0;
+            long ticke = 1_000_000_000 /60; // 120 ticke
+
+            @Override
             public void handle(long tempActuel) {
-                    partie.mettreAJour(carteVue,rubisVue,btnAcheterCase);
+
+                if (tempActuel - dernierTemps >= ticke) {
+                    partie.mettreAJour(carteVue, rubisVue, btnAcheterCase);
+                    dernierTemps = tempActuel;
+                }
             }
         };
-        gameLoop.start();
 
+        gameLoop.start();
     }
 
     public void initialiserListeners() {
