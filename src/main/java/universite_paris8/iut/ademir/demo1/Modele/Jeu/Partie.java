@@ -10,13 +10,10 @@ import javafx.scene.control.Button;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
-import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileBoulet;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
-import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
 import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
-import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
 
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class Partie {
     private ArrayList<Vague> vagues;
     private int indiceVague;
     private int prixCase;
-    private IntegerProperty pvPortail;
+    private IntegerProperty pvPortailIntegerProperty;
     private int prixAmelioration;
     private BooleanProperty vagueEnCours; //
     private BooleanProperty toutesLesVaguesTermine; //
@@ -60,7 +57,7 @@ public class Partie {
         this.indiceVague = 0;
         this.vagueEnCours = new SimpleBooleanProperty(false);
         this.prixCase = 50;
-        this.pvPortail = new SimpleIntegerProperty(3);
+        this.pvPortailIntegerProperty = new SimpleIntegerProperty(3);
         this.prixAmelioration = 50;
         this.toutesLesVaguesTermine = new SimpleBooleanProperty(false);
         this.portailMort = new SimpleBooleanProperty(false);
@@ -216,7 +213,7 @@ public class Partie {
         this.indiceVague = 0;
         this.rubis = 2000;
         this.prixCase = 50;
-        pvPortail.set(3);
+        pvPortailIntegerProperty.set(3);
 
         // recreation des vagues
         vagues.get(0).creeVague1(this.chemin);
@@ -294,20 +291,20 @@ public class Partie {
         return this.prixCase;
     }
 
-    public IntegerProperty pvPortailProperty(){
-        return pvPortail;
+    public IntegerProperty pvPortailIntegerPropertyProperty(){
+        return pvPortailIntegerProperty;
     }
 
-    public int getPvPortail() {
-        return pvPortail.get();
+    public int getPvPortailIntegerProperty() {
+        return pvPortailIntegerProperty.get();
     }
 
     public void recevoirDegatPortail(int nbDegat) {
-        pvPortail.set(pvPortail.get() - nbDegat);
+        pvPortailIntegerProperty.set(pvPortailIntegerProperty.get() - nbDegat);
     }
 
     public boolean portailMort() {
-        return pvPortail.get() <= 0;
+        return pvPortailIntegerProperty.get() <= 0;
     }
 
 

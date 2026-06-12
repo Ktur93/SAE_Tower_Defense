@@ -27,9 +27,9 @@ public class CoeurVue {
         this.coeurVide = new Image(Main.class.getResourceAsStream("Coeurs/coeurVide.png"));
 
         creerSpriteCoeur();
-        mettreAJourPvPortail(partie.getPvPortail());
+        mettreAJourPvPortail(partie.getPvPortailIntegerProperty());
 
-        partie.pvPortailProperty().addListener((obs, oldValue, newValue) -> {
+        partie.pvPortailIntegerPropertyProperty().addListener((obs, oldValue, newValue) -> {
             mettreAJourPvPortail(newValue.intValue());
         });
     }
