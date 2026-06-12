@@ -10,7 +10,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.*;
 
 public class ProjectileVue {
 
-    private static final int TAILLE_PROJECTILE = 64;
+    private static final int TAILLE_PROJECTILE = 32;
 
     private Partie partie;
     private Pane paneSprites;
