@@ -49,19 +49,6 @@ public class Carte {
     }
 
 
-    public void set(int x, int y, int code) {
-        if (dansCarte(x, y)) {
-            carte[y][x] = code;
-        }
-    }
-
-    public boolean dansCarte(int x, int y) {
-        if(x >= 0 && x < getLargeur() && y >= 0 && y < getHauteur()){
-            return true;
-        }else {
-            return false;
-        }
-    }
 
     public int getLargeur() {
         return carte[0].length;
@@ -69,24 +56,22 @@ public class Carte {
     public int getHauteur() {
         return carte.length;
     }
-    public int Tuile(int col, int ligne) {
-        return carte[ligne][col];
-    }
-
-
-
     public int getLargeurDecoration() {
         return carte[0].length;
     }
     public int getHauteurDecoration() {
         return carte.length;
     }
+
+    public int Tuile(int col, int ligne) {
+        return carte[ligne][col];
+    }
     public int TuileDecorations(int col, int ligne) {
         return carteDecoration[ligne][col];
     }
 
 
-    //marchable
+
     public boolean estMarchable(int colonne, int ligne) {
         if (!estDansCarte(colonne, ligne)) {
             return false;
@@ -124,7 +109,7 @@ public class Carte {
 
         return voisins;
     }
-    //
+
 
 
     public Position trouverArrivee() {
@@ -166,7 +151,7 @@ public class Carte {
 
 
 
-    //verification pour l'emplacement des tours :
+    // verification pour l'emplacement des tours :
 
     public boolean estDansCarte(int colonne, int ligne) {
         if (colonne < 0 || colonne >= getLargeur()) {
@@ -192,5 +177,47 @@ public class Carte {
         }
 
         return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void setCarte(int x, int y, int code) {
+        if (dansCarte(x, y)) {
+            carte[y][x] = code;
+        }
+    }
+
+    public boolean dansCarte(int x, int y) {
+        if(x >= 0 && x < getLargeur() && y >= 0 && y < getHauteur()){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

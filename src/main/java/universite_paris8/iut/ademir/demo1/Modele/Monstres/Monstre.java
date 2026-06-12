@@ -10,38 +10,61 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import java.util.ArrayList;
 
 public class Monstre {
-
-    private static int compteurID = 0;
-
-    private double vitesse;
     private int recompense;
     private int indiceChemin;
     private int degat;
-    private ArrayList<Position> chemin;
-    private IntegerProperty pv;
-    private DoubleProperty x;
-    private DoubleProperty y;
-    private String monstreID;
     private int compteurPoison;
     private int compteurGlace;
 
-    private boolean monstreEmpoisone = false;
-    private boolean monstreGlacee = false;
+    private double vitesse;
+
+    private ArrayList<Position> chemin;
+    private Position depart;
+
+    private IntegerProperty pv;
+    private DoubleProperty x;
+    private DoubleProperty y;
+
+    private String monstreID;
+
+
+
+    private boolean monstreGlacee;
+    private boolean monstreEmpoisone;
+
+    private static int compteurID = 0;
+
+
 
 
     public Monstre(int pv, double vitesse, int recompense, int degat, ArrayList<Position> chemin) {
-        Position depart = chemin.get(0);
-        this.pv = new SimpleIntegerProperty(pv);
-        this.vitesse = vitesse;
         this.recompense = recompense;
-        this.chemin = chemin;
         this.indiceChemin = 0;
         this.degat = degat;
-        this.x = new SimpleDoubleProperty(depart.getX() * 64);
-        this.y = new SimpleDoubleProperty(depart.getY() * 64);
+
         this.monstreID = "monstre" + compteurID;
+
+
         this.compteurPoison = 0;
         this.compteurGlace = 0;
+
+        this.vitesse = vitesse;
+
+        this.monstreGlacee = false;
+        this.monstreEmpoisone = false;
+
+        this.chemin = chemin;
+        this.depart = chemin.get(0);
+
+
+        this.pv = new SimpleIntegerProperty(pv);
+        this.x = new SimpleDoubleProperty(depart.getX() * 64);
+        this.y = new SimpleDoubleProperty(depart.getY() * 64);
+
+
+        this.monstreID = "monstre" + compteurID;
+
+
         compteurID++;
     }
 
@@ -104,6 +127,7 @@ public class Monstre {
             }
         }
     }
+
 
 
     public boolean estArrive() {
@@ -172,6 +196,10 @@ public class Monstre {
         this.y.setValue(newY);
     }
 
+    public void setRecompense(int recompense) {
+        this.recompense = recompense;
+    }
+
     public DoubleProperty xProperty() {
         return x;
     }
@@ -182,10 +210,6 @@ public class Monstre {
 
     public IntegerProperty pvProperty(){
         return pv;
-    }
-
-    public boolean estMort() {
-        return this.pv.intValue() <= 0;
     }
 
     public String getMonstreID() {
@@ -200,14 +224,13 @@ public class Monstre {
         return this.chemin.get(this.chemin.size() - 1).getY();
     }
 
+    public boolean estMort() {
+        return this.pv.intValue() <= 0;
+    }
+
     public boolean estADestination() {
         return (getDernierePositionX() == this.getPosition().getX() && getDernierePositionY() == this.getPosition().getY());
     }
-
-    public void setRecompense(int recompense) {
-        this.recompense = recompense;
-    }
-
 
 }
 

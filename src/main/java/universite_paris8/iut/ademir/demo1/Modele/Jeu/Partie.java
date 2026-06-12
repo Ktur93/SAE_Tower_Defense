@@ -1,22 +1,17 @@
 package universite_paris8.iut.ademir.demo1.Modele.Jeu;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
-import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileBoulet;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
-import universite_paris8.iut.ademir.demo1.Modele.Tour.TourCanon;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
 import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
-import universite_paris8.iut.ademir.demo1.Modele.Tour.*;
 
 
 import java.util.ArrayList;
@@ -25,65 +20,116 @@ public class Partie {
 
     private final static int TAILLE_VAGUE = 5;
 
-    private int rubis;
+
     private ObservableList<Tour> tours;
     private ObservableList<Monstre> monstres;
     private ObservableList<Projectile> projectiles;
+
     private ArrayList<Position> chemin;
     private ArrayList<Position> chemin2;
     private ArrayList<Position> chemin3;
+
     private ArrayList<Vague> vagues;
-    private int indiceVague;
-    private int prixCase;
+
+    private int rubis;
     private int pvPortail;
+    private int prixCase;
     private int prixAmelioration;
+    private int indiceVague;
+    private int compteur;
+    private int compteurDefaite;
+
     private BooleanProperty vagueEnCours; //
     private BooleanProperty toutesLesVaguesTermine; //
     private BooleanProperty portailMort; //
     private BooleanProperty victoire;
     private BooleanProperty defaite;
-    private int compteur;
+
     private boolean victoireBoucleLanceUneFois;
-    private int compteurDefaite;
     private boolean defaiteBoucleLanceUneFois;
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
-        this.rubis = 1112000;
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
+
+
         this.chemin = chemin;
         this.chemin2 = chemin2;
         this.chemin3 = chemin3;
+
         this.vagues = new ArrayList<>();
-        this.indiceVague = 0;
-        this.vagueEnCours = new SimpleBooleanProperty(false);
-        this.prixCase = 50;
+
+        this.rubis = 1112000;
         this.pvPortail = 10;
+        this.prixCase = 50;
         this.prixAmelioration = 50;
+        this.indiceVague = 0;
+        this.compteur = 0;
+        this.compteurDefaite = 0;
+
+        this.vagueEnCours = new SimpleBooleanProperty(false);
         this.toutesLesVaguesTermine = new SimpleBooleanProperty(false);
         this.portailMort = new SimpleBooleanProperty(false);
         this.victoire = new SimpleBooleanProperty(false);
-        this.victoireBoucleLanceUneFois = false;
         this.defaite = new SimpleBooleanProperty(false);
-        this.compteur = 0;
-        this.compteurDefaite = 0;
+        this.victoireBoucleLanceUneFois = false;
         this.defaiteBoucleLanceUneFois = false;
-        Vagues();
+
+        creeVagues();
     }
 
-    public int getRubis() {
-        return this.rubis;
+
+    public void mettreAJour() {
+        // Faire avancer les modeles bougeables
+        faireAvancerMonstres();
+        faireAttaquerTours(compteur);
+        supprimerMonstresMorts();
+        projectilePourMettreAJour();
+
+
+
+
+        // Verification de si la vague est en cours pour envoyer les monstres et sinon avancer la vague suivante
+        if (this.vagueEnCours.get()) {
+            Vague vagueActuelle = getVagues().get(indiceVague);
+            vagueActuelle.mettreAJourVague(compteur, getMonstres());
+
+
+            if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
+                this.indiceVague++;
+                this.vagueEnCours.set(false);
+
+            }
+        }
+
+
+        // partie Victoire
+        if (getIndiceVague() > (getVagues().size() - 1) && !(victoireBoucleLanceUneFois) && !(portailMort())) {
+            this.victoireBoucleLanceUneFois = true;
+            this.victoire.set(true);
+        }
+
+        // partie defaite
+        if (portailMort() && !defaiteBoucleLanceUneFois) {
+            if (!(getVagueEnCours())) {
+                defaite.set(true);
+                this.compteurDefaite = compteur;
+                defaiteBoucleLanceUneFois = true;
+            }
+        }
+
+        if (!(portailMort())) {
+            defaite.set(false);
+        }
     }
 
-    public ObservableList<Monstre> getMonstres() {
-        return monstres;
-    }
 
-    public ObservableList<Projectile> getProjectiles(){
-        return projectiles;
-    }
+
+
+
+
 
     public void faireAvancerMonstres() {
 
@@ -118,9 +164,7 @@ public class Partie {
         }
     }
 
-    public ObservableList<Tour> getTours() {
-        return tours;
-    }
+
 
     public boolean placerTour(Tour tour, Carte carte) {
         Position position = tour.getPosition();
@@ -158,27 +202,11 @@ public class Partie {
         }
     }
 
-    public boolean getVagueEnCours () {
-        return this.vagueEnCours.get();
-    }
 
-    public int getIndiceVague () {
-        return this.indiceVague;
-    }
 
-    public int getIndiceVaguePlusUn () {
-        return indiceVague + 1;
-    }
 
-    public boolean toutesLesVaguesTerminees () {
-        return this.getIndiceVague() >= this.vagues.size();
-    }
 
-    public ArrayList<Vague> getVagues () {
-        return this.vagues;
-    }
-
-    public void Vagues() {
+    public void creeVagues() {
         Vague vague1 = new Vague();
         vague1.creeVague1(chemin);
 
@@ -232,71 +260,89 @@ public class Partie {
         tours.clear();
     }
 
+    public void projectilePourMettreAJour(){
 
-    public void mettreAJour(CarteVue carteVue, RubisVue rubisVue , Button button) {
-        // Faire avancer les modeles bougeables
-        faireAvancerMonstres();
-        faireAttaquerTours(compteur);
-        supprimerMonstresMorts();
-        projectilePourMettreAJour();
-        rubisVue.afficherRubis();
-        button.setText("Acheter case - " + getPrixCase());
+        int i = 0;
 
+        while (i < projectiles.size()) {
 
+            Projectile projectile = projectiles.get(i);
 
-        // Verification de si la vague est en cours pour envoyer les monstres et sinon avancer la vague suivante
-        if (this.vagueEnCours.get()) {
-            Vague vagueActuelle = getVagues().get(indiceVague);
-            vagueActuelle.mettreAJourVague(compteur, getMonstres());
-
-
-            if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
-                this.indiceVague++;
-                this.vagueEnCours.set(false);
-
+            if (projectile.toucher()) {
+                projectiles.remove(i);
+                System.out.println("supp");
+            } else {
+                i++;
             }
         }
-
-
-        // partie Victoire
-        if (getIndiceVague() > (getVagues().size() - 1) && !(victoireBoucleLanceUneFois) && !(portailMort())) {
-            this.victoireBoucleLanceUneFois = true;
-            this.victoire.set(true);
-        }
-
-        // partie defaite
-        if (portailMort() && !defaiteBoucleLanceUneFois) {
-            if (!(getVagueEnCours())) {
-                    defaite.set(true);
-                    this.compteurDefaite = compteur;
-                    defaiteBoucleLanceUneFois = true;
-            }
-        }
-
-        if (!(portailMort())) {
-            defaite.set(false);
-        }
+    }
 
 
 
-        if ((compteur - compteurDefaite) > 300 && defaite.get()) {
 
-            defaite.set(false);
-            defaiteBoucleLanceUneFois = false;
-        } else {
-            carteVue.timerRecommencer(compteur - compteurDefaite);
-        }
+    public int getRubis() {
+        return this.rubis;
+    }
 
-        compteur++;
+    public ObservableList<Monstre> getMonstres() {
+        return monstres;
+    }
+
+    public ObservableList<Projectile> getProjectiles(){
+        return projectiles;
+    }
+
+    public ObservableList<Tour> getTours() {
+        return tours;
+    }
+
+    public int getIndiceVague () {
+        return this.indiceVague;
+    }
+
+    public int getIndiceVaguePlusUn () {
+        return indiceVague + 1;
+    }
+
+    public boolean getToutesLesVaguesTerminees() {
+        return this.getIndiceVague() >= this.vagues.size();
+    }
+
+    public ArrayList<Vague> getVagues () {
+        return this.vagues;
+    }
+
+    public boolean getVagueEnCours () {
+        return this.vagueEnCours.get();
     }
 
     public int getPrixCase() {
         return this.prixCase;
     }
 
-    public int getPvPortail() {
-        return this.pvPortail;
+
+
+    public int getCompteur() {
+        return this.compteur;
     }
+
+    public int getCompteurDefaite() {
+        return this.compteurDefaite;
+    }
+
+
+
+
+    public void setDefaiteProperty (boolean defaite) {
+        this.defaite.set(defaite);
+    }
+
+    public void setCompteurPlusPlus() {
+        this.compteur++;
+    }
+
+
+
 
     public void recevoirDegatPortail(int nbDegat) {
         this.pvPortail -= nbDegat;
@@ -327,26 +373,17 @@ public class Partie {
         return victoire;
     }
 
+
+
+
     public void setIndiceVague (int i) {
         this.indiceVague = i;
     }
 
-    public void projectilePourMettreAJour(){
-
-        int i = 0;
-
-        while (i < projectiles.size()) {
-
-            Projectile projectile = projectiles.get(i);
-
-            if (projectile.toucher()) {
-                projectiles.remove(i);
-                System.out.println("supp");
-            } else {
-                i++;
-            }
-        }
+    public int getPvPortail() {
+        return this.pvPortail;
     }
+
 
 
 }

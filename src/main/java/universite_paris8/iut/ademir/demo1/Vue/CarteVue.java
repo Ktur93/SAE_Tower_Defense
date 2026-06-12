@@ -222,15 +222,17 @@ public class CarteVue {
         }
     }
 
-    public void retirerEcranDefaite() {
-        paneDecoration.getChildren().remove(this.labelDefaite);
-    }
-
     public void ajouterEcranVictoire() {
         if (!paneDecoration.getChildren().contains(labelVictoire)) {
             paneDecoration.getChildren().add(labelVictoire);
         }
     }
+
+    public void retirerEcranDefaite() {
+        paneDecoration.getChildren().remove(this.labelDefaite);
+    }
+
+
 
     public void viderCarte() {
         paneCarte.getChildren().clear();

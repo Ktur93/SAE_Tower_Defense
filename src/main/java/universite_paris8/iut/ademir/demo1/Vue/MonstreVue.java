@@ -99,15 +99,4 @@ public class MonstreVue {
         return image;
     }
 
-    public void mettreAJourSprites() {
-//        for (int i = paneSprites.getChildren().size() - 1; i >= 0; i--) {
-//
-//            Node node = paneSprites.getChildren().get(i);
-//
-//            if ("monstre".equals(node.getId())) {
-//                paneSprites.getChildren().remove(i);
-//            }
-//        }
-//        afficherMonstres();
-    }
 }
