@@ -65,7 +65,6 @@ public class Controller implements Initializable {
     private boolean ameliorerTour = false;
     private boolean defaiteLance;
 
-    private ToursVue toursVue;
     private CoeurVue coeurVue;
 
 
@@ -221,7 +220,7 @@ public class Controller implements Initializable {
         AnimationTimer gameLoop = new AnimationTimer() {
 
             long dernierTemps = 0;
-            long ticke = 1_000_000_000 /60; // 120 ticke
+            long ticke = 1_000_000_000 / 60; // 120 ticke
 
             @Override
             public void handle(long tempActuel) {
@@ -232,8 +231,7 @@ public class Controller implements Initializable {
                     rubisVue.afficherRubis();
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
 
-                    if ((partie.getCompteur() - partie.getCompteurDefaite()) > 300 && partie.defaiteProperty().get()) {
-
+                    if ((partie.getCompteur() - partie.getCompteurDefaite()) > 175 && partie.defaiteProperty().get()) { // Avec les ticks 175 ca fait environ 5 secondes
                         partie.setDefaiteProperty(false);
                     } else {
                         carteVue.timerRecommencer(partie.getCompteur() - partie.getCompteurDefaite());
