@@ -27,8 +27,6 @@ public class Monstre {
 
     private String monstreID;
 
-
-
     private boolean monstreGlacee;
     private boolean monstreEmpoisone;
 
@@ -174,11 +172,12 @@ public class Monstre {
     }
 
     public void recevoirDegatsGlace(int degats) {
-
+        pv.setValue(getPv() - degats);
         monstreGlacee = true;
     }
 
     public void recevoirDegatsPoison(int degats) {
+        pv.setValue(getPv() - degats);
         monstreEmpoisone = true;
     }
 

@@ -68,12 +68,6 @@ public abstract class Tour {
     }
 
 
-    public void infligerDegat(Monstre cible){
-        cible.recevoirDegats(atk);
-    }
-
-
-
     private boolean estAPorter(Monstre monstre) {
         int x = position.getX() - monstre.getPosition().getX();
         int y = position.getY() - monstre.getPosition().getY();
