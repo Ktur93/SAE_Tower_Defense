@@ -9,7 +9,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectilePoison;
 public class TourPoison extends Tour{
 
     public TourPoison(Position position){
-        super(5, 100, 3, position,50  , 2); // 0,5 seconde
+        super(15, 100, 3, position,50  , 2); // 0,5 seconde
     }
 
     @Override

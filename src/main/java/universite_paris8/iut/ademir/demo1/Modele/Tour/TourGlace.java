@@ -9,7 +9,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileGlace;
 public class TourGlace extends Tour{
 
     public TourGlace(Position position){
-        super(1, 100, 3, position,120 , 3);
+        super(10, 100, 3, position,120 , 3);
     }
 
     @Override
