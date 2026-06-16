@@ -13,6 +13,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
 import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
+import universite_paris8.iut.ademir.demo1.Vue.MonstreVue;
 import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
 
 

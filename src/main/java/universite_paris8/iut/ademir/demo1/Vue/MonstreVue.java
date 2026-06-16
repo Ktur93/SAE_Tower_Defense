@@ -85,18 +85,63 @@ public class MonstreVue {
         Image image = null;
 
         if (monstre instanceof Zombie) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/zombie.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/zombieGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/zombie.png"));
+            }
         } else if (monstre instanceof Araignee) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/araignee.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/araigneeGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/araignee.png"));
+            }
         } else if (monstre instanceof Squelette) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/squelette.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/squeletteGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/squelette.png"));
+            }
         } else if (monstre instanceof Pillager) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/pillager.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/pillagerGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/pillager.png"));
+            }
         } else if (monstre instanceof Boss) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/boss.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/bossGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/boss.png"));
+            }
         }
 
         return image;
+    }
+
+    public void effetAffichage() {
+
+        for (Node node : paneSprites.getChildren()) {
+
+            if (node instanceof ImageView) {
+
+                ImageView sprite = (ImageView) node;
+
+                for (Monstre monstre : partie.getMonstres()) {
+
+                    if (monstre.getMonstreID().equals(sprite.getId())) {
+
+                        sprite.setImage(imageMonstre(monstre));
+
+                    }
+                }
+            }
+        }
     }
 
 }
