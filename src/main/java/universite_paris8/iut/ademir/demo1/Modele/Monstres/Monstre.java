@@ -164,18 +164,17 @@ public class Monstre {
 
 
 
+
     public void recevoirDegats(int degats) {
         pv.setValue(getPv() - degats);
-
     }
 
     public void recevoirDegatsGlace(int degats) {
-        pv.setValue(getPv() - degats);
+
         monstreGlacee = true;
     }
 
     public void recevoirDegatsPoison(int degats) {
-        pv.setValue(getPv() - degats);
         monstreEmpoisone = true;
     }
 

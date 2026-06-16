@@ -59,7 +59,6 @@ public abstract class Tour {
             }
 
             if (cible != null) {
-                infligerDegat(cible);
                 dernierTir = compteur;
                 return creerProjectile(cible);
             }

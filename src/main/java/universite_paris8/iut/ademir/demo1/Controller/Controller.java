@@ -207,7 +207,7 @@ public class Controller implements Initializable {
         AnimationTimer gameLoop = new AnimationTimer() {
 
             long dernierTemps = 0;
-            long ticke = 1_000_000_000 /60; // 120 ticke
+            long ticke = 1_000_000_000 /60; // 60 ticke
 
             @Override
             public void handle(long tempActuel) {

@@ -24,11 +24,7 @@ public class TourPoison extends Tour{
     public Projectile creerProjectile(Monstre cible) {
         double x = getPosition().getX() * 64;
         double y = getPosition().getY() * 64;
-        return new ProjectilePoison(x, y, cible);
+        return new ProjectilePoison(x, y, getAtk(),cible);
     }
 
-    @Override
-    public void infligerDegat(Monstre cible){
-        cible.recevoirDegatsPoison(getAtk());
-    }
 }

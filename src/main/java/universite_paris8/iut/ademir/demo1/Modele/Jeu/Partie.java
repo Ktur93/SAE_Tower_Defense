@@ -4,14 +4,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
-import universite_paris8.iut.ademir.demo1.Vue.CarteVue;
-import universite_paris8.iut.ademir.demo1.Vue.RubisVue;
 
 
 import java.util.ArrayList;
@@ -261,14 +258,11 @@ public class Partie {
     }
 
     public void projectilePourMettreAJour(){
-
         int i = 0;
 
         while (i < projectiles.size()) {
-
             Projectile projectile = projectiles.get(i);
-
-            if (projectile.toucher()) {
+            if (projectile.avancer()) {
                 projectiles.remove(i);
                 System.out.println("supp");
             } else {

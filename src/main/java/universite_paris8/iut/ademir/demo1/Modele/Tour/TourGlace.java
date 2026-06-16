@@ -24,11 +24,6 @@ public class TourGlace extends Tour{
     public Projectile creerProjectile(Monstre cible) {
         double x = getPosition().getX() * 64;
         double y = getPosition().getY() * 64;
-        return new ProjectileGlace(x, y, cible);
-    }
-
-    @Override
-    public void infligerDegat(Monstre cible){
-        cible.recevoirDegatsGlace(getAtk());
+        return new ProjectileGlace(x, y, getAtk(),cible);
     }
 }
