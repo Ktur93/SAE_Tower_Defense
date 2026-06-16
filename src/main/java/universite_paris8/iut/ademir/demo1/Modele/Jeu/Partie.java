@@ -1,7 +1,9 @@
 package universite_paris8.iut.ademir.demo1.Modele.Jeu;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Carte;
@@ -28,11 +30,15 @@ public class Partie {
 
     private ArrayList<Vague> vagues;
 
+
     private int rubis;
     private int pvPortail;
     private int prixCase;
-    private int prixAmelioration;
+
     private int indiceVague;
+    private IntegerProperty pvPortailIntegerProperty;
+
+    private int prixAmelioration;
     private int compteur;
     private int compteurDefaite;
 
@@ -47,6 +53,9 @@ public class Partie {
 
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
+
+        this.rubis = 10000;
+
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
@@ -58,9 +67,15 @@ public class Partie {
 
         this.vagues = new ArrayList<>();
 
+
         this.rubis = 1112000;
         this.pvPortail = 10;
         this.prixCase = 50;
+
+        this.indiceVague = 0;
+        this.vagueEnCours = new SimpleBooleanProperty(false);
+        this.pvPortailIntegerProperty = new SimpleIntegerProperty(3);
+
         this.prixAmelioration = 50;
         this.indiceVague = 0;
         this.compteur = 0;
@@ -241,7 +256,7 @@ public class Partie {
         this.indiceVague = 0;
         this.rubis = 2000;
         this.prixCase = 50;
-        this.pvPortail = 10;
+        pvPortailIntegerProperty.set(3);
 
         // recreation des vagues
         vagues.get(0).creeVague1(this.chemin);
@@ -315,9 +330,16 @@ public class Partie {
     }
 
 
-
     public int getCompteur() {
         return this.compteur;
+    }
+
+    public IntegerProperty pvPortailIntegerPropertyProperty(){
+        return pvPortailIntegerProperty;
+    }
+
+    public int getPvPortailIntegerProperty() {
+        return pvPortailIntegerProperty.get();
     }
 
     public int getCompteurDefaite() {
@@ -339,11 +361,11 @@ public class Partie {
 
 
     public void recevoirDegatPortail(int nbDegat) {
-        this.pvPortail -= nbDegat;
+        pvPortailIntegerProperty.set(pvPortailIntegerProperty.get() - nbDegat);
     }
 
     public boolean portailMort() {
-        return this.pvPortail <= 0;
+        return pvPortailIntegerProperty.get() <= 0;
     }
 
 

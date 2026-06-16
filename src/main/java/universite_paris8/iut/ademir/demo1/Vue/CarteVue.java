@@ -213,7 +213,7 @@ public class CarteVue {
     }
 
     public void timerRecommencer (long tempsQuiReste) {
-        labelDefaite.setText("Vous êtes mort - " + (5 -(tempsQuiReste / 60)));
+        labelDefaite.setText("Vous êtes mort - " + (5 -(tempsQuiReste / 33))); // 33 car je trouve que c le mieux pour que ca parte pile au bon moment,
     }
 
     public void ajouterEcranDefaite() {

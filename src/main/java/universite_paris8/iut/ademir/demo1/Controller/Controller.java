@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
 public class Controller implements Initializable {
 
     private static final int TAILLE_TUILE = 64;
@@ -29,6 +30,8 @@ public class Controller implements Initializable {
     private TilePane paneCarte;
     @FXML
     private Pane paneSprites;
+    @FXML
+    private Pane paneCoeurs;
     @FXML
     private Pane paneDecoration;
 
@@ -62,6 +65,9 @@ public class Controller implements Initializable {
     private boolean ameliorerTour = false;
     private boolean defaiteLance;
 
+    private CoeurVue coeurVue;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -93,6 +99,7 @@ public class Controller implements Initializable {
         RubisVue rubisVue = new RubisVue(partie, labelRubis);
         rubisVue.afficherRubis();
 
+
         // Creation de MonstreVue
         MonstreVue monstreVue = new MonstreVue(partie, paneSprites);
 
@@ -101,6 +108,12 @@ public class Controller implements Initializable {
 
         // Creation de ProjectileVue
         ProjectileVue projectileVue = new ProjectileVue(partie, paneSprites);
+
+
+
+
+        coeurVue = new CoeurVue(partie, paneCoeurs);
+
 
         // Initialisation des listeners
         initialiserListeners();
@@ -207,6 +220,7 @@ public class Controller implements Initializable {
         AnimationTimer gameLoop = new AnimationTimer() {
 
             long dernierTemps = 0;
+
             long ticke = 1_000_000_000 /60; // 60 ticke
 
             @Override
@@ -218,8 +232,7 @@ public class Controller implements Initializable {
                     rubisVue.afficherRubis();
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
 
-                    if ((partie.getCompteur() - partie.getCompteurDefaite()) > 300 && partie.defaiteProperty().get()) {
-
+                    if ((partie.getCompteur() - partie.getCompteurDefaite()) > 175 && partie.defaiteProperty().get()) { // Avec les ticks 175 ca fait environ 5 secondes
                         partie.setDefaiteProperty(false);
                     } else {
                         carteVue.timerRecommencer(partie.getCompteur() - partie.getCompteurDefaite());
@@ -270,8 +283,6 @@ public class Controller implements Initializable {
                 mettreAJourBoutonVague();
             }
         });
-
-
 
     }
 
@@ -326,6 +337,7 @@ public class Controller implements Initializable {
         carteVue.viderCarte();
         carteVue.dessinerCarte();
         paneSprites.getChildren().clear();
+        coeurVue.mettreAJourPvPortail(3);
     }
 
     public void desactiverToutLesBoutons() {
@@ -353,51 +365,6 @@ public class Controller implements Initializable {
         btnAmeliorer.setDisable(false);
         this.defaiteLance = false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
