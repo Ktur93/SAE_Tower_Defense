@@ -162,6 +162,10 @@ public class Monstre {
         return this.degat;
     }
 
+    public boolean getMonstreGlacee() {
+        return monstreGlacee;
+    }
+
 
 
 

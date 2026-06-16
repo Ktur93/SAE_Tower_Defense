@@ -228,6 +228,7 @@ public class Controller implements Initializable {
 
                 if (tempActuel - dernierTemps >= ticke) {
                     partie.mettreAJour();
+                    monstreVue.effetAffichage();
 
                     rubisVue.afficherRubis();
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());

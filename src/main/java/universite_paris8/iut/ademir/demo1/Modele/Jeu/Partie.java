@@ -12,7 +12,6 @@ import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
 import universite_paris8.iut.ademir.demo1.Modele.Tour.Tour;
 import universite_paris8.iut.ademir.demo1.Modele.Projectile.Projectile;
 
-
 import java.util.ArrayList;
 
 public class Partie {
