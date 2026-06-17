@@ -17,6 +17,7 @@ public class Monstre {
     private int compteurGlace;
 
     private double vitesse;
+    private double vitesseNormal;
 
     private ArrayList<Position> chemin;
     private Position depart;
@@ -36,7 +37,7 @@ public class Monstre {
 
 
 
-    public Monstre(int pv, double vitesse, int recompense, int degat, ArrayList<Position> chemin) {
+    public Monstre(int pv, double vitesse, double vitesseNormal, int recompense, int degat, ArrayList<Position> chemin) {
         this.recompense = recompense;
         this.indiceChemin = 0;
         this.degat = degat;
@@ -48,6 +49,7 @@ public class Monstre {
         this.compteurGlace = 0;
 
         this.vitesse = vitesse;
+        this.vitesseNormal = vitesseNormal;
 
         this.monstreGlacee = false;
         this.monstreEmpoisone = false;
@@ -80,7 +82,7 @@ public class Monstre {
             setVitesse(2);
             if(compteurGlace != 0 && compteurGlace%600 == 0){
                 monstreGlacee = false;
-                setVitesse(4);
+                setVitesse(vitesseNormal);
                 System.out.println("fin de effet Glace");
             }
             compteurGlace++;
