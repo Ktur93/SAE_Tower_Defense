@@ -59,7 +59,6 @@ public abstract class Tour {
             }
 
             if (cible != null) {
-                infligerDegat(cible);
                 dernierTir = compteur;
                 return creerProjectile(cible);
             }
@@ -67,12 +66,6 @@ public abstract class Tour {
 
         return null;
     }
-
-
-    public void infligerDegat(Monstre cible){
-        cible.recevoirDegats(atk);
-    }
-
 
 
     private boolean estAPorter(Monstre monstre) {

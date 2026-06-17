@@ -1,32 +1,30 @@
 package universite_paris8.iut.ademir.demo1.Modele.Projectile;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
-public class Projectile {
+public abstract class Projectile {
 
     private DoubleProperty xProperty;
     private DoubleProperty yProperty;
 
     private int vitesse;
+    public int degats;
+    public Monstre cible;
 
-    private Monstre cible;
 
-    public Projectile(double x, double y, int vitesse, Monstre cible) {
+    public Projectile(double x, double y, int vitesse, int degats, Monstre cible) {
         this.xProperty = new SimpleDoubleProperty(x);
         this.yProperty = new SimpleDoubleProperty(y);
 
         this.vitesse = vitesse;
-
+        this.degats = degats;
         this.cible = cible;
     }
 
-    public boolean toucher() {
+    public boolean avancer() {
         if (cible == null || cible.estMort()) {
             return true;
         }
@@ -40,6 +38,7 @@ public class Projectile {
         double distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance <= vitesse) {
+            toucherCible();
             return true;
         }
 
@@ -74,4 +73,6 @@ public class Projectile {
     public DoubleProperty yProperty() {
         return yProperty;
     }
+
+    public abstract void toucherCible();
 }

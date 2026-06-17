@@ -22,6 +22,6 @@ public class TourCanon extends Tour {
     public Projectile creerProjectile(Monstre cible) {
         double x = getPosition().getX() * 64;
         double y = getPosition().getY() * 64;
-        return new ProjectileBoulet(x, y, cible);
+        return new ProjectileBoulet(x, y, getAtk(),cible);
     }
 }
