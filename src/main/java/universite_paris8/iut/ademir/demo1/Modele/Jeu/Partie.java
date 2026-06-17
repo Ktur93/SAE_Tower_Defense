@@ -67,7 +67,7 @@ public class Partie {
         this.vagues = new ArrayList<>();
 
 
-        this.rubis = 1112000;
+        this.rubis = 250;
         this.pvPortail = 10;
         this.prixCase = 50;
 
@@ -135,12 +135,6 @@ public class Partie {
             defaite.set(false);
         }
     }
-
-
-
-
-
-
 
     public void faireAvancerMonstres() {
 
@@ -253,7 +247,7 @@ public class Partie {
 
     public void recommnencer() {
         this.indiceVague = 0;
-        this.rubis = 2000;
+        this.rubis = 250;
         this.prixCase = 50;
         pvPortailIntegerProperty.set(3);
 
