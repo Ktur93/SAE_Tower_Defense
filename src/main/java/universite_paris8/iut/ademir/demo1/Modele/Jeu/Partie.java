@@ -53,8 +53,6 @@ public class Partie {
 
     public Partie(ArrayList<Position> chemin,ArrayList<Position> chemin2,ArrayList<Position> chemin3) {
 
-        this.rubis = 10000;
-
         this.tours = FXCollections.observableArrayList();
         this.monstres = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
@@ -67,9 +65,9 @@ public class Partie {
         this.vagues = new ArrayList<>();
 
 
-        this.rubis = 1112000;
+        this.rubis = 200;
         this.pvPortail = 10;
-        this.prixCase = 50;
+        this.prixCase = 25;
 
         this.indiceVague = 0;
         this.vagueEnCours = new SimpleBooleanProperty(false);
@@ -91,6 +89,13 @@ public class Partie {
         creeVagues();
     }
 
+    public ArrayList<Position> getChemin() {
+        return chemin;
+    }
+
+    public int getPrixAmelioration() {
+        return prixAmelioration;
+    }
 
     public void mettreAJour() {
         // Faire avancer les modeles bougeables
@@ -110,6 +115,7 @@ public class Partie {
 
             if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
                 this.indiceVague++;
+                this.prixAmelioration += 50;
                 this.vagueEnCours.set(false);
 
             }
@@ -136,12 +142,6 @@ public class Partie {
         }
     }
 
-
-
-
-
-
-
     public void faireAvancerMonstres() {
 
         for (int i = 0 ; i < getMonstres().size() ; i++){
@@ -167,17 +167,20 @@ public class Partie {
 
 
     public void acheterCase(Position position, Carte carte) {
-        if (rubis > prixCase ) {
+        if (rubis >= prixCase ) {
             if (carte.caseDebloquer(position)) {
                 rubis -= prixCase;
-                prixCase += 50;
+                prixCase += 25;
             }
         }
     }
 
 
-
     public boolean placerTour(Tour tour, Carte carte) {
+        if (tour == null) {
+            return false;
+        }
+
         Position position = tour.getPosition();
 
         if (!carte.estCaseTour(position.getX(), position.getY())) {
@@ -222,16 +225,16 @@ public class Partie {
         vague1.creeVague1(chemin);
 
         Vague vague2 = new Vague();
-        vague2.creeVague2(chemin2);
+        vague2.creeVague2(chemin, chemin2);
 
         Vague vague3 = new Vague();
-        vague3.creeVague3(chemin3);
+        vague3.creeVague3(chemin, chemin2);
 
         Vague vague4 = new Vague();
-        vague4.creeVague4(chemin);
+        vague4.creeVague4(chemin, chemin2, chemin3);
 
         Vague vague5 = new Vague();
-        vague5.creeVague5(chemin3);
+        vague5.creeVague5(chemin, chemin2, chemin3);
 
         getVagues().add(vague1);
         getVagues().add(vague2);
@@ -253,16 +256,36 @@ public class Partie {
 
     public void recommnencer() {
         this.indiceVague = 0;
-        this.rubis = 2000;
+        this.rubis = 250;
         this.prixCase = 50;
         pvPortailIntegerProperty.set(3);
+        this.defaiteBoucleLanceUneFois = false;
 
         // recreation des vagues
+        // recreation des vagues
         vagues.get(0).creeVague1(this.chemin);
-        vagues.get(1).creeVague2(this.chemin2);
-        vagues.get(2).creeVague3(this.chemin3);
-        vagues.get(3).creeVague4(this.chemin);
-        vagues.get(4).creeVague5(this.chemin3);
+
+        vagues.get(1).creeVague2(
+                this.chemin,
+                this.chemin2
+        );
+
+        vagues.get(2).creeVague3(
+                this.chemin,
+                this.chemin2
+        );
+
+        vagues.get(3).creeVague4(
+                this.chemin,
+                this.chemin2,
+                this.chemin3
+        );
+
+        vagues.get(4).creeVague5(
+                this.chemin,
+                this.chemin2,
+                this.chemin3
+        );
 
         for (int i = 0; i < TAILLE_VAGUE;i++){
             vagues.get(i).setIndiceMonstreZero();
@@ -355,9 +378,6 @@ public class Partie {
     public void setCompteurPlusPlus() {
         this.compteur++;
     }
-
-
-
 
     public void recevoirDegatPortail(int nbDegat) {
         pvPortailIntegerProperty.set(pvPortailIntegerProperty.get() - nbDegat);

@@ -9,15 +9,14 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileGlace;
 public class TourGlace extends Tour{
 
     public TourGlace(Position position){
-        super(10, 100, 3, position,120 , 3);
+        super(30, 150, 5, position,50 , 3);
     }
 
     @Override
     public void ameliorer() {
-        this.setAtk(this.getAtk() + 10);
-        this.setPorter(this.getPorter() + 10);
-        this.setCadence(this.getCadence() + 10);
-        this.setPrix(this.getPrix() + 10);
+        this.setAtk(this.getAtk() + 5);
+        this.setPorter(this.getPorter() + 1);
+        this.setCadence(this.getCadence() - 4);
     }
 
     @Override

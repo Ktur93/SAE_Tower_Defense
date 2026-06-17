@@ -7,6 +7,6 @@ import java.util.ArrayList;
 public class Zombie extends Monstre {
 
     public Zombie(ArrayList<Position> chemin) {
-        super(100, 4, 10,1, chemin);
+        super(100, 3.5, 4,20,1, chemin);
     }
 }
