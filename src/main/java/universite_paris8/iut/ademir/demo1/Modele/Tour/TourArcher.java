@@ -24,6 +24,6 @@ public class TourArcher extends Tour{
     public Projectile creerProjectile(Monstre cible) {
         double x = getPosition().getX() * 64;
         double y = getPosition().getY() * 64;
-        return new ProjectileFleche(x, y, cible);
+        return new ProjectileFleche(x, y, getAtk(), cible);
     }
 }

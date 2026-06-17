@@ -3,6 +3,7 @@ package universite_paris8.iut.ademir.demo1.Vue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -11,6 +12,8 @@ import javafx.scene.paint.Color;
 import universite_paris8.iut.ademir.demo1.Main;
 import universite_paris8.iut.ademir.demo1.Modele.Jeu.Partie;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class MonstreVue {
 
@@ -48,55 +51,120 @@ public class MonstreVue {
     public void supprimerAffichageMonstre(Monstre m){
         for (int i = paneSprites.getChildren().size() - 1; i >= 0; i--) {
 
-            Node node = paneSprites.getChildren().get(i);
+            String id = paneSprites.getChildren().get(i).getId();
 
-            if ((m.getMonstreID()).equals(node.getId()) ) {
-                paneSprites.getChildren().remove(i);
+            if (id != null && (id.equals(m.getMonstreID()) || id.equals(m.getMonstreID() + "_fondVie") || id.equals(m.getMonstreID() + "_barreVie"))) {
                 paneSprites.getChildren().remove(i);
             }
         }
     }
 
+
     public void creerSprite(Monstre monstre) {
-        Label vie = new Label();
-        vie.setTextFill(new Color(1,0,0,1));
-        vie.setStyle("-fx-font-weight: bold;");
+
         Image image = imageMonstre(monstre);
+
+        if (image == null) {
+            return;
+        }
+
         ImageView sprite = new ImageView(image);
         sprite.setId(monstre.getMonstreID());
-
 
         sprite.setFitWidth(TAILLE_TUILE);
         sprite.setFitHeight(TAILLE_TUILE);
 
         sprite.layoutXProperty().bind(monstre.xProperty());
         sprite.layoutYProperty().bind(monstre.yProperty());
-        vie.textProperty().bind(monstre.pvProperty().asString());
-        vie.layoutXProperty().bind(monstre.xProperty());
-        vie.layoutYProperty().bind(monstre.yProperty());
-        vie.setTranslateY(-20);
-        vie.setTranslateX(17);
+        //affichage barre de vie:
+        Rectangle fondVie = new Rectangle(40, 5);
+        fondVie.setId(monstre.getMonstreID() + "_fondVie");
+        fondVie.setFill(Color.BLACK);
+
+        Rectangle barreVie = new Rectangle(40, 5);
+        barreVie.setId(monstre.getMonstreID() + "_barreVie");
+        barreVie.setFill(Color.RED);
+
+        fondVie.layoutXProperty().bind(monstre.xProperty());
+        fondVie.layoutYProperty().bind(monstre.yProperty());
+        barreVie.layoutXProperty().bind(monstre.xProperty());
+        barreVie.layoutYProperty().bind(monstre.yProperty());
+
+        fondVie.setTranslateX(11);
+        fondVie.setTranslateY(-8);
+        barreVie.setTranslateX(11);
+        barreVie.setTranslateY(-8);
+
+        barreVie.widthProperty().bind(monstre.pvProperty().multiply(40.0 / monstre.getPvMax()));
+
+        paneSprites.getChildren().add(fondVie);
+        paneSprites.getChildren().add(barreVie);
         paneSprites.getChildren().add(sprite);
-        paneSprites.getChildren().add(vie);
     }
+
 
     public Image imageMonstre(Monstre monstre) {
 
         Image image = null;
 
         if (monstre instanceof Zombie) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/zombie.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/zombieGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/zombie.png"));
+            }
         } else if (monstre instanceof Araignee) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/araignee.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/araigneeGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/araignee.png"));
+            }
         } else if (monstre instanceof Squelette) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/squelette.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/squeletteGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/squelette.png"));
+            }
         } else if (monstre instanceof Pillager) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/pillager.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/pillagerGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/pillager.png"));
+            }
         } else if (monstre instanceof Boss) {
-            image = new Image(Main.class.getResourceAsStream("Monstres/boss.png"));
+            if(monstre.getMonstreGlacee()) {
+                image = new Image(Main.class.getResourceAsStream("Monstres/bossGlace.png"));
+            }
+            else {
+                image = new Image(Main.class.getResourceAsStream("Monstres/boss.png"));
+            }
         }
 
         return image;
+    }
+
+    public void effetAffichage() {
+
+        for (Node node : paneSprites.getChildren()) {
+
+            if (node instanceof ImageView) {
+
+                ImageView sprite = (ImageView) node;
+
+                for (Monstre monstre : partie.getMonstres()) {
+
+                    if (monstre.getMonstreID().equals(sprite.getId())) {
+
+                        sprite.setImage(imageMonstre(monstre));
+
+                    }
+                }
+            }
+        }
     }
 
 }

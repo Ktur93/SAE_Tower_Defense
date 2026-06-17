@@ -5,8 +5,11 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import universite_paris8.iut.ademir.demo1.Modele.Monstres.Monstre;
 
 public class ProjectileGlace extends Projectile {
-    public ProjectileGlace(double x, double y, Monstre cible) {
-        super(x, y, 3, cible);
+    public ProjectileGlace(double x, double y, int degats, Monstre cible) {
+        super(x, y, 20, degats, cible);
     }
-
+    @Override
+    public void toucherCible() {
+        cible.recevoirDegatsGlace(degats);
+    }
 }

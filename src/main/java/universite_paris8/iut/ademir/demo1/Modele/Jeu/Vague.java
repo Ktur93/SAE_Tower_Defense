@@ -24,7 +24,11 @@ public class Vague {
 
     public void creeVague1(ArrayList<Position> chemin) {
         this.monstresVague.clear();
+<<<<<<< HEAD
         for (int i = 0; i < 10; i++) {
+=======
+        for (int i = 0; i < 3; i++) {
+>>>>>>> kelyan
             monstresVague.add(new Zombie(chemin));
         }
     }

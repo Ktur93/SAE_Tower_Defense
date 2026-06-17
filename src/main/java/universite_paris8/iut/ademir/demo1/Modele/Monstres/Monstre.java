@@ -22,12 +22,11 @@ public class Monstre {
     private Position depart;
 
     private IntegerProperty pv;
+    private int pvMax;
     private DoubleProperty x;
     private DoubleProperty y;
 
     private String monstreID;
-
-
 
     private boolean monstreGlacee;
     private boolean monstreEmpoisone;
@@ -58,6 +57,7 @@ public class Monstre {
 
 
         this.pv = new SimpleIntegerProperty(pv);
+        this.pvMax = pv;
         this.x = new SimpleDoubleProperty(depart.getX() * 64);
         this.y = new SimpleDoubleProperty(depart.getY() * 64);
 
@@ -162,11 +162,15 @@ public class Monstre {
         return this.degat;
     }
 
+    public boolean getMonstreGlacee() {
+        return monstreGlacee;
+    }
+
+
 
 
     public void recevoirDegats(int degats) {
         pv.setValue(getPv() - degats);
-
     }
 
     public void recevoirDegatsGlace(int degats) {
@@ -212,6 +216,10 @@ public class Monstre {
         return pv;
     }
 
+    public int getPvMax() {
+        return pvMax;
+    }
+
     public String getMonstreID() {
         return monstreID;
     }
@@ -231,6 +239,8 @@ public class Monstre {
     public boolean estADestination() {
         return (getDernierePositionX() == this.getPosition().getX() && getDernierePositionY() == this.getPosition().getY());
     }
+
+
 
 }
 
