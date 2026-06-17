@@ -71,6 +71,11 @@ public class MonstreVue {
         ImageView sprite = new ImageView(image);
         sprite.setId(monstre.getMonstreID());
 
+        // quand le monstre devient glace ou n est plus glace on change son image une seule fois
+        monstre.glaceProperty().addListener((obs, old, now) -> {
+            sprite.setImage(imageMonstre(monstre));
+        });
+
         sprite.setFitWidth(TAILLE_TUILE);
         sprite.setFitHeight(TAILLE_TUILE);
 
@@ -147,24 +152,24 @@ public class MonstreVue {
         return image;
     }
 
-    public void effetAffichage() {
-
-        for (Node node : paneSprites.getChildren()) {
-
-            if (node instanceof ImageView) {
-
-                ImageView sprite = (ImageView) node;
-
-                for (Monstre monstre : partie.getMonstres()) {
-
-                    if (monstre.getMonstreID().equals(sprite.getId())) {
-
-                        sprite.setImage(imageMonstre(monstre));
-
-                    }
-                }
-            }
-        }
-    }
+//    public void effetAffichage() {
+//
+//        for (Node node : paneSprites.getChildren()) {
+//
+//            if (node instanceof ImageView) {
+//
+//                ImageView sprite = (ImageView) node;
+//
+//                for (Monstre monstre : partie.getMonstres()) {
+//
+//                    if (monstre.getMonstreID().equals(sprite.getId())) {
+//
+//                        sprite.setImage(imageMonstre(monstre));
+//
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 }

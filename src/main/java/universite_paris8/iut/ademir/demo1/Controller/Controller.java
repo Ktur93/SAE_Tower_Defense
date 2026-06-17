@@ -229,16 +229,18 @@ public class Controller implements Initializable {
 
                 if (tempActuel - dernierTemps >= ticke) {
                     partie.mettreAJour();
-                    //monstreVue.effetAffichage();
-
                     rubisVue.afficherRubis();
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
                     btnAmeliorer.setText("Amelioration - " + partie.getPrixAmelioration());
 
-                    if ((partie.getCompteur() - partie.getCompteurDefaite()) > 175 && partie.defaiteProperty().get()) { // Avec les ticks 175 ca fait environ 5 secondes
-                        partie.setDefaiteProperty(false);
-                    } else {
-                        carteVue.timerRecommencer(partie.getCompteur() - partie.getCompteurDefaite());
+                    if (partie.defaiteProperty().get()) {
+                        int tempsDefaite = partie.getCompteur() - partie.getCompteurDefaite();
+
+                        carteVue.timerRecommencer(tempsDefaite);
+
+                        if (tempsDefaite > 175) {
+                            partie.setDefaiteProperty(false);
+                        }
                     }
 
                     partie.setCompteurPlusPlus();
