@@ -7,10 +7,6 @@ import java.util.ArrayList;
 public class Zombie extends Monstre {
 
     public Zombie(ArrayList<Position> chemin) {
-<<<<<<< HEAD
-        super(100, 5, 10,3, chemin);
-=======
         super(100, 4, 10,1, chemin);
->>>>>>> kelyan
     }
 }
