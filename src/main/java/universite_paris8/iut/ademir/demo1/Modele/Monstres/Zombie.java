@@ -5,7 +5,8 @@ import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import java.util.ArrayList;
 
 public class Zombie extends Monstre {
+
     public Zombie(ArrayList<Position> chemin) {
-        super(100, 30, 10,3, chemin);
+        super(100, 5, 10,3, chemin);
     }
 }
