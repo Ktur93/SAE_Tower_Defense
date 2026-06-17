@@ -18,22 +18,20 @@ public class Vague {
         this.monstresVague = new ArrayList<>();
         this.indiceMonstre = 0;
         this.dernierSpawn = 0;
-        this.delaiSpawn = 30; // environ 1 seconde et demi
+        this.delaiSpawn = 40;
     }
 
 
     public void creeVague1(ArrayList<Position> chemin1) {
         this.monstresVague.clear();
-
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 5; i++) {
             monstresVague.add(new Zombie(chemin1));
         }
     }
 
     public void creeVague2(ArrayList<Position> chemin1, ArrayList<Position> chemin2) {
         this.monstresVague.clear();
-
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 10; i++) {
             monstresVague.add(new Zombie(chemin1));
             monstresVague.add(new Araignee(chemin2));
         }
@@ -42,7 +40,7 @@ public class Vague {
     public void creeVague3(ArrayList<Position> chemin1, ArrayList<Position> chemin2) {
         this.monstresVague.clear();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 10; i++) {
             monstresVague.add(new Zombie(chemin1));
             monstresVague.add(new Araignee(chemin2));
             monstresVague.add(new Squelette(chemin1));
@@ -52,7 +50,7 @@ public class Vague {
     public void creeVague4(ArrayList<Position> chemin1, ArrayList<Position> chemin2, ArrayList<Position> chemin3) {
         this.monstresVague.clear();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 15; i++) {
             monstresVague.add(new Zombie(chemin1));
             monstresVague.add(new Araignee(chemin2));
             monstresVague.add(new Squelette(chemin3));
@@ -63,7 +61,7 @@ public class Vague {
     public void creeVague5(ArrayList<Position> chemin1, ArrayList<Position> chemin2, ArrayList<Position> chemin3) {
         this.monstresVague.clear();
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 15; i++) {
             monstresVague.add(new Zombie(chemin1));
             monstresVague.add(new Araignee(chemin3));
             monstresVague.add(new Squelette(chemin3));

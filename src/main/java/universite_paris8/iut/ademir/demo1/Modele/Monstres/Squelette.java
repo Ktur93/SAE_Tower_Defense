@@ -5,6 +5,6 @@ import java.util.ArrayList;
 
 public class Squelette extends Monstre {
     public Squelette(ArrayList<Position> chemin) {
-        super(300, 4, 5,40,1, chemin);
+        super(200, 4, 5,40,1, chemin);
     }
 }

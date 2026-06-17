@@ -18,7 +18,6 @@ public class Partie {
 
     private final static int TAILLE_VAGUE = 5;
 
-
     private ObservableList<Tour> tours;
     private ObservableList<Monstre> monstres;
     private ObservableList<Projectile> projectiles;
@@ -65,7 +64,7 @@ public class Partie {
         this.vagues = new ArrayList<>();
 
 
-        this.rubis = 200;
+        this.rubis = 400;
         this.pvPortail = 10;
         this.prixCase = 25;
 
@@ -257,7 +256,7 @@ public class Partie {
     public void recommnencer() {
         this.indiceVague = 0;
         this.rubis = 250;
-        this.prixCase = 50;
+        this.prixCase = 25;
         pvPortailIntegerProperty.set(3);
         this.defaiteBoucleLanceUneFois = false;
 

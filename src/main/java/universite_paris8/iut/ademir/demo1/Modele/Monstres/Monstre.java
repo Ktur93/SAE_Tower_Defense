@@ -77,8 +77,8 @@ public class Monstre {
 
     public void avancer() {
         if(monstreEmpoisone == true){
-            if (compteurPoison%60==0) {
-                pv.setValue(getPv() - 5);
+            if (compteurPoison%45==0) {
+                pv.setValue(getPv() - 10);
             }
             compteurPoison++;
         }

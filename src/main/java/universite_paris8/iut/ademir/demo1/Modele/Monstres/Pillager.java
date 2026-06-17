@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public class Pillager extends Monstre {
     public Pillager(ArrayList<Position> chemin) {
-        super(400, 5, 5,60,1, chemin);
+        super(300, 5, 5,60,1, chemin);
     }
 }
