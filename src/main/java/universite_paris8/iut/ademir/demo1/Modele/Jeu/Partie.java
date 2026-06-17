@@ -254,8 +254,8 @@ public class Partie {
     }
 
     public void recommnencer() {
-        this.indiceVague = 0;
-        this.rubis = 250;
+        setIndiceVaguePlusUn(0);
+        this.rubis = 400;
         this.prixCase = 25;
         pvPortailIntegerProperty.set(3);
         this.defaiteBoucleLanceUneFois = false;
@@ -332,6 +332,9 @@ public class Partie {
 
     public int getIndiceVaguePlusUn () {
         return indiceVague + 1;
+    }
+    public void setIndiceVaguePlusUn(int i){
+        indiceVague = i;
     }
 
     public boolean getToutesLesVaguesTerminees() {

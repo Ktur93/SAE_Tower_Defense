@@ -342,6 +342,7 @@ public class Controller implements Initializable {
         carteVue.dessinerCarte();
         paneSprites.getChildren().clear();
         coeurVue.mettreAJourPvPortail(3);
+        btnVague.setText("Lancer vague " + partie.getIndiceVaguePlusUn());
     }
 
     public void desactiverToutLesBoutons() {
