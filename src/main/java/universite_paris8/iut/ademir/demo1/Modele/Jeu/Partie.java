@@ -176,8 +176,11 @@ public class Partie {
     }
 
 
-
     public boolean placerTour(Tour tour, Carte carte) {
+        if (tour == null) {
+            return false;
+        }
+
         Position position = tour.getPosition();
 
         if (!carte.estCaseTour(position.getX(), position.getY())) {
@@ -256,6 +259,7 @@ public class Partie {
         this.rubis = 2000;
         this.prixCase = 50;
         pvPortailIntegerProperty.set(3);
+        this.defaiteBoucleLanceUneFois = false;
 
         // recreation des vagues
         vagues.get(0).creeVague1(this.chemin);
@@ -355,9 +359,6 @@ public class Partie {
     public void setCompteurPlusPlus() {
         this.compteur++;
     }
-
-
-
 
     public void recevoirDegatPortail(int nbDegat) {
         pvPortailIntegerProperty.set(pvPortailIntegerProperty.get() - nbDegat);

@@ -39,11 +39,20 @@ public class Position {
         return getX() == autre.getX() && getY() == autre.getY();
     }
 
-    // Si deux positions ont les memes coordonnées ils auront les memes hashcode donc seront "trié" dans le meme tiroir
+    // Important pour HashMap : si deux positions sont egales,
+    // elles doivent avoir le meme hashCode
     @Override
     public int hashCode() {
         return Objects.hash(getX(), getY());
     }
+
+//    On a besoin de equals et hashCode dans Position parce que le BFS utilise une HashMap pour retenir
+//    les cases deja visitees et leurs predecesseurs. Mais en Java, deux objets Position avec les memes coordonnees
+//    ne sont pas consideres egaux automatiquement. Sans equals, Java compare les adresses memoire.
+//    Donc le BFS ne reconnaitrait pas correctement qu'une case a deja ete visitee. hashCode est necessaire
+//    parce que HashMap utilise le hash pour ranger et retrouver les objets rapidement.
+//    et ducoup sans redéfinir hashCode(), Java aurait utilisé le hashCode() de base de Object.
+//    mais ce hashCode() identifie l’objet lui-même, pas ses coordonnées.
 
     @Override
     public String toString() {

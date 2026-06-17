@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import universite_paris8.iut.ademir.demo1.Modele.Cartes.Position;
 import java.util.ArrayList;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 public class Monstre {
     private int recompense;
@@ -28,10 +30,12 @@ public class Monstre {
 
     private String monstreID;
 
-    private boolean monstreGlacee;
+
     private boolean monstreEmpoisone;
 
     private static int compteurID = 0;
+
+    private BooleanProperty glace;
 
 
 
@@ -49,7 +53,6 @@ public class Monstre {
 
         this.vitesse = vitesse;
 
-        this.monstreGlacee = false;
         this.monstreEmpoisone = false;
 
         this.chemin = chemin;
@@ -64,6 +67,8 @@ public class Monstre {
 
         this.monstreID = "monstre" + compteurID;
 
+        this.glace = new SimpleBooleanProperty(false);
+
 
         compteurID++;
     }
@@ -76,13 +81,16 @@ public class Monstre {
             compteurPoison++;
         }
 
-        if(monstreGlacee == true){
+        if (this.estGlace()) {
             setVitesse(2);
-            if(compteurGlace != 0 && compteurGlace%600 == 0){
-                monstreGlacee = false;
+
+            if (compteurGlace != 0 && compteurGlace % 600 == 0) {
+                setGlace(false);
                 setVitesse(4);
+                compteurGlace = 0;
                 System.out.println("fin de effet Glace");
             }
+
             compteurGlace++;
         }
 
@@ -163,7 +171,7 @@ public class Monstre {
     }
 
     public boolean getMonstreGlacee() {
-        return monstreGlacee;
+        return this.estGlace();
     }
 
 
@@ -175,7 +183,8 @@ public class Monstre {
 
     public void recevoirDegatsGlace(int degats) {
         pv.setValue(getPv() - degats);
-        monstreGlacee = true;
+        compteurGlace = 0;
+        setGlace(true);
     }
 
     public void recevoirDegatsPoison(int degats) {
@@ -238,6 +247,18 @@ public class Monstre {
 
     public boolean estADestination() {
         return (getDernierePositionX() == this.getPosition().getX() && getDernierePositionY() == this.getPosition().getY());
+    }
+
+    public BooleanProperty glaceProperty() {
+        return glace;
+    }
+
+    public boolean estGlace() {
+        return glace.get();
+    }
+
+    public void setGlace(boolean estGlaceOuPas) {
+        glace.set(estGlaceOuPas);
     }
 
 
