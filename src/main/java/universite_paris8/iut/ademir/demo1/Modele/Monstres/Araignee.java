@@ -5,6 +5,6 @@ import java.util.ArrayList;
 
 public class Araignee extends Monstre {
     public Araignee(ArrayList<Position> chemin) {
-        super(80, 6,4, 15,1, chemin);
+        super(125, 6,4, 30,1, chemin);
     }
 }

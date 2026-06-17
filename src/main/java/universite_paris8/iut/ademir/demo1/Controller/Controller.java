@@ -89,8 +89,9 @@ public class Controller implements Initializable {
 
         // Chemins
         ArrayList<Position> chemin = bfs.cheminDeSourceVersCible(arrivee);
-        ArrayList<Position> chemin2 = bfs2.cheminDeSourceVersCible(arrivee);
-        ArrayList<Position> chemin3 = bfs3.cheminDeSourceVersCible(arrivee);
+        ArrayList<Position> chemin2 = bfs3.cheminDeSourceVersCible(arrivee);
+        ArrayList<Position> chemin3 = bfs2.cheminDeSourceVersCible(arrivee);
+
 
         // Creation de la partie
         partie = new Partie(chemin,chemin2,chemin3);
@@ -228,10 +229,11 @@ public class Controller implements Initializable {
 
                 if (tempActuel - dernierTemps >= ticke) {
                     partie.mettreAJour();
-                    monstreVue.effetAffichage();
+                    //monstreVue.effetAffichage();
 
                     rubisVue.afficherRubis();
                     btnAcheterCase.setText("Acheter case - " + partie.getPrixCase());
+                    btnAmeliorer.setText("Amelioration - " + partie.getPrixAmelioration());
 
                     if ((partie.getCompteur() - partie.getCompteurDefaite()) > 175 && partie.defaiteProperty().get()) { // Avec les ticks 175 ca fait environ 5 secondes
                         partie.setDefaiteProperty(false);

@@ -8,14 +8,14 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileBoulet;
 public class TourCanon extends Tour {
 
     public TourCanon(Position position) {
-        super(45, 125, 4, position,75 , 4);
+        super(60, 125, 4, position,80 , 4);
     }
 
     @Override
     public void ameliorer() {
-        this.setAtk(this.getAtk() + 8);
+        this.setAtk(this.getAtk() + 10);
         this.setPorter(this.getPorter() + 1);
-        this.setCadence(this.getCadence() - 3);
+        this.setCadence(this.getCadence() - 2);
     }
 
     public Projectile creerProjectile(Monstre cible) {

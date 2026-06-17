@@ -9,13 +9,13 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileFleche;
 public class TourArcher extends Tour{
 
     public TourArcher(Position position){
-        super(25, 50, 4, position,40 , 5); // 1 seconde
+        super(32, 50, 5, position,30 , 5); // 1 seconde
     }
 
     @Override
     public void ameliorer() {
-        this.setAtk(this.getAtk() + 10);
-        this.setPorter(this.getPorter() + 10);
+        this.setAtk(this.getAtk() + 3);
+        this.setPorter(this.getPorter() + 1);
         this.setCadence(this.getCadence() - 5);
     }
 
