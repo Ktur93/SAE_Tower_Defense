@@ -9,7 +9,7 @@ import universite_paris8.iut.ademir.demo1.Modele.Projectile.ProjectileFleche;
 public class TourArcher extends Tour{
 
     public TourArcher(Position position){
-        super(32, 50, 5, position,30 , 5); // 1 seconde
+        super(32, 50, 6, position,30 , 5); // 1 seconde
     }
 
     @Override
