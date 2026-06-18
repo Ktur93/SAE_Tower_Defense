@@ -72,7 +72,7 @@ public class Partie {
         this.vagueEnCours = new SimpleBooleanProperty(false);
         this.pvPortailIntegerProperty = new SimpleIntegerProperty(3);
 
-        this.prixAmelioration = 50;
+        this.prixAmelioration = 75;
         this.indiceVague = 0;
         this.compteur = 0;
         this.compteurDefaite = 0;
@@ -114,7 +114,7 @@ public class Partie {
 
             if (vagueActuelle.tousLesMonstresEnvoyes() && getMonstres().isEmpty()) {
                 this.indiceVague++;
-                this.prixAmelioration += 50;
+                this.prixAmelioration += 75;
                 this.vagueEnCours.set(false);
 
             }
@@ -208,7 +208,7 @@ public class Partie {
     }
 
     public void faireAmeliorerTours(Tour t){
-        if (t.getNivT() < t.getNivMax() && rubis >= 50) {
+        if (t.getNivT() < t.getNivMax() && rubis >= this.prixAmelioration) {
             t.ameliorer();
             rubis -= prixAmelioration;
             t.setNivT(t.getNivT() + 1);
@@ -259,6 +259,7 @@ public class Partie {
         this.prixCase = 25;
         pvPortailIntegerProperty.set(3);
         this.defaiteBoucleLanceUneFois = false;
+        this.prixAmelioration = 75;
 
         // recreation des vagues
         // recreation des vagues
