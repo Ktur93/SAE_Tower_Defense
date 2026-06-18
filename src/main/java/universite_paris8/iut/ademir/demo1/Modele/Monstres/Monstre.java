@@ -84,7 +84,7 @@ public class Monstre {
         }
 
         if (this.estGlace()) {
-            setVitesse(2);
+            setVitesse(vitesseNormal / 2);
             if(compteurGlace != 0 && compteurGlace%600 == 0){
                 this.glace.set(false);
                 setVitesse(vitesseNormal);

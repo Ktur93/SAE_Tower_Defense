@@ -262,7 +262,6 @@ public class Partie {
         this.prixAmelioration = 75;
 
         // recreation des vagues
-        // recreation des vagues
         vagues.get(0).creeVague1(this.chemin);
 
         vagues.get(1).creeVague2(
