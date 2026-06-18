@@ -61,11 +61,11 @@ public class Vague {
     public void creeVague5(ArrayList<Position> chemin1, ArrayList<Position> chemin2, ArrayList<Position> chemin3) {
         this.monstresVague.clear();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 20; i++) {
             monstresVague.add(new Zombie(chemin1));
-            monstresVague.add(new Araignee(chemin3));
+            monstresVague.add(new Araignee(chemin2));
             monstresVague.add(new Squelette(chemin3));
-            monstresVague.add(new Pillager(chemin2));
+            monstresVague.add(new Pillager(chemin3));
         }
         monstresVague.add(new Boss(chemin1));
     }
