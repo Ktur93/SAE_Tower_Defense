@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public class Boss extends Monstre {
     public Boss(ArrayList<Position> chemin) {
-        super(7450, 2, 2,150,3, chemin);
+        super(7650, 2, 2,150,3, chemin);
     }
 }
