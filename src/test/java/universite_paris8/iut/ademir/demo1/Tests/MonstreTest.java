@@ -66,8 +66,7 @@ public class MonstreTest {
     public void zombieArriveApresPlusieursAvancements() {
         Zombie zombie = new Zombie(creerPetitChemin());
 
-        // Le zombie avance en pixels. Avec une vitesse de 3,5, il faut plus que 10 ticks
-        // pour parcourir deux cases de 64 pixels.
+        // Le zombie avance en pixels. Avec une vitesse de 3,5, il faut plus que 10 ticks pour parcourir deux cases de 64 pixels.
         for (int i = 0; i < 50; i++) {
             zombie.avancer();
         }
